@@ -2,6 +2,7 @@ import { problema as p } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { SpinDot } from "@/components/ui/spin-dot";
 import { TiltCard } from "@/components/unlumen-ui/tilt-card";
 import { cn } from "@/lib/utils";
 
@@ -48,7 +49,7 @@ export function Problema() {
                   key={i}
                   className="flex items-center gap-3 font-display text-[1.0625rem] font-semibold"
                 >
-                  <span aria-hidden className="size-1.5 shrink-0 bg-accent" />
+                  <SpinDot />
                   <WhipInUp text={i} />
                 </li>
               ))}
