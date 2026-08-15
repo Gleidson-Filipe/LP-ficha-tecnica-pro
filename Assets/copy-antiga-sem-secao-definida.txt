@@ -1,0 +1,93 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo (index.html) que pertence a seções AINDA NÃO mapeadas para uma pasta de assets
+no projeto novo. Conforme assets/intruções-site.txt item 5: "nem todas as seções estão nessa pasta, algumas
+ainda precisam ser mais bem definidas". Guardar aqui até o cliente definir onde cada uma entra.
+Fonte: D:\Projetos reais\LP-ficha-tecnica-pro\temporario\LP Ficha Tecnica Pro 2026 - IA\index.html
+
+=== "Mecanismo Único" + "Não é só mais uma planilha" — FUNDIDAS EM UMA SÓ SEÇÃO (decisão do cliente) ===
+Confirmado pelo cliente: no site antigo eram 2 seções (linhas 199-229 e 355-395), mas no site novo viram UMA
+única seção. O cliente já enviou um mockup de exemplo do layout: eyebrow rosa "Cálculo Automático. Zero
+Complicação." + H2 "Por que a Ficha Técnica Pro não é ''só mais uma planilha''?" + grid de 4 colunas (cards
+numerados 01-04, ícone Phosphor, título, descrição curta), fundo escuro, cards em card claro/cinza claro
+contrastando com o fundo dark da seção.
+
+Copy final dos 4 cards (mescla o conteúdo das duas seções antigas, mantendo os 4 itens do "Mecanismo Único"
+que já cobrem os 4 pontos de diferencial da tabela comparativa):
+
+01 — ícone tipo "clipboard/lista" (Phosphor)
+Título: "Ingredientes e fator de correção"
+Texto: "Calcule o custo exato considerando as perdas normais do preparo (cascas, ossos, cozimento)."
+
+02 — ícone tipo "raio" (Phosphor, energia)
+Título: "Energia Elétrica e Gás Isolados"
+Texto: "Descubra o custo exato de cocção ou refrigeração de cada item, sem rateios irreais."
+
+03 — ícone tipo "relógio" (Phosphor, tempo)
+Título: "Mão de Obra e Tempo de Produção"
+Texto: "Saiba quanto custa a hora do seu funcionário dedicada especificamente àquela receita."
+
+04 — ícone tipo "caixa/pacote" (Phosphor, embalagem)
+Título: "Embalagens, Impostos e Delivery"
+Texto: "Precifique corretamente para o salão e para o iFood. Calcule taxas, impostos e custos extras
+automaticamente."
+
+A tabela comparativa antiga (Planilha Comum x Ficha Técnica Pro, ver assets/Precificacao/copy-antiga.txt) foi
+absorvida pelo conceito desta seção fundida — os 4 diferenciais da tabela = os 4 cards acima. Não recriar a
+tabela separadamente, a menos que o cliente peça.
+
+Referência de design: ver print enviado pelo cliente na conversa (fundo #09090a/preto, eyebrow em accent rosa
+#ff4785, H2 branco com uma palavra sublinhada/destacada, 4 cards em card claro #f5f4ea-like com numeração 01-04
+em rosa, ícone rosa, título bold, descrição cinza menor).
+
+=== "Benefícios Tangíveis" / bento grid (dark) — linhas 397-426 ===
+H2: "O que muda no seu dia a dia quando você tem os números na mão."
+4 cards:
+1. 🛡️ "Pare de ter medo de reajustar"
+   "Tenha segurança total para formar preços (Markup) e saiba exatamente quanto cobrar sem afugentar clientes."
+2. 🔍 "Identifique os vilões do cardápio"
+   "Descubra em segundos quais pratos estão sugando sua margem de contribuição e ajuste o cardápio."
+3. 📉 "Reduza o Desperdício"
+   "Controle rigorosamente o fator de correção e pare de jogar insumos caros no lixo."
+4. ⏱️ "Ganhe tempo para ser dono"
+   "Automações prontas. Você só insere os dados, a Ficha Técnica Pro calcula CMV, preços e lucros sozinha."
+
+=== "Oferta" / pricing (dark, #oferta) — linhas 428-457 ===
+H2: "Assuma o controle da precificação do seu negócio agora."
+Lista de inclusos:
+- Acesso vitalício à Ficha Técnica Pro (Google Sheets)
+- Atualização automática de CMV e Margem de Contribuição
+- Cálculo automatizado de Gás, Energia e Mão de Obra
+- Suporte especializado e aulas práticas
+Preço: "R$ 197/único"
+CTA: "Quero saber meu custo real e / PRECIFICAR CERTO"
+Garantia: 🛡️ "Risco Zero. Garantia de 7 Dias."
+"Se você achar que a ferramenta não vai ajudar seu restaurante a economizar dinheiro, devolvemos 100% do seu
+investimento. Sem burocracia."
+Confirmado pelo cliente: preço (R$ 197/único) e garantia (7 dias) seguem os mesmos valores do site antigo.
+
+=== FAQ (light) — linhas 459-519 ===
+H2: "Ainda tem dúvidas?"
+1. "Serve para qualquer restaurante?"
+   "Sim. A ferramenta atende padarias, pizzarias, hamburguerias, confeitarias, marmitarias, cafeterias, dark
+   kitchens e similares."
+2. "Preciso entender de Excel ou planilhas?"
+   "Não. A ferramenta já possui todos os cálculos e automações prontas. Você apenas preenche as informações
+   do seu negócio."
+3. "Ela calcula os custos operacionais?"
+   "Sim, ela calcula detalhadamente componentes cruciais como consumo de gás, energia elétrica e mão de obra
+   por produto."
+4. "Como recebo o acesso?"
+   "O acesso é enviado imediatamente para o seu e-mail após a confirmação do pagamento, com instruções claras
+   de uso."
+5. "Posso atualizar os preços dos insumos facilmente?"
+   "Com certeza. Ao alterar o preço de um ingrediente (como carne ou farinha), todas as fichas técnicas que o
+   utilizam são recalculadas automaticamente."
+
+=== Meta/SEO (head do site antigo) ===
+Title: "Ficha Técnica Pro - Gestor de Custos de Produção"
+Description: "Descubra seu lucro real em cada prato. Gestor de custos e precificação automático para
+Restaurantes, Deliveries e Negócios Gastronômicos."

@@ -1,0 +1,13 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+O HTML antigo NÃO tinha uma seção de depoimentos com texto — apenas as 9 fotos (Depoimento 1.jpg a 9.jpg) existiam
+soltas na pasta assets do projeto antigo, sem markup/copy correspondente no index.html.
+
+Ou seja: não há copy legada para reaproveitar aqui. Se os depoimentos tiverem texto (print de conversa, avaliação,
+etc.), esse conteúdo está dentro das próprias imagens, não em texto separado — não inventar depoimentos falsos.
+
+Lembrete da instrução do cliente (assets/Depoimentos/intruções.txt): não posicionar essa seção muito perto do
+final da página, para garantir que o usuário a veja.

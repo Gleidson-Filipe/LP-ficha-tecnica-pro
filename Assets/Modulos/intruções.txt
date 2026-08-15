@@ -1,0 +1,3 @@
+Essa seção tem o proposito de mostrar o produto com um pouco mais de detalhe e o que cada aba faz, gentileza averiguar se a imagem bate com a copy, tambem tomar sempre cuidado não só nessa seção mas em todas
+as que possuem imagens o tamanho de cada imagem, não corte imagens, verifique espaçamentos, as imagens não podem ficar pequenas demais, essa seção vc pode fazer como uma especie de galeria, um slide ou algo
+do tipo, pra que a pessoa veja bem como funciona cada aba

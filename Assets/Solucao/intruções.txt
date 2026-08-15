@@ -1,0 +1,2 @@
+Essa seção procura introduzir quais as funcionalidades que o produto possui, ela possui uma lista de features que a planilha tem, seu objetivo aqui é deixar isso claro pro lead, atualmente a copy está em texto
+comum, vc pode pegar esse texto e transformar em uma lista de beneficios pra facilitar a compreensão, adicionar um cta tambem

@@ -1,0 +1,24 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo — referência para a seção Vídeo (logo abaixo do Hero).
+Fonte: index.html linha 21-23
+
+No site antigo o vídeo não era uma seção separada, era embutido dentro do Hero via iframe do Panda Video:
+<iframe src="https://player-vz-0e8baf6e-011.tv.pandavideo.com.br/embed/?v=66bcda6b-0d7a-46d8-9e08-997dd88101b9"
+ allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe>
+
+Não havia headline própria para o vídeo — ele só ilustrava a promessa do H1/H2 do Hero:
+"Descubra o custo real e o lucro de cada ítem do seu cardápio."
+"Tenha preços que geram lucro e não apenas faturamento."
+
+Uso da imagem "thumb de video temporaria.png": usar como thumbnail/poster do player de vídeo.
+
+RESOLVIDO (confirmado pelo cliente): o link do Panda Video é o mesmo que já está no HTML antigo (ver acima),
+usar esse embed ao construir o site. Formato do embed (iframe):
+https://player-vz-0e8baf6e-011.tv.pandavideo.com.br/embed/?v=66bcda6b-0d7a-46d8-9e08-997dd88101b9
+
+Sugestão de copy de apoio pra essa seção (a definir com o cliente): algo curto tipo "Veja como funciona por dentro"
+— não existe no site antigo, esta seção é nova/reestruturada.

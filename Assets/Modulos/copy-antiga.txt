@@ -1,0 +1,45 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo — seção "Feature Showcase — Módulos Integrados" (light).
+Fonte: index.html linhas 112-197
+
+Tag/eyebrow: "Módulos Integrados"
+H2: "Tudo que você precisa em um único lugar."
+
+Stats row (4 números, pode reaproveitar como selo de credibilidade em qualquer seção):
+- 5   → "Módulos Integrados"
+- 100% → "Automatizado"
+- 30s → "Para Precificar"
+- 7   → "Dias de Garantia"
+
+Mapeamento imagem (pasta assets/Modulos/) -> título -> descrição:
+
+1. gestor_lucro_cardapio.png  (antigo: gestor-lucro.png)
+   Título: "Gestão do Cardápio"
+   Descrição: "Visualize custos, CMV, margem e lucro de todos os produtos em uma única tela."
+
+2. controle_despesas.png  (antigo: controle-despesas.png)
+   Título: "Controle de Despesas"
+   Descrição: "Registre todas as despesas operacionais e veja o impacto direto na rentabilidade."
+
+3. custo_maodeobra.png  (antigo: custo-maodeobra.png)
+   Título: "Custo de Mão de Obra"
+   Descrição: "Calcule automaticamente o custo da mão de obra por produto baseado no tempo de preparo."
+
+4. calc_combos.png  (antigo: calc-combos.png)
+   Título: "Calculadora de Combos"
+   Descrição: "Monte combos e promoções sem perder margem, com cálculo de custo em tempo real."
+
+5. modulo_precificar.png  (antigo: modulo-precificar.png)
+   Título: "Precificação Inteligente"
+   Descrição: "Defina markup, impostos e taxas para obter o preço de venda ideal automaticamente."
+
+6. pontodeequilibrio.png  (antigo: ponto-equilibrio.png)
+   Título: "Ponto de Equilíbrio"
+   Descrição: "Saiba exatamente quantos produtos precisa vender para cobrir todos os custos fixos."
+
+Observação: instrução do cliente pede formato galeria/slide pra essa seção, e checar se a imagem bate com a copy
+antes de usar — todas as 6 imagens da pasta batem 1:1 com os 6 cards acima.

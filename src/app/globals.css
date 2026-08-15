@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+/* =============================================================
+   FICHA TÉCNICA PRO — SISTEMA VISUAL
+
+   Base ESCURA (a logo é branca e precisa funcionar em toda a página).
+   Linguagem estrutural: LINHAS DE TABELA — filetes horizontais separando
+   linhas e filetes verticais separando colunas, com respiro generoso
+   entre elas. Estrutura, não papel de parede.
+
+   Regras duras:
+   - ZERO gradiente, glow, blur ou glassmorphism.
+   - UMA cor de destaque (#ff4785).
+   - Duas famílias tipográficas, nunca três.
+   - Nenhum texto em cinza claro sobre fundo claro.
+   ============================================================= */
+@theme {
+  /* Superfícies */
+  --color-ink: #09090a;
+  --color-ink-panel: #0f0f13;
+  --color-ink-raise: #17171c;
+  --color-paper: #f5f4ea;
+  --color-paper-panel: #eae8d9;
+
+  /* Destaque */
+  --color-accent: #ff4785;
+  --color-accent-deep: #e02e6b;
+
+  /* Texto sobre escuro */
+  --color-on-ink: #f5f4ea;
+  --color-on-ink-soft: #b5b4a9;
+
+  /* Texto sobre claro */
+  --color-on-paper: #09090a;
+  --color-on-paper-soft: #3a3a34;
+
+  /* Tipografia */
+  --font-display: "Switzer", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "General Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Grande e chamativa, mas ainda cabendo em UMA tela junto do resto do hero */
+  --text-mega: clamp(2.5rem, 5.2vw, 5.5rem);
+  --text-mega--line-height: 0.98;
+  --text-mega--letter-spacing: -0.035em;
+  --text-mega--font-weight: 700;
+
+  --text-h2: clamp(2rem, 4.2vw, 3.25rem);
+  --text-h2--line-height: 1.04;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h2--font-weight: 700;
+
+  --text-h3: clamp(1.1875rem, 1.7vw, 1.4375rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 600;
+
+  --text-lead: clamp(1.125rem, 1.5vw, 1.3125rem);
+  --text-lead--line-height: 1.5;
+  --text-lead--font-weight: 500;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.1em;
+  --text-label--font-weight: 600;
+}
+
+/* =============================================================
+   BASE
+   ============================================================= */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  overflow-x: clip;
+  font-synthesis-weight: none;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* Cantos retos — é uma ferramenta de precisão */
+*,
+*::before,
+*::after {
+  border-radius: 0;
+}
+
+/* Âncoras não somem sob o header fixo */
+[id] {
+  scroll-margin-top: 68px;
+}
+
+@media (min-width: 640px) {
+  [id] { scroll-margin-top: 76px; }
+}
+
+@media (min-width: 1024px) {
+  [id] { scroll-margin-top: 100px; }
+}
+
+/* =============================================================
+   MEDIDAS
+   ============================================================= */
+:root {
+  --pad: 1.25rem;
+  /* Altura do header fixo — usada pelo hero para caber em uma tela */
+  --header-h: 68px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-h: 76px;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --pad: 2.5rem;
+  }
+}
+
+/* Desktop: header tem 88px (fidelidade ao Pencil) */
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 88px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --pad: 4rem;
+  }
+}
+
+.pad {
+  padding-inline: var(--pad);
+}
+
+.measure {
+  max-width: 60ch;
+}
+
+/* =============================================================
+   TOM — resolve cor de texto, filete e fundo de uma vez
+   ============================================================= */
+.t-ink {
+  --fg: var(--color-on-ink);
+  --fg-soft: var(--color-on-ink-soft);
+  --rule: rgb(245 244 234 / 0.13);
+  --panel: var(--color-ink-panel);
+  --bg: var(--color-ink);
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+.t-paper {
+  --fg: var(--color-on-paper);
+  --fg-soft: var(--color-on-paper-soft);
+  --rule: rgb(9 9 10 / 0.15);
+  --panel: var(--color-paper-panel);
+  --bg: var(--color-paper);
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+.soft {
+  color: var(--fg-soft);
+}
+
+.panel {
+  background-color: var(--panel);
+}
+
+/* =============================================================
+   LINHAS DE TABELA — a linguagem estrutural do site
+   ============================================================= */
+@utility rule-t {
+  border-top: 1px solid var(--rule);
+}
+@utility rule-b {
+  border-bottom: 1px solid var(--rule);
+}
+@utility rule-l {
+  border-left: 1px solid var(--rule);
+}
+@utility rule-r {
+  border-right: 1px solid var(--rule);
+}
+@utility rule-box {
+  border: 1px solid var(--rule);
+}
+@utility rule-t-0 {
+  border-top: 0;
+}
+@utility rule-l-0 {
+  border-left: 0;
+}
+
+/* Linha da "tabela": respiro alto para o filete estruturar sem poluir */
+.row {
+  padding-block: 2.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 768px) {
+  .row {
+    padding-block: 3rem;
+  }
+}
+
+/* Colunas divididas por filete vertical, empilhando no mobile */
+.cols {
+  display: grid;
+  gap: 1px;
+  background-color: var(--rule);
+}
+
+.cols > * {
+  background-color: var(--bg);
+  padding: 2rem var(--pad);
+}
+
+@media (min-width: 768px) {
+  .cols > * {
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* Caixa que PROTEGE o texto das linhas de fundo: o fundo opaco corta a
+   linha antes que ela atravesse a tipografia. Sem borda — a proteção é
+   invisível, só o efeito importa. */
+.box {
+  background-color: var(--bg);
+}
+
+/* Variante com borda visível, quando o bloco precisa virar célula */
+.box-ruled {
+  border: 1px solid var(--rule);
+  background-color: var(--bg);
+}
+
+/* Camada de linhas de fundo — contida ao bloco onde vive, nunca atravessa
+   texto (a .box opaca corta a linha). */
+.lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lines > span {
+  position: absolute;
+  background-color: var(--rule);
+}
+
+/* Colunas verticais igualmente espaçadas, no eixo do padding da página */
+.rails {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: var(--pad);
+  pointer-events: none;
+}
+
+.rails > span {
+  width: 1px;
+  background-color: var(--rule);
+}
+
+/* Números com largura fixa — colunas de valores sempre alinhadas */
+.num {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* =============================================================
+   ABAS (Módulos)
+   ============================================================= */
+.tab {
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.tab[data-on="true"] {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* =============================================================
+   FAQ
+   ============================================================= */
+.q summary::-webkit-details-marker {
+  display: none;
+}
+.q summary::marker {
+  content: "";
+}
+.q[open] .q-sign {
+  transform: rotate(45deg);
+}
+
+/* =============================================================
+   MOVIMENTO
+   O conteúdo nasce visível: se o JS falhar, nada some da página.
+   ============================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

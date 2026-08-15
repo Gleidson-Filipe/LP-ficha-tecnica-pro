@@ -1,0 +1,24 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo — referência para o "filete" de Prova Social (entre Vídeo e Hero, ou abaixo do Vídeo).
+Fonte: index.html linha 30 e linhas 36-56 (marquee)
+
+Microcopy que ficava embaixo do CTA do Hero, boa candidata para reaproveitar aqui:
+"Acesso Imediato • Pagamento Único • Acesso vitalício"
+
+Marquee/trust bar (faixa rolante de texto) que existia logo após o Hero no site antigo — pode inspirar o filete:
+- Gestor de custos profissional
+- Precificação automática
+- 100% automatizado
+- Custo real por produto
+- CMV atualizado em tempo real
+- Margem de contribuição exata
+- Markup calculado automaticamente
+- Exclusivo para gastronomia
+
+IMPORTANTE (instrução do cliente, assets/Prova social/intruções.txt): esta seção precisa comunicar que o produto
+já é validado, usado por ~25 mil usuários, tem acesso vitalício e pagamento único. Esse número (25 mil) NÃO
+aparece no HTML antigo — é informação nova passada pelo cliente, não inventar outros números.

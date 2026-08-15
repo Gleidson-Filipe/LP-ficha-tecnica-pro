@@ -1,0 +1,33 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo (site antigo, seção Hero) — referência, não copiar 1:1, adaptar ao novo design.
+Fonte: D:\Projetos reais\LP-ficha-tecnica-pro\temporario\LP Ficha Tecnica Pro 2026 - IA\index.html (linhas 15-33)
+
+H1: "Descubra o custo real e o lucro de cada ítem do seu cardápio."
+H2 (subheadline): "Tenha preços que geram lucro e não apenas faturamento."
+
+CTA (botão premium, 2 linhas):
+  linha 1: "Quero saber meu custo real e"
+  linha 2: "PRECIFICAR CERTO" (destaque/maiúsculo)
+
+Microcopy abaixo do CTA: "Acesso Imediato • Pagamento Único • Acesso vitalício"
+-> essa frase é candidata a virar a seção "Prova social" (filete), ver assets/Prova social/copy-antiga.txt
+
+Observação: no site antigo o vídeo (Panda Video) ficava dentro do Hero, embutido logo abaixo do H2.
+No novo site o vídeo virou seção própria (ver assets/Video/copy-antiga.txt) — o Hero aqui deve usar a imagem
+Mockup-Hero2.png no lugar do vídeo.
+
+Trust bar / marquee (faixa de texto rolante), pode servir de complemento ao hero ou à prova social:
+- Gestor de custos profissional
+- Precificação automática
+- 100% automatizado
+- Custo real por produto
+- CMV atualizado em tempo real
+- Margem de contribuição exata
+- Markup calculado automaticamente
+- Exclusivo para gastronomia
+
+Header (regra do arquivo assets/intruções-site.txt): logo "Ficha Técnica Pro" + slogan "Engenharia do lucro para gastronomia" abaixo da logo.

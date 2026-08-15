@@ -1,0 +1,40 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo — no site antigo eram DUAS seções separadas (Agitação do Problema + Consequências).
+A instrução do cliente permite juntar as duas em uma só, se fizer sentido no storytelling.
+Fonte: index.html linhas 58-95
+
+=== SEÇÃO A — "Agitação do Problema" (dark) ===
+H2: "O faturamento engana. A falta de controle de custos quebra."
+
+4 cards (problem-grid):
+1. "Preço no Achismo"
+   "Você não tem segurança para reajustar preços e acaba copiando o concorrente, engolindo os próprios custos."
+
+2. "Custos Invisíveis"
+   "Você paga pelo gás, pela energia e pela embalagem, mas esquece de incluir isso no custo final do prato."
+
+3. "O Fantasma do CMV"
+   "As vendas aumentam, o restaurante lota, mas o caixa vive vazio porque o CMV está descontrolado."
+
+4. "Desperdício não Calculado"
+   "As perdas no processo de produção (fator de correção) estão corroendo sua margem sem você perceber."
+
+=== SEÇÃO B — "As Consequências / rateios genéricos" (light) ===
+Ícone: 💸
+H2: "O grande perigo dos "rateios genéricos"."
+
+Parágrafo 1: "A maioria das planilhas comuns e sistemas de contabilidade divide as despesas gerais igualmente
+entre todos os produtos."
+
+Parágrafo 2: "Isso é um erro fatal na gastronomia. Produtos que nunca passaram pelo fogão acabam recebendo
+custos de gás, mascarando a margem real. O resultado? Você continua vendendo sem saber qual prato dá lucro
+de verdade e qual está te dando prejuízo."
+
+Nota: instrução do cliente (assets/Problemas/intruções.txt) pede pra explorar 3 eixos: faturamento enganoso,
+falta de controle de custos, e o perigo dos rateios genéricos — os 3 já estão cobertos acima (achismo/CMV cobrem
+faturamento enganoso e falta de controle; seção B cobre rateios genéricos). Pode comparar problema x o que o
+produto resolve.

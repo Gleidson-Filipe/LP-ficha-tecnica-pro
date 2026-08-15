@@ -1,0 +1,2 @@
+Começando por aqui, essa é uma landing page, seu objetivo é vender uma planilha feita no google docs, é a planilha mais completa do mercado quando se trata de gastronomia, ela serve para a pessoa gerenciar seu negocio, definir preço, ver custos dos insumos, etc
+o header deve ter a logo da ficha tecnica pro, logo abaixo dela deve ter o slogan ''Engenharia do lucro para gastronomia''

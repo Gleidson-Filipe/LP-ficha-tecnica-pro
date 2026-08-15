@@ -1,0 +1,72 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo — seção "Como a Ficha Técnica Pro Calcula o Preço de Venda" (fluxo vertical em etapas, dark).
+Fonte: index.html linhas 231-353
+As imagens desta pasta (assets/Precificacao/) têm o MESMO NOME das do HTML antigo — mapeamento direto e confiável.
+
+Tag/H2 da seção:
+H2: "Como a Ficha Técnica Pro Calcula o Preço de Venda"
+Subheadline: "Você informa os dados da produção. A Ficha Técnica Pro faz todos os cálculos automaticamente e
+entrega um preço de venda baseado nos custos reais do seu produto."
+
+Fluxo com 5 etapas + card de resultado:
+
+ETAPA 1 DE 5 — imagem: ingredientes.png
+Ícone antigo: 🥣 (trocar por ícone Phosphor equivalente, ex: bowl-food)
+Título: "Ingredientes"
+Texto: "Cadastre os ingredientes e as quantidades da receita. A Ficha Técnica Pro calcula automaticamente o
+custo exato de cada preparo."
+Badge: "⚡ Cálculo automático"
+
+ETAPA 2 DE 5 — imagem: embalagens.png
+Ícone antigo: 📦 (Phosphor: package)
+Título: "Embalagens"
+Texto: "Adicione o custo de embalagens, etiquetas, sacolas e outros materiais utilizados na venda do produto."
+Badge: "⚡ Cálculo automático"
+
+ETAPA 3 DE 5 — imagem: maquinarios.png
+Ícone antigo: ⚙️ (Phosphor: gear)
+Título: "Maquinários"
+Texto: "Cadastre os equipamentos utilizados na produção e informe o tempo de uso de cada um. A Ficha Técnica
+Pro calcula automaticamente o consumo de gás e energia da receita."
+Badge: "⚡ Cálculo automático"
+
+ETAPA 4 DE 5 — imagem: maodeobra.png
+Ícone antigo: 👨‍🍳 (Phosphor: cooking-pot ou chef-hat)
+Título: "Mão de Obra"
+Texto: "Cadastre seus funcionários e informe o tempo de produção da receita. O sistema calcula automaticamente
+o custo da mão de obra utilizada."
+Badge: "⚡ Cálculo automático"
+
+ETAPA 5 DE 5 — imagem: precificacao.png
+Ícone antigo: 💰 (Phosphor: money ou coins)
+Título: "Precificação"
+Texto: "Informe impostos, taxas de cartão, comissões e a margem de lucro desejada. A Ficha Técnica Pro calcula
+automaticamente o preço de venda sugerido."
+Badge: "⚡ Cálculo automático"
+
+RESULTADO — imagem: resultado.png
+Selo: "✅ RESULTADO"
+Título: "Preço de Venda Calculado"
+Texto intro: "Em poucos segundos você visualiza:"
+Lista:
+- Preço sugerido
+- Lucro estimado
+- Margem de contribuição
+- CMV
+- Markup
+- Todos os custos considerados automaticamente
+
+Nota (instrução do cliente): transformar em lista de benefícios + adicionar CTA no fim da seção.
+
+--- Bônus: tabela comparativa que vinha logo depois no site antigo (pode reaproveitar em qualquer seção de
+diferenciais) ---
+H2: "Por que a Ficha Técnica Pro não é "só mais uma planilha"?"
+Tabela: "O que você precisa" | "Planilha Comum" | "Ficha Técnica Pro"
+- Isola custos de gás e energia por prato? → Não / Sim
+- Calcula Mão de Obra baseada no tempo de preparo? → Não / Sim
+- Sugere preço de venda baseado no Markup e CMV? → Não / Sim
+- É feita exclusivamente para Gastronomia? → Não / Sim

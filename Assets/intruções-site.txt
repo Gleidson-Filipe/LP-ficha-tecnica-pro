@@ -1,0 +1,26 @@
+Esse arquivo visa te dar uma breve instrução no design geral do site
+
+1. primeiro de tudo, se não sabe do contexto de algo, sempre me pergunte, nunca faça algo se não tem certeza
+
+2. a hierarquia do site é de extrema importancia, palavras maiores comunicam importancia maior, palavras menores comunicam importancia menor
+
+3. o site de contar uma história, não literalmente mas no sentido de guiar o usuario a compra, se vc cria um visual que é bonito mas não serve ao proposito daquela seção, vc já errou
+
+4. pesquisa de mercado e referencias é com vc, mas como uma base, o produto é uma planilha, e o que uma planilha possui? Muitas linhas, retangulos, white spaces etc, só ai da pra fazer um site tematico
+
+5. nem todas as seções estão nessa pasta, algumas ainda precisam ser mais bem definidas, iremos definir melhor no decorrer do projeto
+
+6. algumas cores que podem ser usadas são #f5f4ea e #09090a como cores neutras, servem para areas maiores, backgrouds e afins, outra cor pra dar uma quebrada pode ser o #0d0d0f, é quase um preto porem mais
+grafite, e por fim a color accent que é o #ff4785, pode ser usada nos botões e pequenos elementos pra dar um charme no design, nem todas essas cores são mandatorias, é apenas uma direção
+
+7. se for usar icones, sempre usar os do phosphor, evitar icones genericos e que não conversam com o design da seção
+
+8. tipografia é uma das coisas mais importantes, evitar fontes com cara de AI slop (pesquise mais pra ter contexto de quais são hoje em dia)
+
+9. neste projeto verifique quais mcps vc tem disponivel, pra poder usa-los se necessario
+
+10. iremos usar ui elements de sites como o 21st pra deixar o site mais premium, mas isso conforme a necessidade
+
+11. a copy da maioria das seções pode ser reutilizada, ela existe no html do site antigo que foi uma tentativa falha do meu cliente de criar o site, o index.html vc encontra em D:\Projetos reais\LP-ficha-tecnica-pro\temporario\LP Ficha Tecnica Pro 2026 - IA
+
+12. esse site precisa ser responsivo, irá ser bastante usado por usuarios mobile então tenha isso em mente quando for fazer o design, ajustar pra telas grandes e pequenas

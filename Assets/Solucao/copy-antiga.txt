@@ -1,0 +1,20 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo — seção "Apresentação da Solução" (dark), usa a imagem Mockup-solucao2.png
+(no antigo era mockup-solucao.png, mesmo propósito).
+Fonte: index.html linhas 97-110
+
+Tag/eyebrow: "A Solução Definitiva"
+
+H2: "Onde Seu Lucro Está Escondido?"
+
+Parágrafo: "Visualize em uma única tela informações de custos, CMV, Margem de Contribuição, preço sugerido e
+lucro de todos os seus produtos. Sempre que o preço de um insumo mudar, todo o cardápio é recalculado
+automaticamente, mostrando imediatamente quais itens estão mais lucrativos e quais precisam de atenção."
+
+CTA (botão secundário): "Ver a Ficha Técnica Pro por Dentro"
+
+Imagem: Mockup-solucao2.png (mockup da Ficha Técnica Pro) — não cortar, respeitar proporção (regra geral do projeto).

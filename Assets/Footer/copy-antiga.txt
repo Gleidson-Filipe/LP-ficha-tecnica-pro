@@ -1,0 +1,25 @@
+AVISO IMPORTANTE (do cliente): o HTML antigo foi uma tentativa de site que NÃO deu certo e foi abandonada.
+NADA da estrutura, layout, ordem de seções, componentes visuais ou escolhas de design daquele site deve ser
+levado como referência — apenas a COPY (textos) e as IMAGENS podem ser reaproveitadas, e mesmo assim como
+ponto de partida, adaptando ao novo design definido em assets/intruções-site.txt e nos prints de referência.
+=====================================================================
+Copy extraída do HTML antigo — CTA Final + Footer (dark).
+Fonte: index.html linhas 521-539
+
+H2 (CTA final, antes do footer): "O custo invisível de não ter controle."
+Subheadline: "Continuar precificando sem informações completas é o caminho mais rápido para ver seu faturamento
+crescer e seu caixa esvaziar. Pare de perder dinheiro na mesa."
+
+CTA (botão premium, 2 linhas):
+  linha 1: "Quero saber meu custo real e"
+  linha 2: "PRECIFICAR CERTO"
+
+Footer (era só uma linha no antigo, o cliente pediu mais elementos agora — logo Ficha Técnica Pro + logo Gestor
+Financeiro Digital com link do Instagram):
+"© 2026 In-app Digital Ltda. Todos os direitos reservados."
+
+Nota (instrução do cliente, assets/Footer/intruções.txt): footer precisa de copy forte + CTA de compra (pode
+reaproveitar o H2/subheadline acima), logo Ficha Técnica Pro + logo Gestor Financeiro Digital embaixo, com link
+pro Instagram na logo do Gestor Financeiro.
+
+RESOLVIDO (confirmado pelo cliente): link do Instagram = https://www.instagram.com/gestaofinanceiradigital/

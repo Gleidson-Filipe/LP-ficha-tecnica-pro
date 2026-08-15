@@ -1,0 +1,2 @@
+Essa seção vem logo abaixo do hero, ela serve para mostrar como o produto é por dentro, não te passei o video original pois o video em questão é hospedado em uma plataforma chamada panda video 
+então está no html do site antigo mas vc pode usar essa imagem simulando como se fosse a thumb do video ou pegando o link do html antigo
