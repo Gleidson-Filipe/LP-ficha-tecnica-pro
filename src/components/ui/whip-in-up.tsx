@@ -44,23 +44,32 @@ export function WhipInUp({
 
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      ensureWhipEase();
-
       const el = root.current;
       const letters = el?.querySelectorAll<HTMLElement>(".wiu-letter");
       if (!el || !letters?.length) return;
 
-      gsap.set(letters, { yPercent: 200 });
+      // JSX nasce só com opacity:0 (evita o "flash" de aparecer pronto).
+      // O yPercent:200 é definido AQUI, pelo próprio GSAP — nunca via CSS
+      // bruto no style inline: o GSAP, ao herdar um transform já escrito
+      // em % puro, cravava um deslocamento fixo em px por cima do que
+      // depois animava, deixando a letra presa fora de posição mesmo após
+      // o tween "terminar". Definindo tudo pelo GSAP desde o início, o
+      // cache interno dele fica consistente com o que realmente anima.
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(letters, { clearProps: "transform,opacity" });
+        return;
+      }
+      ensureWhipEase();
+      gsap.set(letters, { yPercent: 200, opacity: 1 });
 
       const io = new IntersectionObserver(
         (entries) => {
           if (!entries[0].isIntersecting) return;
           gsap.to(letters, {
             yPercent: 0,
-            duration: 1,
+            duration: 0.58,
             ease: "whipInUp",
-            stagger: 0.014,
+            stagger: 0.007,
           });
           io.disconnect();
         },
@@ -84,14 +93,108 @@ export function WhipInUp({
         <span
           key={wi}
           className="mr-[0.22em] inline-block overflow-hidden align-top last:mr-0"
+          style={{ paddingBottom: "0.2em", marginBottom: "-0.2em" }}
         >
           {Array.from(word).map((ch, ci) => (
-            <span key={ci} className="wiu-letter inline-block">
+            <span
+              key={ci}
+              className="wiu-letter inline-block"
+              style={{ opacity: 0 }}
+            >
               {ch}
             </span>
           ))}
         </span>
       ))}
+    </span>
+  );
+}
+
+/**
+ * Número que "chicoteia" pra cima como o WhipInUp e, na sequência, cresce
+ * suavemente de um valor menor até `to` (em vez de já nascer no valor final).
+ * Dispara junto com o resto do texto ao redor, mesmo gatilho de viewport.
+ */
+export function CountUpStat({
+  to,
+  prefix = "",
+  suffix = "",
+  className,
+}: {
+  to: number;
+  prefix?: string;
+  suffix?: string;
+  className?: string;
+}) {
+  const wrap = useRef<HTMLSpanElement>(null);
+  const num = useRef<HTMLSpanElement>(null);
+
+  useGSAP(
+    () => {
+      const wrapEl = wrap.current;
+      const el = num.current;
+      if (!wrapEl || !el) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        el.textContent = `${prefix}${to}${suffix}`;
+        gsap.set(el, { clearProps: "transform,opacity" });
+        return;
+      }
+      ensureWhipEase();
+
+      const from = Math.max(0, Math.round(to * 0.25));
+      const counter = { val: from };
+      el.textContent = `${prefix}${from}${suffix}`;
+      gsap.set(el, { yPercent: 200, opacity: 1 });
+
+      // Observa o WRAPPER (sem transform), nunca o próprio número que se
+      // move — o mesmo padrão do WhipInUp. Observar o elemento que é
+      // transformado faz o navegador medir a interseção na posição
+      // deslocada (escondida), não na posição de repouso.
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          gsap
+            .timeline()
+            .to(el, { yPercent: 0, duration: 0.58, ease: "whipInUp" })
+            .to(
+              counter,
+              {
+                val: to,
+                duration: 1,
+                ease: "power2.out",
+                onUpdate: () => {
+                  el.textContent = `${prefix}${Math.round(counter.val)}${suffix}`;
+                },
+              },
+              "-=0.55",
+            );
+          io.disconnect();
+        },
+        { rootMargin: "0px" },
+      );
+      io.observe(wrapEl);
+
+      return () => io.disconnect();
+    },
+    { scope: wrap },
+  );
+
+  return (
+    <span
+      ref={wrap}
+      className="inline-block overflow-hidden align-top"
+      style={{ paddingBottom: "0.2em", marginBottom: "-0.2em" }}
+    >
+      <span
+        ref={num}
+        className={cn("inline-block tabular-nums", className)}
+        style={{ opacity: 0 }}
+      >
+        {prefix}
+        {to}
+        {suffix}
+      </span>
     </span>
   );
 }

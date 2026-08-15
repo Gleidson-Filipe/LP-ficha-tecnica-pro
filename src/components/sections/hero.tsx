@@ -5,7 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { CHECKOUT } from "@/lib/content";
-import { WhipInUp } from "@/components/ui/whip-in-up";
+import { WhipInUp, CountUpStat } from "@/components/ui/whip-in-up";
 
 gsap.registerPlugin(useGSAP);
 
@@ -34,8 +34,15 @@ export function Hero() {
       // evita o "flash" de aparecer pronto e só depois pular pra escondido.
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .to(".hero-fade", { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 })
-        .to(".hero-mockup", { opacity: 1, x: 0, duration: 0.8 }, "-=0.4");
+        .to(".hero-fade", {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotation: 0,
+          duration: 1.1,
+          ease: "back.out(1.6)",
+        })
+        .to(".hero-mockup", { opacity: 1, x: 0, duration: 0.8 }, "-=0.7");
     },
     { scope: root }
   );
@@ -78,7 +85,7 @@ export function Hero() {
           <a
             href={CHECKOUT}
             className="hero-fade font-body mt-8 inline-flex items-center justify-center gap-1.5 bg-[#FF4784] px-6 py-4 text-white transition-colors duration-150 hover:bg-[#e02e6b] lg:mt-0 lg:absolute lg:left-[64px] lg:top-[649px] lg:w-[584px] lg:h-[70px] lg:px-0 lg:py-0 lg:justify-center"
-            style={{ opacity: 0, transform: "translateY(20px)" }}
+            style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
           >
             <span className="text-[17px] lg:text-[20px] font-medium whitespace-nowrap">
               <WhipInUp text="Quero saber meu custo real e" />
@@ -108,8 +115,9 @@ export function Hero() {
       {/* ── Faixa de Reforços / Stats na Base ── */}
       <div className="font-body relative z-20 w-full max-w-[1920px] mx-auto border-t border-[#212124] grid grid-cols-1 md:grid-cols-3 text-[#F5F4F2]">
         <div className="border-b border-[#212124] md:border-b-0 md:border-r border-[#212124] px-6 py-8 lg:pl-[64px] lg:py-6">
-          <p className="text-[28px] font-bold leading-none lg:text-[32px]">
-            <WhipInUp text="+25 mil" />
+          <p className="inline-flex items-baseline text-[28px] font-bold leading-none lg:text-[32px]">
+            <CountUpStat prefix="+" to={25} className="mr-[0.22em]" />
+            <WhipInUp text="mil" />
           </p>
           <p className="mt-2 text-[#ababab] text-[16px]">
             <WhipInUp text="Negócios atendidos" />
