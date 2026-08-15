@@ -4,6 +4,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { SpinDot } from "@/components/ui/spin-dot";
 import { TiltCard } from "@/components/unlumen-ui/tilt-card";
+import { RateioFocus } from "@/components/sections/rateio-focus";
 import { cn } from "@/lib/utils";
 
 /**
@@ -115,21 +116,16 @@ export function Problema() {
               </span>
               <WhipInUp text={r.titlePost} />
             </h2>
-
-            <div className="mx-auto mt-8 space-y-4 text-lead leading-relaxed">
-              <p className="text-[1.125rem] font-medium text-on-ink">
-                <WhipInUp text={r.p1} />
-              </p>
-              <p className="text-[1.125rem] font-medium text-on-ink">
-                <WhipInUp text={r.p2} />
-              </p>
-            </div>
-
-            {/* Citação Editorial de Impacto */}
-            <p className="mx-auto mt-10 font-display text-[1.375rem] md:text-[1.75rem] font-semibold leading-snug text-on-ink">
-              <WhipInUp text={r.remate} />
-            </p>
           </div>
+
+          <RateioFocus
+            p1={r.p1}
+            p1Emphasis={["A maioria", "igualmente", "todos"]}
+            p2={r.p2}
+            p2Emphasis={["erro fatal", "mascarando", "real"]}
+            remate={r.remate}
+            remateEmphasis={["sem saber", "lucro de verdade", "prejuízo"]}
+          />
         </div>
       </div>
     </Section>

@@ -26,6 +26,14 @@ interface HighlighterProps {
   isView?: boolean;
   /** Espera X ms depois do gatilho antes de desenhar (ex.: deixar um texto animado, tipo WhipInUp, terminar antes do traço aparecer). */
   delay?: number;
+  /**
+   * Modo controlado: quando definido, ignora `isView` e desenha/some a
+   * anotação toda vez que o valor mudar — em vez de desenhar uma única
+   * vez. Use pra ênfases que reagem a hover/estado, não só a "entrou na
+   * tela". Cada toggle recria a anotação do zero (mede a posição de novo),
+   * então nunca fica presa numa medição antiga.
+   */
+  show?: boolean;
 }
 
 /**
@@ -47,12 +55,15 @@ export function Highlighter({
   multiline = true,
   isView = false,
   delay = 0,
+  show,
 }: HighlighterProps) {
   const elementRef = useRef<HTMLSpanElement>(null);
   const [isInView, setIsInView] = useState(false);
 
+  const controlled = show !== undefined;
+
   useLayoutEffect(() => {
-    if (!isView) return;
+    if (controlled || !isView) return;
     const element = elementRef.current;
     if (!element) return;
 
@@ -67,67 +78,42 @@ export function Highlighter({
     io.observe(element);
 
     return () => io.disconnect();
-  }, [isView]);
+  }, [isView, controlled]);
 
-  // Se isView for false, sempre mostra. Se for true, espera entrar na viewport.
-  const shouldShow = !isView || isInView;
+  // Modo controlado: `show` manda. Senão, mostra direto (ou espera a
+  // viewport, se `isView`).
+  const shouldShow = controlled ? show : !isView || isInView;
 
+  // Cria a anotação DO ZERO a cada vez que `shouldShow` liga (e a destrói
+  // quando desliga) — em vez de manter uma única instância viva alternando
+  // show()/hide(). Manter uma instância persistente + um ResizeObserver
+  // por Highlighter (observando document.body) causava colisão entre as
+  // várias anotações de um mesmo parágrafo: todas acabavam desenhadas na
+  // mesma posição/tamanho quando vários observers disparavam juntos.
+  // Recriar do zero garante uma medição limpa e isolada a cada toggle.
   useLayoutEffect(() => {
     const element = elementRef.current;
+    if (!element || !shouldShow) return;
+
     let annotation: RoughAnnotation | null = null;
-    let resizeObserver: ResizeObserver | null = null;
-    let timer: ReturnType<typeof setTimeout> | null = null;
-
-    if (shouldShow && element) {
-      const start = () => {
-        const annotationConfig = {
-          type: action,
-          color,
-          strokeWidth,
-          animationDuration,
-          iterations,
-          padding,
-          multiline,
-        };
-
-        const currentAnnotation = annotate(element, annotationConfig);
-        annotation = currentAnnotation;
-        currentAnnotation.show();
-
-        resizeObserver = new ResizeObserver(() => {
-          currentAnnotation.hide();
-          currentAnnotation.show();
-        });
-
-        resizeObserver.observe(element);
-        resizeObserver.observe(document.body);
-      };
-
-      if (delay > 0) {
-        timer = setTimeout(start, delay);
-      } else {
-        start();
-      }
-    }
+    const timer = setTimeout(() => {
+      annotation = annotate(element, {
+        type: action,
+        color,
+        strokeWidth,
+        animationDuration,
+        iterations,
+        padding,
+        multiline,
+      });
+      annotation.show();
+    }, delay);
 
     return () => {
-      if (timer) clearTimeout(timer);
+      clearTimeout(timer);
       annotation?.remove();
-      if (resizeObserver) {
-        resizeObserver.disconnect();
-      }
     };
-  }, [
-    shouldShow,
-    action,
-    color,
-    strokeWidth,
-    animationDuration,
-    iterations,
-    padding,
-    multiline,
-    delay,
-  ]);
+  }, [shouldShow, delay, action, color, strokeWidth, animationDuration, iterations, padding, multiline]);
 
   return (
     <span ref={elementRef} className="relative inline-block bg-transparent">
