@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { rodape, INSTAGRAM, NAV, SLOGAN, CTA } from "@/lib/content";
 import { Buy } from "@/components/ui/kit";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 export function SiteFooter() {
   return (
     <footer className="t-ink rule-t">
       <div className="pad grid items-center gap-10 py-16 md:grid-cols-[1fr_auto] md:py-20">
         <p className="max-w-[14ch] font-display text-h2 text-balance">
-          {rodape.chamada}
+          <WhipInUp text={rodape.chamada} />
         </p>
         <Buy l1={CTA.rodape.l1} l2={CTA.rodape.l2} className="md:justify-self-end" />
       </div>
@@ -21,11 +22,15 @@ export function SiteFooter() {
             height={100}
             className="block h-auto w-[168px]"
           />
-          <p className="mt-5 max-w-[30ch] text-body soft">{SLOGAN}.</p>
+          <p className="mt-5 max-w-[30ch] text-body soft">
+            <WhipInUp text={`${SLOGAN}.`} />
+          </p>
         </div>
 
         <nav aria-label="Seções do site">
-          <p className="text-label uppercase soft">Navegar</p>
+          <p className="text-label uppercase soft">
+            <WhipInUp text="Navegar" />
+          </p>
           <ul className="mt-5 space-y-3">
             {NAV.map((l) => (
               <li key={l.id}>
@@ -33,7 +38,7 @@ export function SiteFooter() {
                   href={`#${l.id}`}
                   className="text-body transition-colors hover:text-accent"
                 >
-                  {l.label}
+                  <WhipInUp text={l.label} />
                 </a>
               </li>
             ))}
@@ -41,7 +46,9 @@ export function SiteFooter() {
         </nav>
 
         <div>
-          <p className="text-label uppercase soft">Realização</p>
+          <p className="text-label uppercase soft">
+            <WhipInUp text="Realização" />
+          </p>
           <a
             href={INSTAGRAM}
             target="_blank"
@@ -57,13 +64,15 @@ export function SiteFooter() {
               className="block h-auto w-[92px] opacity-80 transition-opacity group-hover:opacity-100"
             />
             <span className="text-body transition-colors group-hover:text-accent">
-              @gestaofinanceiradigital ↗
+              <WhipInUp text="@gestaofinanceiradigital ↗" />
             </span>
           </a>
         </div>
       </div>
 
-      <p className="pad rule-t py-6 text-[0.875rem] soft">{rodape.copyright}</p>
+      <p className="pad rule-t py-6 text-[0.875rem] soft">
+        <WhipInUp text={rodape.copyright} />
+      </p>
     </footer>
   );
 }

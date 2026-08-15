@@ -1,6 +1,7 @@
 import { problema as p } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 /**
  * Uma seção, três movimentos:
@@ -21,17 +22,23 @@ export function Problema() {
       <div className="pad py-16 md:py-20">
         <Label>{p.label}</Label>
         <h2 className="mt-7 max-w-[20ch] font-display text-h2 text-balance">
-          {p.title}
+          <WhipInUp text={p.title} />
         </h2>
-        <p className="measure mt-6 text-lead soft">{p.lead}</p>
+        <p className="measure mt-6 text-lead soft">
+          <WhipInUp text={p.lead} />
+        </p>
       </div>
 
       <Reveal stagger={0.08} className="cols rule-t md:grid-cols-3">
         {p.gruposNegocio.map((g) => (
           <div key={g.grupo}>
             <p className="num text-[1.125rem] leading-none text-accent">{g.n}</p>
-            <h3 className="mt-5 font-display text-h3">{g.grupo}</h3>
-            <p className="mt-2 text-[0.9375rem] soft">{g.desc}</p>
+            <h3 className="mt-5 font-display text-h3">
+              <WhipInUp text={g.grupo} />
+            </h3>
+            <p className="mt-2 text-[0.9375rem] soft">
+              <WhipInUp text={g.desc} />
+            </p>
 
             <ul className="mt-6 space-y-2.5 rule-t pt-6">
               {g.itens.map((i) => (
@@ -40,7 +47,7 @@ export function Problema() {
                   className="flex items-center gap-3 font-display text-[1.0625rem] font-semibold"
                 >
                   <span aria-hidden className="size-1.5 shrink-0 bg-accent" />
-                  {i}
+                  <WhipInUp text={i} />
                 </li>
               ))}
             </ul>
@@ -54,7 +61,8 @@ export function Problema() {
         <div className="pad py-16 md:py-20">
           <Label>{p.problemaLabel}</Label>
           <h2 className="mt-7 max-w-[20ch] font-display text-h2 text-balance">
-            O faturamento engana.<br />A falta de controle de custos quebra.
+            <WhipInUp text="O faturamento engana." /><br />
+            <WhipInUp text="A falta de controle de custos quebra." />
           </h2>
 
           {/* GRID DE 4 COLUNAS COM DIVISORES VERTICAIS */}
@@ -73,10 +81,10 @@ export function Problema() {
                     {l.n}
                   </p>
                   <h3 className="mt-6 font-display text-[1.25rem] font-bold text-on-paper">
-                    {l.antes}
+                    <WhipInUp text={l.antes} />
                   </h3>
                   <p className="mt-3 text-[0.9375rem] leading-relaxed soft">
-                    {l.antesTexto}
+                    <WhipInUp text={l.antesTexto} />
                   </p>
                 </div>
               </div>
@@ -91,25 +99,25 @@ export function Problema() {
               <Label>{r.label}</Label>
             </div>
             <h2 className="mx-auto mt-7 font-display text-h2 text-balance">
-              {r.titlePre}
+              <WhipInUp text={r.titlePre} />
               <span className="underline decoration-accent decoration-[5px] underline-offset-[10px]">
-                "{r.titleMark}"
+                <WhipInUp text={`"${r.titleMark}"`} />
               </span>
-              {r.titlePost}
+              <WhipInUp text={r.titlePost} />
             </h2>
 
             <div className="mx-auto mt-8 space-y-4 text-lead soft leading-relaxed">
               <p className="text-[1.125rem] font-medium text-on-ink">
-                {r.p1}
+                <WhipInUp text={r.p1} />
               </p>
               <p className="text-[1rem] soft">
-                {r.p2}
+                <WhipInUp text={r.p2} />
               </p>
             </div>
 
             {/* Citação Editorial de Impacto */}
             <p className="mx-auto mt-10 font-display text-[1.5rem] md:text-[1.875rem] font-bold leading-snug text-on-ink">
-              {r.remate}
+              <WhipInUp text={r.remate} />
             </p>
           </div>
         </div>

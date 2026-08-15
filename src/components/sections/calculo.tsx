@@ -2,6 +2,7 @@ import Image from "next/image";
 import { calculo as c, CTA } from "@/lib/content";
 import { Section, Head, Buy } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 /**
  * As cinco etapas como LINHAS de uma tabela: número, descrição e o quanto
@@ -21,13 +22,21 @@ export function Calculo() {
                   <span className="num text-[2.25rem] leading-none text-accent">
                     {e.n}
                   </span>
-                  <h3 className="font-display text-h3">{e.titulo}</h3>
+                  <h3 className="font-display text-h3">
+                    <WhipInUp text={e.titulo} />
+                  </h3>
                 </div>
-                <p className="measure mt-5 text-body soft">{e.texto}</p>
+                <p className="measure mt-5 text-body soft">
+                  <WhipInUp text={e.texto} />
+                </p>
                 {e.valor && (
                   <p className="mt-7 inline-flex items-baseline gap-2 rule-box px-5 py-3">
-                    <span className="text-label uppercase soft">soma</span>
-                    <span className="num text-[1.25rem]">+ R$ {e.valor}</span>
+                    <span className="text-label uppercase soft">
+                      <WhipInUp text="soma" />
+                    </span>
+                    <span className="num text-[1.25rem]">
+                      <WhipInUp text={`+ R$ ${e.valor}`} />
+                    </span>
                   </p>
                 )}
               </div>
@@ -51,7 +60,9 @@ export function Calculo() {
       <Reveal className="pad py-16 md:py-20">
         <div className="rule-box panel grid gap-10 p-8 md:grid-cols-2 md:items-center md:gap-14 md:p-12">
           <div>
-            <h3 className="font-display text-h2">{c.resultado.titulo}</h3>
+            <h3 className="font-display text-h2">
+              <WhipInUp text={c.resultado.titulo} />
+            </h3>
 
             <dl className="mt-9">
               {c.resultado.linhas.map((l) => (
@@ -60,7 +71,7 @@ export function Calculo() {
                   className="flex items-baseline justify-between gap-6 rule-b py-4"
                 >
                   <dt className={l.destaque ? "font-semibold" : "soft"}>
-                    {l.rotulo}
+                    <WhipInUp text={l.rotulo} />
                   </dt>
                   <dd
                     className={
@@ -69,13 +80,15 @@ export function Calculo() {
                         : "num text-[1.125rem]"
                     }
                   >
-                    {l.valor}
+                    <WhipInUp text={l.valor} />
                   </dd>
                 </div>
               ))}
             </dl>
 
-            <p className="mt-5 text-[0.875rem] soft">{c.nota}</p>
+            <p className="mt-5 text-[0.875rem] soft">
+              <WhipInUp text={c.nota} />
+            </p>
           </div>
 
           <div className="flex items-center justify-center rule-box p-5 md:p-8">
@@ -93,7 +106,7 @@ export function Calculo() {
 
       <Reveal className="pad flex flex-col items-start gap-6 rule-t py-14 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-[32ch] font-display text-h3">
-          Faça essa conta para o cardápio inteiro.
+          <WhipInUp text="Faça essa conta para o cardápio inteiro." />
         </p>
         <Buy l1={CTA.calculo.l1} l2={CTA.calculo.l2} />
       </Reveal>

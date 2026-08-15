@@ -1,5 +1,6 @@
 import { faq } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 /** Perguntas como linhas da tabela. <details> nativo: funciona sem JS. */
 export function Faq() {
@@ -8,7 +9,7 @@ export function Faq() {
       <div className="pad py-16 md:py-20">
         <Label>{faq.label}</Label>
         <h2 className="mt-7 max-w-[16ch] font-display text-h2 text-balance">
-          {faq.title}
+          <WhipInUp text={faq.title} />
         </h2>
       </div>
 
@@ -17,7 +18,7 @@ export function Faq() {
           <details key={item.q} className="q rule-b">
             <summary className="pad flex cursor-pointer list-none items-center gap-6 py-7">
               <span className="flex-1 font-display text-[1.125rem] font-semibold md:text-[1.25rem]">
-                {item.q}
+                <WhipInUp text={item.q} />
               </span>
               <span
                 aria-hidden
@@ -27,7 +28,9 @@ export function Faq() {
                 <span className="absolute left-1/2 top-0 h-5 w-[2px] -translate-x-1/2 bg-current" />
               </span>
             </summary>
-            <p className="pad measure pb-8 text-body soft">{item.a}</p>
+            <p className="pad measure pb-8 text-body soft">
+              <WhipInUp text={item.a} />
+            </p>
           </details>
         ))}
       </div>

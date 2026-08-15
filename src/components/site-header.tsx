@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { NAV, SLOGAN, CTA, CHECKOUT } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -37,6 +38,22 @@ export function SiteHeader() {
           }),
         );
       });
+
+      // Logo descendo de cima pra baixo ao carregar a página, com fade.
+      // Estado inicial (y:-90 opacity:0) já nasce no JSX via style inline —
+      // evita o "flash": aparecer na posição final e só depois pular pra
+      // escondida antes de animar, caso o efeito demore a montar.
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(".site-logo", { clearProps: "transform,opacity" });
+      } else {
+        gsap.to(".site-logo", {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "back.out(1.4)",
+        });
+      }
+
       return () => gs.forEach((g) => g.kill());
     },
     { scope: root },
@@ -58,7 +75,10 @@ export function SiteHeader() {
           className="relative flex shrink-0 items-stretch pl-5 pr-6 sm:pl-8 lg:w-[408px] lg:px-0"
         >
           {/* Responsivo (mobile/tablet) */}
-          <div className="flex flex-col justify-center gap-0 lg:hidden">
+          <div
+            className="site-logo flex flex-col justify-center gap-0 lg:hidden"
+            style={{ transform: "translateY(-160px)", opacity: 0 }}
+          >
             <Image
               src="/images/logo-ftp.png"
               alt="Ficha Técnica Pro"
@@ -72,19 +92,21 @@ export function SiteHeader() {
           {/* Desktop (lg): Logo 302×32px (left:65px top:16px) e Slogan (left:64px top:48px) */}
           <div className="hidden lg:block lg:w-full lg:h-full lg:relative">
             <div
-              className="absolute left-[65px] top-[10px] w-[302px] h-[32px]"
+              className="site-logo absolute left-[65px] top-[10px] w-[302px] h-[32px]"
               style={{
                 backgroundImage: "url('/images/logo-ftp.png')",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "contain",
+                transform: "translateY(-160px)",
+                opacity: 0,
               }}
             />
             <div
               className="font-body absolute left-[64px] top-[40px] text-[16px] font-semibold text-[#dbdbdb] whitespace-nowrap"
               style={{ lineHeight: "normal" }}
             >
-              {SLOGAN}
+              <WhipInUp text={SLOGAN} />
             </div>
           </div>
         </a>
@@ -106,7 +128,7 @@ export function SiteHeader() {
                 fontWeight: 500,
               }}
             >
-              {item.label}
+              <WhipInUp text={item.label} />
               {/* Underline 3px #ff4785 na base da célula ativa */}
               {ativo === item.id && (
                 <span
@@ -135,7 +157,9 @@ export function SiteHeader() {
             <span className={cn("block h-[2px] w-4 bg-current transition-opacity",   aberto && "opacity-0")} />
             <span className={cn("block h-[2px] w-4 bg-current transition-transform", aberto && "-translate-y-[6px] -rotate-45")} />
           </span>
-          <span className="hidden sm:inline">Menu</span>
+          <span className="hidden sm:inline">
+            <WhipInUp text="Menu" />
+          </span>
         </button>
 
         {/* ── CTA: Largura de 304px no desktop, bg #FF4784, texto 19px bold ── */}
@@ -145,10 +169,10 @@ export function SiteHeader() {
           style={{ borderLeft: "1px solid #212124" }}
         >
           <span className="font-body lg:hidden font-bold text-[15px]">
-            Comprar
+            <WhipInUp text="Comprar" />
           </span>
           <span className="font-body hidden lg:inline font-bold text-[19px] whitespace-nowrap">
-            {CTA.header.l2}
+            <WhipInUp text={CTA.header.l2} />
           </span>
         </a>
       </div>
@@ -168,7 +192,7 @@ export function SiteHeader() {
               className="block py-4 pl-5 text-[1.0625rem] font-semibold text-[#dbdbdb] sm:pl-8"
               style={{ borderBottom: "1px solid #212124" }}
             >
-              {item.label}
+              <WhipInUp text={item.label} />
             </a>
           ))}
         </nav>

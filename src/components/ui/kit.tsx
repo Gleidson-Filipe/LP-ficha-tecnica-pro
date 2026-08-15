@@ -1,6 +1,7 @@
 import { forwardRef, type ReactNode } from "react";
 import { CTA, CHECKOUT } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 /** Bloco de seção. Define o tom (escuro/claro) e o respiro vertical. */
 export const Section = forwardRef<
@@ -24,11 +25,11 @@ export const Section = forwardRef<
 });
 
 /** Etiqueta da seção — uma por seção, em accent. Orienta o olho antes do título. */
-export function Label({ children }: { children: ReactNode }) {
+export function Label({ children }: { children: string }) {
   return (
     <p className="flex items-center gap-3 text-label uppercase text-accent">
       <span aria-hidden className="inline-block h-[2px] w-7 bg-accent" />
-      {children}
+      <WhipInUp text={children} />
     </p>
   );
 }
@@ -40,7 +41,7 @@ export function Head({
   lead,
 }: {
   label?: string;
-  title: ReactNode;
+  title: string;
   lead?: ReactNode;
 }) {
   return (
@@ -52,7 +53,7 @@ export function Head({
           label && "mt-7",
         )}
       >
-        {title}
+        <WhipInUp text={title} />
       </h2>
       {lead && <p className="measure mt-6 text-lead soft">{lead}</p>}
     </div>
@@ -105,7 +106,7 @@ export function Buy({
       {/* Uma linha só: texto de apoio em peso normal + a ação em negrito */}
       {size === "sm" && (
         <span className="font-display text-[0.9375rem] font-semibold sm:hidden">
-          {CTA.heroMobile.l2}
+          <WhipInUp text={CTA.heroMobile.l2} />
         </span>
       )}
       <span
@@ -114,8 +115,13 @@ export function Buy({
           size === "lg" ? "text-[1.0625rem]" : "hidden text-[0.9375rem] sm:inline",
         )}
       >
-        {l1 && <span className="font-normal opacity-90">{l1} </span>}
-        <span className="font-display font-bold">{l2}</span>
+        {l1 && (
+          <span className="font-normal opacity-90">
+            <WhipInUp text={l1} /> </span>
+        )}
+        <span className="font-display font-bold">
+          <WhipInUp text={l2} />
+        </span>
       </span>
     </a>
   );

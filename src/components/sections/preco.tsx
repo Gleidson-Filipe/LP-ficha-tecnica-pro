@@ -2,6 +2,7 @@ import Image from "next/image";
 import { preco as p, depoimentos, CTA } from "@/lib/content";
 import { Section, Label, Buy } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 /**
  * Área de conversão. A prova social fica AO LADO do preço — é aqui que a
@@ -13,7 +14,7 @@ export function Preco() {
       <div className="pad py-16 md:py-20">
         <Label>{p.label}</Label>
         <h2 className="mt-7 max-w-[16ch] font-display text-h2 text-balance">
-          {p.title}
+          <WhipInUp text={p.title} />
         </h2>
       </div>
 
@@ -29,7 +30,7 @@ export function Preco() {
                 }`}
               >
                 <span aria-hidden className="mt-2 block size-2 shrink-0 bg-accent" />
-                {item}
+                <WhipInUp text={item} />
               </li>
             ))}
           </ul>
@@ -37,25 +38,33 @@ export function Preco() {
           <div className="mt-10 rule-t pt-10">
             <div className="flex items-start gap-2">
               <span className="mt-3 font-display text-[1.5rem] font-semibold soft">
-                R$
+                <WhipInUp text="R$" />
               </span>
               <span className="num text-[5rem] leading-[0.85] md:text-[6.5rem]">
-                {p.valor}
+                <WhipInUp text={p.valor} />
               </span>
             </div>
-            <p className="mt-4 text-lead soft">{p.nota}</p>
+            <p className="mt-4 text-lead soft">
+              <WhipInUp text={p.nota} />
+            </p>
             <Buy l1={CTA.preco.l1} l2={CTA.preco.l2} className="mt-9 w-full sm:w-auto" />
           </div>
 
           <div className="mt-10 rule-t pt-8">
-            <h3 className="font-display text-h3">{p.garantiaTitulo}</h3>
-            <p className="measure mt-3 text-body soft">{p.garantiaTexto}</p>
+            <h3 className="font-display text-h3">
+              <WhipInUp text={p.garantiaTitulo} />
+            </h3>
+            <p className="measure mt-3 text-body soft">
+              <WhipInUp text={p.garantiaTexto} />
+            </p>
           </div>
         </div>
 
         {/* Prova social colada na decisão */}
         <div>
-          <p className="text-label uppercase soft">Quem já comprou</p>
+          <p className="text-label uppercase soft">
+            <WhipInUp text="Quem já comprou" />
+          </p>
           <div className="mt-6 space-y-5">
             {depoimentos.imagens.slice(1, 3).map((img, i) => (
               <Image
@@ -71,9 +80,9 @@ export function Preco() {
           </div>
           <p className="mt-7 text-body soft">
             <span className="num mr-2 text-[1.75rem] leading-none text-accent">
-              {depoimentos.statN}
+              <WhipInUp text={depoimentos.statN} />
             </span>
-            {depoimentos.statT}
+            <WhipInUp text={depoimentos.statT} />
           </p>
         </div>
       </Reveal>

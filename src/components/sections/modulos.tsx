@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { modulos } from "@/lib/content";
 import { Section, Head } from "@/components/ui/kit";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 gsap.registerPlugin(useGSAP);
 
@@ -48,7 +49,7 @@ export function Modulos() {
               onClick={() => setI(idx)}
               className="tab rule-box px-5 py-3 font-display text-[0.9375rem] font-semibold"
             >
-              {it.tab}
+              <WhipInUp text={it.tab} />
             </button>
           ))}
         </div>
@@ -73,8 +74,12 @@ export function Modulos() {
           </div>
 
           <div className="mt-8 max-w-[52ch]">
-            <h3 className="font-display text-h3">{item.titulo}</h3>
-            <p className="mt-3 text-body soft">{item.texto}</p>
+            <h3 className="font-display text-h3">
+              <WhipInUp text={item.titulo} />
+            </h3>
+            <p className="mt-3 text-body soft">
+              <WhipInUp text={item.texto} />
+            </p>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { depoimentos as d } from "@/lib/content";
 import { Section, Label, Fill } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 /** Colunas CSS: as fotos têm proporções diferentes e nenhuma pode ser cortada. */
 export function Depoimentos() {
@@ -11,15 +12,17 @@ export function Depoimentos() {
         <Label>{d.label}</Label>
         <div className="mt-7 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="max-w-[17ch] font-display text-h2 text-balance">
-            {d.titlePre}
-            <Fill>{d.titleFill}</Fill>
-            {d.titlePost}
+            <WhipInUp text={d.titlePre} />
+            <Fill>
+              <WhipInUp text={d.titleFill} />
+            </Fill>
+            <WhipInUp text={d.titlePost} />
           </h2>
           <p className="max-w-[28ch] text-body soft">
             <span className="num mr-2 text-[2rem] leading-none text-accent">
-              {d.statN}
+              <WhipInUp text={d.statN} />
             </span>
-            {d.statT}
+            <WhipInUp text={d.statT} />
           </p>
         </div>
       </div>

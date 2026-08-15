@@ -5,6 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { CHECKOUT } from "@/lib/content";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 gsap.registerPlugin(useGSAP);
 
@@ -24,21 +25,17 @@ export function Hero() {
 
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set([".hero-fade", ".hero-mockup"], { clearProps: "transform,opacity" });
+        return;
+      }
 
+      // Estado inicial (opacity:0 + offset) já nasce no JSX via style inline —
+      // evita o "flash" de aparecer pronto e só depois pular pra escondido.
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(
-          ".hero-fade",
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 }
-        )
-        .fromTo(
-          ".hero-mockup",
-          { opacity: 0, x: 30 },
-          { opacity: 1, x: 0, duration: 0.8 },
-          "-=0.4"
-        );
+        .to(".hero-fade", { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 })
+        .to(".hero-mockup", { opacity: 1, x: 0, duration: 0.8 }, "-=0.4");
     },
     { scope: root }
   );
@@ -68,31 +65,35 @@ export function Hero() {
         {/* ── Conteúdo Textual (Headline + Sub + CTA) ── */}
         <div className="relative z-20 px-6 pt-[108px] pb-12 lg:px-0 lg:pt-0 lg:pb-0">
           {/* Headline exata de teste1.html (left:64px top:203px w:755px) */}
-          <h1 className="hero-fade font-display font-bold tracking-[-0.6px] text-left text-[#F5F4F2] text-[2.5rem] leading-[1.1] lg:absolute lg:left-[64px] lg:top-[136px] lg:w-[755px] lg:text-[90px] lg:leading-[99px]">
-            Descubra o custo real e o lucro de cada ítem do seu cardápio.
+          <h1 className="font-display font-bold tracking-[-0.6px] text-left text-[#F5F4F2] text-[2.5rem] leading-[1.1] lg:absolute lg:left-[64px] lg:top-[136px] lg:w-[755px] lg:text-[90px] lg:leading-[99px]">
+            <WhipInUp text="Descubra o custo real e o lucro de cada ítem do seu cardápio." />
           </h1>
 
           {/* Subtítulo exato de teste1.html (left:64px top:614px w:742px) */}
-          <p className="hero-fade font-body mt-6 text-[#ababab] text-lg font-normal lg:mt-0 lg:absolute lg:left-[64px] lg:top-[547px] lg:w-[742px] lg:text-[25px] lg:leading-[38px]">
-            Tenha preços que geram lucro e não apenas faturamento.
+          <p className="font-body mt-6 text-[#ababab] text-lg font-normal lg:mt-0 lg:absolute lg:left-[64px] lg:top-[547px] lg:w-[742px] lg:text-[25px] lg:leading-[38px]">
+            <WhipInUp text="Tenha preços que geram lucro e não apenas faturamento." />
           </p>
 
           {/* Botão CTA exato de teste1.html (left:64px top:716px w:584px h:70px) */}
           <a
             href={CHECKOUT}
             className="hero-fade font-body mt-8 inline-flex items-center justify-center gap-1.5 bg-[#FF4784] px-6 py-4 text-white transition-colors duration-150 hover:bg-[#e02e6b] lg:mt-0 lg:absolute lg:left-[64px] lg:top-[649px] lg:w-[584px] lg:h-[70px] lg:px-0 lg:py-0 lg:justify-center"
+            style={{ opacity: 0, transform: "translateY(20px)" }}
           >
             <span className="text-[17px] lg:text-[20px] font-medium whitespace-nowrap">
-              Quero saber meu custo real e
+              <WhipInUp text="Quero saber meu custo real e" />
             </span>
             <span className="text-[19px] lg:text-[25px] font-bold whitespace-nowrap">
-              precificar certo
+              <WhipInUp text="precificar certo" />
             </span>
           </a>
         </div>
 
         {/* ── Imagem do Mockup (Encostando na borda inferior) ── */}
-        <div className="hero-mockup relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[751px] lg:bottom-0 lg:top-auto lg:w-[1311px] lg:h-[668px] pointer-events-none flex items-end">
+        <div
+          className="hero-mockup relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[751px] lg:bottom-0 lg:top-auto lg:w-[1311px] lg:h-[668px] pointer-events-none flex items-end"
+          style={{ opacity: 0, transform: "translateX(30px)" }}
+        >
           <Image
             src="/images/mockup-hero.png"
             alt="Planilha Ficha Técnica Pro"
@@ -107,18 +108,30 @@ export function Hero() {
       {/* ── Faixa de Reforços / Stats na Base ── */}
       <div className="font-body relative z-20 w-full max-w-[1920px] mx-auto border-t border-[#212124] grid grid-cols-1 md:grid-cols-3 text-[#F5F4F2]">
         <div className="border-b border-[#212124] md:border-b-0 md:border-r border-[#212124] px-6 py-8 lg:pl-[64px] lg:py-6">
-          <p className="text-[28px] font-bold leading-none lg:text-[32px]">+25 mil</p>
-          <p className="mt-2 text-[#ababab] text-[16px]">Negócios atendidos</p>
+          <p className="text-[28px] font-bold leading-none lg:text-[32px]">
+            <WhipInUp text="+25 mil" />
+          </p>
+          <p className="mt-2 text-[#ababab] text-[16px]">
+            <WhipInUp text="Negócios atendidos" />
+          </p>
         </div>
 
         <div className="border-b border-[#212124] md:border-b-0 md:border-r border-[#212124] px-6 py-8 lg:px-10 lg:py-6">
-          <p className="text-[28px] font-bold leading-none lg:text-[32px]">Pagamento único</p>
-          <p className="mt-2 text-[#ababab] text-[16px]">Sem mensalidade</p>
+          <p className="text-[28px] font-bold leading-none lg:text-[32px]">
+            <WhipInUp text="Pagamento único" />
+          </p>
+          <p className="mt-2 text-[#ababab] text-[16px]">
+            <WhipInUp text="Sem mensalidade" />
+          </p>
         </div>
 
         <div className="px-6 py-8 lg:px-10 lg:py-6">
-          <p className="text-[28px] font-bold leading-none lg:text-[32px]">Acesso vitalício</p>
-          <p className="mt-2 text-[#ababab] text-[16px]">Atualizações incluídas</p>
+          <p className="text-[28px] font-bold leading-none lg:text-[32px]">
+            <WhipInUp text="Acesso vitalício" />
+          </p>
+          <p className="mt-2 text-[#ababab] text-[16px]">
+            <WhipInUp text="Atualizações incluídas" />
+          </p>
         </div>
       </div>
     </section>
