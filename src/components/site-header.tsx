@@ -81,11 +81,8 @@ export function SiteHeader() {
               }}
             />
             <div
-              className="absolute left-[64px] top-[40px] text-[16px] font-semibold text-[#dbdbdb] whitespace-nowrap"
-              style={{
-                fontFamily: "Manrope, system-ui, sans-serif",
-                lineHeight: "normal",
-              }}
+              className="font-body absolute left-[64px] top-[40px] text-[16px] font-semibold text-[#dbdbdb] whitespace-nowrap"
+              style={{ lineHeight: "normal" }}
             >
               {SLOGAN}
             </div>
@@ -100,12 +97,11 @@ export function SiteHeader() {
               href={`#${item.id}`}
               aria-current={ativo === item.id ? "true" : undefined}
               className={cn(
-                "relative flex flex-1 items-center justify-start pl-8 text-left transition-colors duration-150 whitespace-nowrap",
+                "font-body relative flex flex-1 items-center justify-start pl-8 text-left transition-colors duration-150 whitespace-nowrap",
                 ativo === item.id ? "text-[#f5f4f2]" : "text-[#A3A3A3] hover:text-[#dbdbdb]",
               )}
               style={{
                 borderLeft: "1px solid #212124",
-                fontFamily: "Manrope, system-ui, sans-serif",
                 fontSize: "15px",
                 fontWeight: 500,
               }}
@@ -148,16 +144,10 @@ export function SiteHeader() {
           className="flex shrink-0 items-center justify-center bg-[#FF4784] px-6 text-white transition-colors duration-150 hover:bg-[#e02e6b] lg:w-[304px] lg:px-0"
           style={{ borderLeft: "1px solid #212124" }}
         >
-          <span
-            className="lg:hidden font-bold text-[15px]"
-            style={{ fontFamily: "Manrope, system-ui, sans-serif" }}
-          >
+          <span className="font-body lg:hidden font-bold text-[15px]">
             Comprar
           </span>
-          <span
-            className="hidden lg:inline font-bold text-[19px] whitespace-nowrap"
-            style={{ fontFamily: "Manrope, system-ui, sans-serif" }}
-          >
+          <span className="font-body hidden lg:inline font-bold text-[19px] whitespace-nowrap">
             {CTA.header.l2}
           </span>
         </a>

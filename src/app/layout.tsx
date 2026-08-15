@@ -30,13 +30,6 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://api.fontshare.com/v2/css?f%5B%5D=switzer@400,500,600,700,800&f%5B%5D=general-sans@400,500,600&display=swap"
         />
-        {/* Manrope & Archivo — usadas no header e hero (fiel ao teste1) */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Archivo:wght@100..900&family=Manrope:wght@400;500;600;700&display=swap"
-        />
       </head>
       <body>{children}</body>
     </html>
