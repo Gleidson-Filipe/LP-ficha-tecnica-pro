@@ -28,8 +28,8 @@ export function SpinDot({ className }: { className?: string }) {
         if (cancelled) return;
         gsap.to(el, {
           rotate: "+=360",
-          duration: 0.5 + Math.random() * 0.3,
-          ease: "power2.inOut",
+          duration: 1.8 + Math.random() * 0.5,
+          ease: "sine.inOut",
           onComplete: () => {
             if (cancelled) return;
             timer = setTimeout(spin, 2200 + Math.random() * 3200);

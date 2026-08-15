@@ -139,7 +139,7 @@ export const problema = {
    * Copy original do site antigo, na íntegra.
    */
   rateio: {
-    label: "O erro que quase ninguém enxerga",
+    label: "A falsa margem",
     titlePre: "O grande perigo dos ",
     titleMark: "rateios genéricos",
     titlePost: ".",

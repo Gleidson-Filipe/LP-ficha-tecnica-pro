@@ -116,17 +116,17 @@ export function Problema() {
               <WhipInUp text={r.titlePost} />
             </h2>
 
-            <div className="mx-auto mt-8 space-y-4 text-lead soft leading-relaxed">
+            <div className="mx-auto mt-8 space-y-4 text-lead leading-relaxed">
               <p className="text-[1.125rem] font-medium text-on-ink">
                 <WhipInUp text={r.p1} />
               </p>
-              <p className="text-[1rem] soft">
+              <p className="text-[1.125rem] font-medium text-on-ink">
                 <WhipInUp text={r.p2} />
               </p>
             </div>
 
             {/* Citação Editorial de Impacto */}
-            <p className="mx-auto mt-10 font-display text-[1.5rem] md:text-[1.875rem] font-bold leading-snug text-on-ink">
+            <p className="mx-auto mt-10 font-display text-[1.375rem] md:text-[1.75rem] font-semibold leading-snug text-on-ink">
               <WhipInUp text={r.remate} />
             </p>
           </div>

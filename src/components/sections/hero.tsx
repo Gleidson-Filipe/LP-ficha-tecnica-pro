@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { CHECKOUT } from "@/lib/content";
 import { WhipInUp, CountUpStat } from "@/components/ui/whip-in-up";
+import { Highlighter } from "@/components/magicui/highlighter";
 
 gsap.registerPlugin(useGSAP);
 
@@ -73,7 +74,18 @@ export function Hero() {
         <div className="relative z-20 px-6 pt-[108px] pb-12 lg:px-0 lg:pt-0 lg:pb-0">
           {/* Headline exata de teste1.html (left:64px top:203px w:755px) */}
           <h1 className="font-display font-bold tracking-[-0.6px] text-left text-[#F5F4F2] text-[2.5rem] leading-[1.1] lg:absolute lg:left-[64px] lg:top-[136px] lg:w-[755px] lg:text-[90px] lg:leading-[99px]">
-            <WhipInUp text="Descubra o custo real e o lucro de cada ítem do seu cardápio." />
+            <WhipInUp text="Descubra o custo real e o lucro de " className="inline" />
+            <Highlighter
+              action="underline"
+              color="#FF4785"
+              strokeWidth={1.5}
+              padding={2}
+              delay={700}
+              iterations={4}
+            >
+              <WhipInUp text="cada ítem" className="inline" />
+            </Highlighter>{" "}
+            <WhipInUp text="do seu cardápio." className="inline" />
           </h1>
 
           {/* Subtítulo exato de teste1.html (left:64px top:614px w:742px) */}
