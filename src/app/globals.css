@@ -34,6 +34,12 @@
   --color-on-paper: #09090a;
   --color-on-paper-soft: #3a3a34;
 
+  /* Aliases genéricos (componentes tipo shadcn/ui, ex.: TiltCard) */
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-on-paper);
+  --color-border: color-mix(in oklab, var(--color-on-paper) 15%, transparent);
+  --color-secondary: var(--color-paper-panel);
+
   /* Tipografia */
   --font-display: "Switzer", ui-sans-serif, system-ui, sans-serif;
   --font-body: "General Sans", ui-sans-serif, system-ui, sans-serif;

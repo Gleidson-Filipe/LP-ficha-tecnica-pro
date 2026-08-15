@@ -64,7 +64,7 @@ export const problema = {
      a dor. Agora cada bloco responde uma pergunta só. */
   label: "Para quem é",
   title: "Feita para quem vive de gastronomia.",
-  lead: "Se você define preço de prato, monta cardápio ou responde pelo caixa, essa planilha é sua.",
+  lead: "Se você define preço de prato, monta cardápio ou responde pelo caixa, essa planilha é pra você.",
   /* Abre a comparação — copy original do site antigo, intacta. */
   problemaLabel: "O problema",
   problemaTitle: "O faturamento engana. A falta de controle de custos quebra.",

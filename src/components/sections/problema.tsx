@@ -2,6 +2,8 @@ import { problema as p } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { TiltCard } from "@/components/unlumen-ui/tilt-card";
+import { cn } from "@/lib/utils";
 
 /**
  * Uma seção, três movimentos:
@@ -70,23 +72,30 @@ export function Problema() {
             {c.linhas.map((l, index) => (
               <div
                 key={l.n}
-                className={`py-8 sm:py-10 ${
-                  index < 3 ? "lg:rule-r lg:pr-8" : ""
-                } ${index % 2 === 0 ? "sm:rule-r sm:pr-8" : "sm:pl-8"} ${
-                  index > 0 ? "lg:pl-8" : ""
-                } flex flex-col justify-between`}
+                className={`${index < 3 ? "lg:rule-r" : ""} ${
+                  index % 2 === 0 ? "sm:rule-r" : ""
+                }`}
               >
-                <div>
-                  <p className="font-display font-light text-[4.5rem] md:text-[5.5rem] leading-none text-on-paper/30 select-none">
+                <TiltCard
+                  title={l.antes}
+                  description={l.antesTexto}
+                  className={cn(
+                    "!h-full w-full !bg-transparent !border-0 !rounded-none !shadow-none hover:!scale-100",
+                    `py-8 sm:py-10 ${index === 0 ? "pl-8" : ""} ${
+                      index < 3 ? "lg:pr-8" : ""
+                    } ${index % 2 === 0 ? "sm:pr-8" : "sm:pl-8"} ${
+                      index > 0 ? "lg:pl-8" : ""
+                    }`,
+                    "[&>div:first-child]:!px-0 [&>div:first-child]:!py-0",
+                    "[&_.flex-col>div:last-child]:order-first [&_.flex-col>div:last-child]:!mt-0 [&_.flex-col>div:last-child]:mb-6",
+                    "[&_h2]:font-display [&_h2]:text-[1.25rem] [&_h2]:font-bold [&_h2]:text-on-paper [&_h2]:transition-colors [&_h2]:duration-300 hover:[&_h2]:!text-on-ink",
+                    "[&_p]:text-[0.9375rem] [&_p]:leading-relaxed [&_p]:text-on-paper-soft [&_p]:transition-colors [&_p]:duration-300 hover:[&_p]:!text-on-ink-soft",
+                  )}
+                >
+                  <span className="font-display font-light text-[4.5rem] md:text-[5.5rem] leading-none text-on-paper/30 select-none transition-colors duration-300 group-hover:text-accent">
                     {l.n}
-                  </p>
-                  <h3 className="mt-6 font-display text-[1.25rem] font-bold text-on-paper">
-                    <WhipInUp text={l.antes} />
-                  </h3>
-                  <p className="mt-3 text-[0.9375rem] leading-relaxed soft">
-                    <WhipInUp text={l.antesTexto} />
-                  </p>
-                </div>
+                  </span>
+                </TiltCard>
               </div>
             ))}
           </Reveal>
