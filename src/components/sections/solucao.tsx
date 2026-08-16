@@ -3,6 +3,8 @@ import { Section, Label, Buy } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { ParallaxMockup } from "@/components/ui/parallax-mockup";
+import { ChecklistReveal } from "@/components/ui/checklist-reveal";
+import { AnimatedCheck } from "@/components/ui/animated-check";
 
 /**
  * Logo depois da falsa margem (fim de Problema): resume em três blocos o
@@ -40,24 +42,24 @@ export function Solucao() {
           </h2>
 
           <Reveal stagger={0.1} className="mt-6 space-y-6 rule-t pt-6 lg:mt-5 lg:space-y-5 lg:pt-5">
-            {s.blocos.map((b) => (
-              <div key={b.n}>
-                <p className="flex items-baseline gap-3 font-display text-[1.0625rem] font-semibold">
-                  <span className="text-accent">{b.n}.</span>
-                  <WhipInUp text={b.titulo} />
-                </p>
-                <ul className="mt-2.5 space-y-1.5 pl-8">
-                  {b.itens.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-[0.9375rem] soft">
-                      <span aria-hidden className="mt-1 text-accent">
-                        ▸
-                      </span>
-                      <WhipInUp text={item} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <ChecklistReveal>
+              {s.blocos.map((b, bi) => (
+                <div key={b.n} className={bi > 0 ? "mt-6 lg:mt-5" : undefined}>
+                  <p className="flex items-baseline gap-3 font-display text-[1.0625rem] font-semibold">
+                    <span className="text-accent">{b.n}.</span>
+                    <WhipInUp text={b.titulo} />
+                  </p>
+                  <ul className="mt-2.5 space-y-1.5 pl-8">
+                    {b.itens.map((item) => (
+                      <li key={item} className="chk-item flex items-center gap-2.5 text-[0.9375rem] soft">
+                        <AnimatedCheck />
+                        <WhipInUp text={item} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </ChecklistReveal>
           </Reveal>
 
           <div className="mt-6 lg:mt-6">
