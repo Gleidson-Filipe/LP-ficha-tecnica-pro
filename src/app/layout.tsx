@@ -23,7 +23,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className="antialiased">
+    <html lang="pt-BR" className="antialiased" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
@@ -31,7 +31,7 @@ export default function RootLayout({
           href="https://api.fontshare.com/v2/css?f%5B%5D=switzer@400,500,600,700,800&f%5B%5D=general-sans@400,500,600&display=swap"
         />
       </head>
-      <body>{children}</body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

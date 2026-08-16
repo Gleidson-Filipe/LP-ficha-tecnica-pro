@@ -48,11 +48,10 @@ function HandUnderline({ show, delay = 0 }: { show: boolean; delay?: number }) {
         style={{
           strokeDasharray: 120,
           strokeDashoffset: show ? 0 : 120,
-          transition: show
-            ? `stroke-dashoffset 0.4s cubic-bezier(0.2, 0.9, 0.3, 1) ${delay}ms`
-            : "stroke-dashoffset 0.15s ease-out 0ms",
           opacity: show ? 1 : 0,
-          transitionProperty: "stroke-dashoffset, opacity",
+          transition: show
+            ? `stroke-dashoffset 0.4s cubic-bezier(0.2, 0.9, 0.3, 1) ${delay}ms, opacity 0.3s ease ${delay}ms`
+            : "stroke-dashoffset 0.15s ease-out 0ms, opacity 0.15s ease 0ms",
         }}
       />
       <path
@@ -66,11 +65,10 @@ function HandUnderline({ show, delay = 0 }: { show: boolean; delay?: number }) {
         style={{
           strokeDasharray: 120,
           strokeDashoffset: show ? 0 : 120,
-          transition: show
-            ? `stroke-dashoffset 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) ${delay + 60}ms`
-            : "stroke-dashoffset 0.15s ease-out 0ms",
           opacity: show ? 0.7 : 0,
-          transitionProperty: "stroke-dashoffset, opacity",
+          transition: show
+            ? `stroke-dashoffset 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) ${delay + 60}ms, opacity 0.3s ease ${delay + 60}ms`
+            : "stroke-dashoffset 0.15s ease-out 0ms, opacity 0.15s ease 0ms",
         }}
       />
     </svg>
@@ -109,11 +107,10 @@ function HandCircle({ show, delay = 0 }: { show: boolean; delay?: number }) {
         style={{
           strokeDasharray: 320,
           strokeDashoffset: show ? 0 : 320,
-          transition: show
-            ? `stroke-dashoffset 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) ${delay}ms`
-            : "stroke-dashoffset 0.15s ease-out 0ms",
           opacity: show ? 1 : 0,
-          transitionProperty: "stroke-dashoffset, opacity",
+          transition: show
+            ? `stroke-dashoffset 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) ${delay}ms, opacity 0.3s ease ${delay}ms`
+            : "stroke-dashoffset 0.15s ease-out 0ms, opacity 0.15s ease 0ms",
         }}
       />
       {/* Segundo traço de sobreposição sutil para autenticidade de desenho à mão */}
@@ -128,11 +125,10 @@ function HandCircle({ show, delay = 0 }: { show: boolean; delay?: number }) {
         style={{
           strokeDasharray: 240,
           strokeDashoffset: show ? 0 : 240,
-          transition: show
-            ? `stroke-dashoffset 0.42s cubic-bezier(0.2, 0.9, 0.3, 1) ${delay + 80}ms`
-            : "stroke-dashoffset 0.15s ease-out 0ms",
           opacity: show ? 0.75 : 0,
-          transitionProperty: "stroke-dashoffset, opacity",
+          transition: show
+            ? `stroke-dashoffset 0.42s cubic-bezier(0.2, 0.9, 0.3, 1) ${delay + 80}ms, opacity 0.3s ease ${delay + 80}ms`
+            : "stroke-dashoffset 0.15s ease-out 0ms, opacity 0.15s ease 0ms",
         }}
       />
     </svg>
@@ -235,14 +231,14 @@ export function RateioFocus({
 
   return (
     <div
-      className="cursor-default py-4"
+      className="cursor-default py-2"
       onMouseMove={handleMove}
       onMouseLeave={() => setActive(null)}
     >
       <div className="mx-auto max-w-[46rem] text-center">
-        <div className="mt-8 space-y-5 text-lead leading-relaxed">
-          {renderParagraph(0, p1, p1Emphasis, "text-[1.125rem] font-medium text-on-ink")}
-          {renderParagraph(1, p2, p2Emphasis, "text-[1.125rem] font-medium text-on-ink")}
+        <div className="mt-4 space-y-3 text-lead leading-relaxed">
+          {renderParagraph(0, p1, p1Emphasis, "text-[1.0625rem] md:text-[1.125rem] font-medium text-on-ink")}
+          {renderParagraph(1, p2, p2Emphasis, "text-[1.0625rem] md:text-[1.125rem] font-medium text-on-ink")}
         </div>
 
         {/* Citação Editorial de Impacto */}
@@ -250,7 +246,7 @@ export function RateioFocus({
           2,
           remate,
           remateEmphasis,
-          "mx-auto mt-10 font-display text-[1.375rem] md:text-[1.75rem] font-semibold leading-snug text-on-ink",
+          "mx-auto mt-5 font-display text-[1.25rem] md:text-[1.5rem] font-semibold leading-snug text-on-ink",
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/sections/hero";
 import { VideoCover } from "@/components/video-cover";
 import { Problema } from "@/components/sections/problema";
+import { Solucao } from "@/components/sections/solucao";
 import { Diferenciais } from "@/components/sections/diferenciais";
 import { Modulos } from "@/components/sections/modulos";
 import { Calculo } from "@/components/sections/calculo";
@@ -22,8 +23,9 @@ export default function Home() {
           <Problema />
         </VideoCover>
         {/* A virada */}
-        <Diferenciais />
+        <Solucao />
         <Modulos />
+        <Diferenciais />
         {/* A prova técnica */}
         <Calculo />
         {/* Decisão */}

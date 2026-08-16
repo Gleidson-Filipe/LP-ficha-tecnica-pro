@@ -168,6 +168,48 @@ export const problema = {
   },
 };
 
+/**
+ * A virada entre o produto por dentro (Módulos) e os diferenciais técnicos:
+ * resume em três blocos o que a tela de gestão do cardápio entrega. Copy
+ * original do site antigo (parágrafo único) quebrada em lista, como pedido
+ * em Assets/Solucao/intruções.txt.
+ */
+export const solucao = {
+  label: "A Solução Definitiva",
+  title: "Onde seu lucro está escondido?",
+  blocos: [
+    {
+      n: "01",
+      titulo: "Visualize em uma única tela:",
+      itens: [
+        "informações de custos",
+        "CMV",
+        "Margem de Contribuição",
+        "preço sugerido e o lucro de todos os seus produtos",
+      ],
+    },
+    {
+      n: "02",
+      titulo: "Cálculo automático:",
+      itens: [
+        "Sempre que o preço de um insumo mudar, todo o cardápio é recalculado automaticamente",
+      ],
+    },
+    {
+      n: "03",
+      titulo: "Você vê imediatamente:",
+      itens: ["Itens mais lucrativos", "Itens que precisam de atenção"],
+    },
+  ],
+  stats: [
+    { valor: "6", rotulo: "Módulos" },
+    { valor: "100%", rotulo: "Automático" },
+    { valor: "30s", rotulo: "Para precificar" },
+    { valor: "7 dias", rotulo: "de garantia" },
+  ],
+  cta: "Ver a Ficha Técnica Pro por Dentro",
+};
+
 export const diferenciais = {
   label: "Cálculo automático. Zero complicação.",
   titlePre: "Por que não é ",

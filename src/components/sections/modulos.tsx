@@ -29,7 +29,7 @@ export function Modulos() {
   );
 
   return (
-    <Section id="modulos" tone="paper" className="rule-t">
+    <Section id="modulos" tone="ink" className="rule-t">
       <Head label={modulos.label} title={modulos.title} lead={modulos.lead} />
 
       <div className="pad pb-20">
