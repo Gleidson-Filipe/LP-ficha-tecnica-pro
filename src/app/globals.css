@@ -306,9 +306,24 @@ body {
 }
 
 /* =============================================================
-   MOVIMENTO
-   O conteúdo nasce visível: se o JS falhar, nada some da página.
+   DEPOIMENTOS MARQUEE SCROLL
    ============================================================= */
+@keyframes testimonials-scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-testimonials-scroll {
+  animation-name: testimonials-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

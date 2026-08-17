@@ -212,33 +212,49 @@ export const solucao = {
 
 export const diferenciais = {
   label: "Cálculo automático. Zero complicação.",
-  titlePre: "Por que não é ",
-  titleMark: "só mais uma planilha",
-  titlePost: ".",
+  titlePre: "Por que a Ficha Técnica Pro não é ",
+  titleMark: "“só mais uma planilha”",
+  titlePost: "?",
   cards: [
     {
       n: "01",
+      icone: "calculadora",
       titulo: "Ingredientes e fator de correção",
       texto:
-        "Custo exato considerando as perdas normais do preparo: cascas, ossos, cozimento.",
+        "Calcule o custo exato considerando as perdas normais do preparo (cascas, ossos, cozimento).",
+      pergunta: "Isola custos de gás e energia por prato?",
+      concorrente: "Planilha comum",
+      destaque: "Ficha Técnica Pro",
     },
     {
       n: "02",
-      titulo: "Energia e gás isolados",
+      icone: "energia",
+      titulo: "Energia Elétrica e Gás Isolados",
       texto:
-        "Custo real de cocção ou refrigeração de cada item, sem rateio irreal.",
+        "Descubra o custo exato de cocção ou refrigeração de cada item, sem rateios irreais.",
+      pergunta: "Calcula Mão de Obra baseada no tempo de preparo?",
+      concorrente: "Planilha comum",
+      destaque: "Ficha Técnica Pro",
     },
     {
       n: "03",
-      titulo: "Mão de obra por tempo",
+      icone: "tempo",
+      titulo: "Mão de Obra e Tempo de Produção",
       texto:
-        "Quanto custa a hora do seu funcionário dedicada especificamente àquela receita.",
+        "Saiba quanto custa a hora do seu funcionário dedicada especificamente àquela receita.",
+      pergunta: "Sugere preço de venda baseado no Markup e CMV?",
+      concorrente: "Planilha comum",
+      destaque: "Ficha Técnica Pro",
     },
     {
       n: "04",
-      titulo: "Embalagens, impostos e delivery",
+      icone: "embalagem",
+      titulo: "Embalagens, Impostos e Delivery",
       texto:
-        "Preço certo para o salão e para o iFood, com taxas e impostos calculados.",
+        "Precifique corretamente para o salão e para o iFood. Calcule taxas, impostos e custos extras automaticamente.",
+      pergunta: "É feita exclusivamente para Gastronomia?",
+      concorrente: "Planilha comum",
+      destaque: "Ficha Técnica Pro",
     },
   ],
 };
@@ -382,9 +398,7 @@ export const video = {
 
 export const depoimentos = {
   label: "Depoimentos",
-  titlePre: "Não é promessa. É ",
-  titleFill: "resultado",
-  titlePost: " no caixa.",
+  title: "Relatos de quem decidiu ter controle de verdade.",
   statN: "+25 mil",
   statT: "negócios gastronômicos já precificam com a Ficha Técnica Pro",
   imagens: [
