@@ -415,19 +415,46 @@ export const depoimentos = {
 };
 
 export const preco = {
-  label: "Preço",
-  title: "Assuma o controle da precificação.",
-  inclui: [
-    "Acesso vitalício à planilha completa (Google Sheets)",
-    "Atualização automática de CMV e margem de contribuição",
-    "Cálculo de gás, energia e mão de obra por produto",
-    "Suporte especializado e aulas práticas",
+  label: "O Próximo Passo",
+  title: "Assuma o controle da precificação do seu negócio agora.",
+  beneficios: [
+    {
+      icone: "escudo",
+      titulo: "Pare de ter medo de reajustar",
+      texto:
+        "Tenha segurança total para formar preços (Markup) e saiba exatamente quanto cobrar sem afugentar clientes.",
+    },
+    {
+      icone: "lupa",
+      titulo: "Identifique os vilões do cardápio",
+      texto:
+        "Descubra em segundos quais pratos estão sugando sua margem de contribuição e ajuste o cardápio.",
+    },
+    {
+      icone: "queda",
+      titulo: "Reduza o Desperdício",
+      texto:
+        "Controle rigorosamente o fator de correção e pare de jogar insumos caros no lixo.",
+    },
+    {
+      icone: "relogio",
+      titulo: "Ganhe tempo para ser dono",
+      texto:
+        "Automações prontas. Você só insere os dados, a Ficha Técnica Pro calcula CMV, preços e lucros sozinha.",
+    },
   ],
   valor: "197",
-  nota: "pagamento único · sem mensalidade",
-  garantiaTitulo: "Risco zero. Garantia de 7 dias.",
+  nota: "pagamento único",
+  inclui: [
+    "Acesso vitalício à Ficha Técnica Pro",
+    "Atualização automática de CMV e Margem de Contribuição",
+    "Cálculo automatizado de Gás, Energia e Mão de Obra",
+    "Suporte especializado e aulas práticas",
+  ],
+  cta: "Quero assumir o controle da minha precificação",
+  garantiaTitulo: "Risco Zero. Garantia de 7 Dias.",
   garantiaTexto:
-    "Se você achar que a ferramenta não vai ajudar seu restaurante a economizar dinheiro, devolvemos 100% do investimento. Sem burocracia.",
+    "Se você achar que a ferramenta não vai ajudar seu restaurante a economizar dinheiro, devolvemos 100% do seu investimento. Sem burocracia.",
 };
 
 export const faq = {
