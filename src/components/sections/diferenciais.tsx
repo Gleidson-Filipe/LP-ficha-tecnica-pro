@@ -9,7 +9,7 @@ import { WhipInUp } from "@/components/ui/whip-in-up";
  */
 export function Diferenciais() {
   return (
-    <Section id="diferenciais" tone="paper">
+    <Section id="diferenciais" tone="ink">
       <div className="pad py-16 md:py-20">
         <Label>{d.label}</Label>
         <h2 className="mt-7 max-w-[17ch] font-display text-h2 text-balance">

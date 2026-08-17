@@ -244,8 +244,8 @@ export const diferenciais = {
 };
 
 export const modulos = {
-  label: "Módulos",
-  title: "Seis módulos. Uma planilha só.",
+  label: "Módulos integrados",
+  title: "Tudo que você precisa em\u00A0um único lugar.",
   lead: "Cada aba resolve uma parte do negócio — e todas conversam entre si.",
   items: [
     {
@@ -303,9 +303,9 @@ export const modulos = {
 };
 
 export const calculo = {
-  label: "Como calcula",
-  title: "Cinco etapas até o preço certo.",
-  lead: "Você preenche os dados da produção. A planilha resolve o resto.",
+  label: "Precificação inteligente",
+  title: "Como a Ficha Técnica Pro calcula o preço de venda",
+  lead: "Você informa os dados da produção. Todos os cálculos são feitos automaticamente para entregar um preço de venda baseado nos custos reais do seu produto.",
   nota: "Valores de uma ficha técnica de exemplo.",
   etapas: [
     {
@@ -352,7 +352,7 @@ export const calculo = {
       n: "05",
       titulo: "Precificação",
       texto:
-        "Impostos, taxas de cartão, comissões e a margem desejada fecham o preço sugerido.",
+        "Informe impostos, taxas de cartão, comissões e a margem de lucro desejada. A Ficha Técnica Pro calcula automaticamente o preço de venda sugerido.",
       valor: "",
       image: "/images/precificacao/precificacao.png",
       w: 950,

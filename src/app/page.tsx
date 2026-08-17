@@ -25,9 +25,9 @@ export default function Home() {
         {/* A virada */}
         <Solucao />
         <Modulos />
-        <Diferenciais />
         {/* A prova técnica */}
         <Calculo />
+        <Diferenciais />
         {/* Decisão */}
         <Depoimentos />
         <Preco />
