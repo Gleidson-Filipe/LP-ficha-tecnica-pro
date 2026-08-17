@@ -1,37 +1,217 @@
+"use client";
+
+import { useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { faq } from "@/lib/content";
-import { Section, Label } from "@/components/ui/kit";
+import { Section } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 
-/** Perguntas como linhas da tabela. <details> nativo: funciona sem JS. */
-export function Faq() {
+gsap.registerPlugin(useGSAP);
+
+function FaqRow({
+  item,
+  isOpen,
+  onToggle,
+}: {
+  item: { q: string; a: string };
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const iconRef = useRef<SVGSVGElement>(null);
+  const badgeRef = useRef<HTMLSpanElement>(null);
+  const titleRef = useRef<HTMLSpanElement>(null);
+  const isFirstRender = useRef(true);
+
+  useGSAP(
+    () => {
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        if (!isOpen && contentRef.current) {
+          gsap.set(contentRef.current, { height: 0, opacity: 0 });
+        }
+        return;
+      }
+
+      if (isOpen) {
+        // Transição suave de fundo da linha de ponta a ponta
+        gsap.to(rowRef.current, {
+          backgroundColor: "#0f0f11",
+          duration: 0.45,
+          ease: "power2.out",
+        });
+
+        // Cor do título
+        gsap.to(titleRef.current, {
+          color: "#ffffff",
+          duration: 0.35,
+          ease: "power2.out",
+        });
+
+        // Badge circular Phosphor
+        gsap.to(badgeRef.current, {
+          backgroundColor: "#ffffff",
+          color: "#0f0f11",
+          scale: 1.05,
+          duration: 0.35,
+          ease: "power2.out",
+        });
+
+        // Rotação do ícone em 45 graus
+        gsap.to(iconRef.current, {
+          rotate: 45,
+          duration: 0.4,
+          ease: "power2.out",
+        });
+
+        // Expansão fluida de altura com GSAP
+        gsap.to(contentRef.current, {
+          height: "auto",
+          opacity: 1,
+          duration: 0.45,
+          ease: "power2.out",
+        });
+
+        // Revelação do texto
+        gsap.fromTo(
+          textRef.current,
+          { y: 8, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, delay: 0.08, ease: "power2.out" }
+        );
+      } else {
+        // Fundo voltando suavemente para transparente
+        gsap.to(rowRef.current, {
+          backgroundColor: "transparent",
+          duration: 0.35,
+          ease: "power2.inOut",
+        });
+
+        // Título voltando para cor escura
+        gsap.to(titleRef.current, {
+          color: "#0f0f11",
+          duration: 0.3,
+          ease: "power2.inOut",
+        });
+
+        // Badge voltando ao estado padrão
+        gsap.to(badgeRef.current, {
+          backgroundColor: "#0f0f11",
+          color: "#ffffff",
+          scale: 1,
+          duration: 0.35,
+          ease: "power2.inOut",
+        });
+
+        // Rotação do ícone voltando a 0
+        gsap.to(iconRef.current, {
+          rotate: 0,
+          duration: 0.35,
+          ease: "power2.inOut",
+        });
+
+        // Recolhimento fluido de altura
+        gsap.to(contentRef.current, {
+          height: 0,
+          opacity: 0,
+          duration: 0.35,
+          ease: "power2.inOut",
+        });
+      }
+    },
+    { dependencies: [isOpen], scope: rowRef }
+  );
+
   return (
-    <Section id="faq" tone="paper" className="rule-t">
-      <div className="pad py-16 md:py-20">
-        <Label>{faq.label}</Label>
-        <h2 className="mt-7 max-w-[16ch] font-display text-h2 text-balance">
+    <div
+      ref={rowRef}
+      className="w-full will-change-[background-color]"
+    >
+      <div className="pad max-w-4xl mx-auto w-full">
+        <button
+          type="button"
+          onClick={onToggle}
+          className="w-full py-5 sm:py-6 flex items-center justify-between gap-4 text-left cursor-pointer select-none group focus-visible:outline-2 focus-visible:outline-accent"
+          aria-expanded={isOpen}
+        >
+          <span
+            ref={titleRef}
+            className="font-display text-[1rem] sm:text-[1.125rem] md:text-[1.1875rem] font-bold leading-snug text-ink transition-colors duration-200 group-hover:text-accent"
+          >
+            <WhipInUp text={item.q} />
+          </span>
+
+          {/* Badge circular Phosphor Icons */}
+          <span
+            ref={badgeRef}
+            aria-hidden
+            style={{ borderRadius: "9999px" }}
+            className="w-8 h-8 sm:w-9 sm:h-9 bg-ink text-white flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105"
+          >
+            <svg
+              ref={iconRef}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 256 256"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="20"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-current"
+            >
+              <line x1="40" y1="128" x2="216" y2="128" />
+              <line x1="128" y1="40" x2="128" y2="216" />
+            </svg>
+          </span>
+        </button>
+
+        {/* Resposta com animação GSAP */}
+        <div
+          ref={contentRef}
+          className="overflow-hidden"
+          style={{ height: 0, opacity: 0 }}
+        >
+          <p
+            ref={textRef}
+            className={`pb-7 text-sm sm:text-base leading-relaxed max-w-[65ch] ${
+              isOpen ? "text-on-ink-soft" : "text-ink/75"
+            }`}
+          >
+            {item.a}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Faq() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggle = (idx: number) => {
+    setOpenIndex((prev) => (prev === idx ? null : idx));
+  };
+
+  return (
+    <Section id="faq" tone="paper" className="py-16 sm:py-20 md:py-24 rule-t overflow-hidden">
+      {/* ── Título Centralizado ── */}
+      <div className="pad max-w-4xl mx-auto w-full text-center mb-12 sm:mb-16">
+        <h2 className="font-display text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] font-bold tracking-tight text-ink">
           <WhipInUp text={faq.title} />
         </h2>
       </div>
 
-      <div className="rule-t">
-        {faq.items.map((item) => (
-          <details key={item.q} className="q rule-b">
-            <summary className="pad flex cursor-pointer list-none items-center gap-6 py-7">
-              <span className="flex-1 font-display text-[1.125rem] font-semibold md:text-[1.25rem]">
-                <WhipInUp text={item.q} />
-              </span>
-              <span
-                aria-hidden
-                className="q-sign relative block size-5 shrink-0 text-accent transition-transform duration-300"
-              >
-                <span className="absolute left-0 top-1/2 h-[2px] w-5 -translate-y-1/2 bg-current" />
-                <span className="absolute left-1/2 top-0 h-5 w-[2px] -translate-x-1/2 bg-current" />
-              </span>
-            </summary>
-            <p className="pad measure pb-8 text-body soft">
-              <WhipInUp text={item.a} />
-            </p>
-          </details>
+      {/* ── Lista de Perguntas Full-Bleed ── */}
+      <div className="w-full border-t border-b border-ink/20 divide-y divide-ink/15">
+        {faq.items.map((item, index) => (
+          <FaqRow
+            key={item.q}
+            item={item}
+            isOpen={openIndex === index}
+            onToggle={() => toggle(index)}
+          />
         ))}
       </div>
     </Section>

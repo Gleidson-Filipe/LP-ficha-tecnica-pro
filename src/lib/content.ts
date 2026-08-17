@@ -459,7 +459,7 @@ export const preco = {
 
 export const faq = {
   label: "Dúvidas",
-  title: "Perguntas que sempre chegam.",
+  title: "Ainda tem dúvidas?",
   items: [
     {
       q: "Serve para qualquer restaurante?",
@@ -485,7 +485,12 @@ export const faq = {
 };
 
 export const rodape = {
-  chamada: "Pare de perder dinheiro na mesa.",
+  tituloLinha1: "O custo invisível de",
+  tituloLinha2: "não ter controle.",
+  texto:
+    "Continuar precificando sem informações completas é o caminho mais rápido para ver seu faturamento crescer e seu caixa esvaziar. Pare de perder dinheiro na mesa.",
+  ctaLinha1: "Quero saber meu custo real e",
+  ctaLinha2: "PRECIFICAR CERTO",
   copyright: "© 2026 In-app Digital Ltda. Todos os direitos reservados.",
   empresa: "Gestão Financeira Digital",
 };
