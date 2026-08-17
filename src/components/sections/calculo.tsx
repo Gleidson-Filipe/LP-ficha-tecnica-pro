@@ -17,7 +17,7 @@ const steps = [
     titulo: "Ingredientes",
     texto:
       "Cadastre os ingredientes e as quantidades da receita. A Ficha Técnica Pro calcula automaticamente o custo exato de cada preparo.",
-    image: "/images/precificacao/ingredientes.png",
+    image: "/images/precificacao/ingredientes.webp",
     w: 1001,
     h: 677,
   },
@@ -26,7 +26,7 @@ const steps = [
     titulo: "Embalagens",
     texto:
       "Adicione o custo de embalagens, etiquetas, sacolas e outros materiais utilizados na venda do produto.",
-    image: "/images/precificacao/embalagens.png",
+    image: "/images/precificacao/embalagens.webp",
     w: 691,
     h: 677,
   },
@@ -35,7 +35,7 @@ const steps = [
     titulo: "Maquinários",
     texto:
       "Cadastre os equipamentos utilizados na produção e informe o tempo de uso de cada um. A Ficha Técnica Pro calcula automaticamente o consumo de gás e energia da receita.",
-    image: "/images/precificacao/maquinarios.png",
+    image: "/images/precificacao/maquinarios.webp",
     w: 768,
     h: 677,
   },
@@ -44,7 +44,7 @@ const steps = [
     titulo: "Mão de obra",
     texto:
       "Cadastre os funcionários e o tempo gasto na produção. A planilha calcula o custo da mão de obra por minuto e por receita.",
-    image: "/images/precificacao/maodeobra.png",
+    image: "/images/precificacao/maodeobra.webp",
     w: 777,
     h: 677,
   },
@@ -53,7 +53,7 @@ const steps = [
     titulo: "Precificação",
     texto:
       "Informe impostos, taxas de cartão, comissões e a margem de lucro desejada. A Ficha Técnica Pro calcula automaticamente o preço de venda sugerido.",
-    image: "/images/precificacao/precificacao.png",
+    image: "/images/precificacao/precificacao.webp",
     w: 950,
     h: 991,
   },
@@ -69,7 +69,7 @@ const steps = [
       "Markup",
       "Todos os custos considerados automaticamente",
     ],
-    image: "/images/precificacao/resultado.png",
+    image: "/images/precificacao/resultado.webp",
     w: 827,
     h: 861,
   },
@@ -233,6 +233,7 @@ export function Calculo() {
                         width={step.w}
                         height={step.h}
                         sizes="(max-width: 1024px) 95vw, 50vw"
+                        quality={100}
                         className="max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[415px] w-auto max-w-full object-contain rounded-xl shadow-md transition-transform duration-300 group-hover/img:scale-[1.015]"
                         priority={idx === 0}
                       />
@@ -277,6 +278,7 @@ export function Calculo() {
               alt="Planilha ampliada"
               width={2278}
               height={1100}
+              quality={100}
               className="max-h-[85vh] max-w-[92vw] w-auto h-auto object-contain rounded-xl"
               priority
             />

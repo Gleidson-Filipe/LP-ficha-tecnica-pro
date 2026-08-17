@@ -330,7 +330,7 @@ export const calculo = {
       texto:
         "Cadastre os ingredientes e as quantidades. O custo exato sai automático, já com o fator de correção.",
       valor: "8,40",
-      image: "/images/precificacao/ingredientes.png",
+      image: "/images/precificacao/ingredientes.webp",
       w: 1001,
       h: 677,
     },
@@ -340,7 +340,7 @@ export const calculo = {
       texto:
         "Some embalagens, etiquetas, sacolas e todo material usado na venda do produto.",
       valor: "1,15",
-      image: "/images/precificacao/embalagens.png",
+      image: "/images/precificacao/embalagens.webp",
       w: 691,
       h: 677,
     },
@@ -350,7 +350,7 @@ export const calculo = {
       texto:
         "Informe os equipamentos e o tempo de uso. O consumo de gás e energia é calculado sozinho.",
       valor: "0,95",
-      image: "/images/precificacao/maquinarios.png",
+      image: "/images/precificacao/maquinarios.webp",
       w: 768,
       h: 677,
     },
@@ -360,7 +360,7 @@ export const calculo = {
       texto:
         "Cadastre a equipe e o tempo de produção. O custo da hora dedicada à receita entra na conta.",
       valor: "2,60",
-      image: "/images/precificacao/maodeobra.png",
+      image: "/images/precificacao/maodeobra.webp",
       w: 777,
       h: 677,
     },
@@ -370,14 +370,14 @@ export const calculo = {
       texto:
         "Informe impostos, taxas de cartão, comissões e a margem de lucro desejada. A Ficha Técnica Pro calcula automaticamente o preço de venda sugerido.",
       valor: "",
-      image: "/images/precificacao/precificacao.png",
+      image: "/images/precificacao/precificacao.webp",
       w: 950,
       h: 991,
     },
   ],
   resultado: {
     titulo: "Preço de venda calculado",
-    image: "/images/precificacao/resultado.png",
+    image: "/images/precificacao/resultado.webp",
     w: 827,
     h: 861,
     linhas: [
