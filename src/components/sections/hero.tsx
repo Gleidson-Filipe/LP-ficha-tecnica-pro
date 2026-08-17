@@ -125,16 +125,18 @@ export function Hero() {
 
         {/* ── Imagem do Mockup (Encostando na borda inferior) ── */}
         <div
-          className="hero-mockup relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[751px] lg:bottom-0 lg:top-auto lg:w-[1311px] lg:h-[668px] pointer-events-none flex items-end"
+          className="hero-mockup relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[691px] lg:bottom-0 lg:top-auto lg:w-[1370px] lg:h-[698px] pointer-events-none flex items-end"
           style={{ opacity: 0, transform: "translateX(30px)" }}
         >
           <Image
-            src="/images/mockup-hero.png"
+            src="/images/mockup-hero.webp"
             alt="Planilha Ficha Técnica Pro"
-            width={5471}
-            height={2856}
+            width={5423}
+            height={2808}
             priority
-            className="w-full h-auto object-contain object-bottom block lg:w-[1311px] lg:h-[668px]"
+            quality={90}
+            sizes="(min-width: 1024px) 1370px, 100vw"
+            className="w-full h-auto object-contain object-bottom block lg:w-[1370px] lg:h-[698px]"
           />
         </div>
       </div>
