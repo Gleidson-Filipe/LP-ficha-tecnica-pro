@@ -16,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
  * Header refinado com base no feedback do Pencil:
  * 1. Nav mais fina: h:88px em desktop.
  * 2. Caixa da Logo ajustada: w:408px (remove o excesso de espaçamento na direita).
- * 3. 4 Botões Principais: Como funciona, Recursos, Preço, FAQ.
+ * 3. 4 Botões Principais: Como funciona, Recursos, Depoimentos, FAQ.
  * 4. Alinhamento dos Nomes dos Botões: alinhados à esquerda (pl-8) exatamente como no Pencil.
  */
 export function SiteHeader() {
@@ -27,19 +27,38 @@ export function SiteHeader() {
 
   useGSAP(
     () => {
-      const gs: ScrollTrigger[] = [];
-      NAV.forEach((item) => {
-        const alvo = document.getElementById(item.id);
-        if (!alvo) return;
-        gs.push(
-          ScrollTrigger.create({
-            trigger: alvo,
-            start: "top 40%",
-            end: "bottom 40%",
-            onToggle: (self) => self.isActive && setAtivo(item.id),
-          }),
-        );
+      // Alvos válidos, resolvidos uma vez (evitam getElementById repetido a cada scroll).
+      const secoes = NAV.map((item) => ({
+        id: item.id,
+        el: document.getElementById(item.id),
+      })).filter((s): s is { id: string; el: HTMLElement } => !!s.el);
+
+      // Mesma linha de referência do scroll-margin-top das âncoras (altura
+      // real do header, seção encostando na nav): a seção que contém essa
+      // linha na tela é a seção "ativa". Calcular tudo num único lugar (em
+      // vez de vários ScrollTrigger independentes competindo via onToggle)
+      // evita a corrida em que o clique acendia o item vizinho em vez do
+      // clicado.
+      const linha = () => (root.current?.offsetHeight ?? 0) + 2;
+
+      const atualizar = () => {
+        const y = linha();
+        const atual = secoes.find(({ el }) => {
+          const r = el.getBoundingClientRect();
+          return r.top <= y && r.bottom > y;
+        });
+        setAtivo(atual ? atual.id : null);
+      };
+
+      const st = ScrollTrigger.create({
+        start: 0,
+        end: "max",
+        onUpdate: atualizar,
+        onRefresh: atualizar,
       });
+      atualizar();
+
+      const gs: ScrollTrigger[] = [st];
 
       // Logo descendo de cima pra baixo ao carregar a página, com fade.
       // Estado inicial (y:-90 opacity:0) já nasce no JSX via style inline —
@@ -74,11 +93,11 @@ export function SiteHeader() {
         <a
           href="#topo"
           aria-label="Ficha Técnica Pro"
-          className="relative flex shrink-0 items-stretch pl-5 pr-6 sm:pl-8 lg:w-[408px] lg:px-0"
+          className="relative flex shrink-0 items-stretch pl-5 pr-6 sm:pl-8 xl:w-[408px] xl:px-0"
         >
           {/* Responsivo (mobile/tablet) */}
           <div
-            className="site-logo flex flex-col justify-center gap-0 lg:hidden"
+            className="site-logo flex flex-col justify-center gap-0 xl:hidden"
             style={{ transform: "translateY(-160px)", opacity: 0 }}
           >
             <Image
@@ -92,7 +111,7 @@ export function SiteHeader() {
           </div>
 
           {/* Desktop (lg): Logo 302×32px (left:65px top:16px) e Slogan (left:64px top:48px) */}
-          <div className="hidden lg:block lg:w-full lg:h-full lg:relative">
+          <div className="hidden xl:block xl:w-full xl:h-full xl:relative">
             <div
               className="site-logo absolute left-[65px] top-[10px] w-[302px] h-[32px]"
               style={{
@@ -114,7 +133,7 @@ export function SiteHeader() {
         </a>
 
         {/* ── Nav desktop: 4 botões principais com texto ALINHADO À ESQUERDA (pl-8) ── */}
-        <nav aria-label="Seções" className="hidden flex-1 items-stretch lg:flex">
+        <nav aria-label="Seções" className="hidden flex-1 items-stretch xl:flex">
           {NAV.map((item) => (
             <a
               key={item.id}
@@ -144,7 +163,7 @@ export function SiteHeader() {
         </nav>
 
         {/* ── Espaçador mobile ── */}
-        <div className="flex-1 lg:hidden" />
+        <div className="flex-1 xl:hidden" />
 
         {/* ── Hambúrguer (mobile/tablet) ── */}
         <button
@@ -152,7 +171,7 @@ export function SiteHeader() {
           onClick={() => setAberto((v) => !v)}
           aria-expanded={aberto}
           aria-label={aberto ? "Fechar menu" : "Abrir menu"}
-          className="flex shrink-0 items-center gap-2.5 px-4 text-[0.8125rem] font-semibold text-[#dbdbdb] uppercase tracking-wider sm:px-5 lg:hidden"
+          className="flex shrink-0 items-center gap-2.5 px-4 text-[0.8125rem] font-semibold text-[#dbdbdb] uppercase tracking-wider sm:px-5 xl:hidden"
         >
           <span className="flex flex-col gap-[4px]">
             <span className={cn("block h-[2px] w-4 bg-current transition-transform", aberto && "translate-y-[6px] rotate-45")} />
@@ -168,15 +187,15 @@ export function SiteHeader() {
         <a
           ref={ctaFx}
           href={CHECKOUT}
-          className="group relative flex shrink-0 items-center justify-center overflow-hidden cta-btn-fluid px-6 text-white transition-all duration-150 lg:w-[304px] lg:px-0"
+          className="group relative flex shrink-0 items-center justify-center overflow-hidden cta-btn-fluid px-6 text-white transition-all duration-150 xl:w-[304px] xl:px-0"
           style={{ borderLeft: "1px solid #212124" }}
         >
           <CtaGlow />
           <CtaShine />
-          <span className="font-body lg:hidden font-bold text-[15px] text-white">
+          <span className="font-body xl:hidden font-bold text-[15px] text-white">
             <CtaEcho>Comprar</CtaEcho>
           </span>
-          <span className="font-body hidden lg:inline font-bold text-[19px] whitespace-nowrap text-white">
+          <span className="font-body hidden xl:inline font-bold text-[19px] whitespace-nowrap text-white">
             <CtaEcho>{CTA.header.l2}</CtaEcho>
           </span>
         </a>
@@ -186,7 +205,7 @@ export function SiteHeader() {
       {aberto && (
         <nav
           aria-label="Seções"
-          className="bg-[#09090a] lg:hidden"
+          className="bg-[#09090a] xl:hidden"
           style={{ borderTop: "1px solid #212124" }}
         >
           {NAV.map((item) => (

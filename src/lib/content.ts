@@ -28,7 +28,7 @@ export const SLOGAN = "Engenharia do lucro para gastronomia";
 export const NAV = [
   { id: "calculo", label: "Como funciona" },
   { id: "diferenciais", label: "Recursos" },
-  { id: "preco", label: "Preço" },
+  { id: "depoimentos", label: "Depoimentos" },
   { id: "faq", label: "FAQ" },
 ] as const;
 

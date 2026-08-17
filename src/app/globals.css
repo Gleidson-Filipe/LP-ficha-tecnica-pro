@@ -107,17 +107,9 @@ body {
   border-radius: 0;
 }
 
-/* Âncoras não somem sob o header fixo */
+/* Âncoras não somem sob o header fixo — topo da seção encosta na nav */
 [id] {
-  scroll-margin-top: 68px;
-}
-
-@media (min-width: 640px) {
-  [id] { scroll-margin-top: 76px; }
-}
-
-@media (min-width: 1024px) {
-  [id] { scroll-margin-top: 100px; }
+  scroll-margin-top: var(--header-h);
 }
 
 /* =============================================================
@@ -125,13 +117,14 @@ body {
    ============================================================= */
 :root {
   --pad: 1.25rem;
-  /* Altura do header fixo — usada pelo hero para caber em uma tela */
-  --header-h: 68px;
+  /* Altura do header fixo (56px + 1px de borda) — usada pelo scroll-margin das âncoras */
+  --header-h: 57px;
 }
 
 @media (min-width: 640px) {
   :root {
-    --header-h: 76px;
+    /* Header sm: 64px + 1px de borda */
+    --header-h: 65px;
   }
 }
 
@@ -141,10 +134,10 @@ body {
   }
 }
 
-/* Desktop: header tem 88px (fidelidade ao Pencil) */
 @media (min-width: 1024px) {
   :root {
-    --header-h: 88px;
+    /* Header lg: 72px + 1px de borda */
+    --header-h: 73px;
   }
 }
 
