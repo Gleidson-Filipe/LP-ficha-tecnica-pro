@@ -6,6 +6,7 @@ import { Section, Label } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { AnimatedCheck } from "@/components/ui/animated-check";
 import { ChecklistReveal } from "@/components/ui/checklist-reveal";
+import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 
 /* ── Ícones Phosphor estruturais ── */
 function BenefitIcon({ icone }: { icone: string }) {
@@ -55,6 +56,7 @@ function BenefitIcon({ icone }: { icone: string }) {
 
 export function Preco() {
   const [btnHovered, setBtnHovered] = useState(false);
+  const ctaFx = useCtaFx<HTMLAnchorElement>();
 
   return (
     <Section id="preco" tone="ink" className="py-12 md:py-16 lg:py-20 overflow-hidden">
@@ -159,14 +161,17 @@ export function Preco() {
                   {/* Botão de Ação (Gatilho exclusivo do efeito 3D rosa) */}
                   <div className="pt-6">
                     <a
+                      ref={ctaFx}
                       href={CHECKOUT}
                       target="_blank"
                       rel="noopener noreferrer"
                       onMouseEnter={() => setBtnHovered(true)}
                       onMouseLeave={() => setBtnHovered(false)}
-                      className="w-full inline-flex items-center justify-center bg-accent hover:bg-accent-deep text-white font-display font-bold text-xs sm:text-sm md:text-base py-4.5 px-4 sm:px-6 transition-colors active:translate-y-px text-center uppercase tracking-wide leading-tight"
+                      className="group relative w-full inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-display font-bold text-xs sm:text-sm md:text-base py-4.5 px-4 sm:px-6 transition-all active:translate-y-px text-center uppercase tracking-wide leading-tight"
                     >
-                      {p.cta}
+                      <CtaGlow />
+                      <CtaShine />
+                      <CtaEcho>{p.cta}</CtaEcho>
                     </a>
                     <p className="mt-2.5 text-center text-xs soft">
                       🔒 Pagamento seguro · Acesso vitalício imediato

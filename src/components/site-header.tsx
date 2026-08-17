@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { NAV, SLOGAN, CTA, CHECKOUT } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -22,6 +23,7 @@ export function SiteHeader() {
   const root = useRef<HTMLElement>(null);
   const [ativo, setAtivo] = useState<string | null>(null);
   const [aberto, setAberto] = useState(false);
+  const ctaFx = useCtaFx<HTMLAnchorElement>();
 
   useGSAP(
     () => {
@@ -162,17 +164,20 @@ export function SiteHeader() {
           </span>
         </button>
 
-        {/* ── CTA: Largura de 304px no desktop, bg #FF4784, texto 19px bold ── */}
+        {/* ── CTA: Largura de 304px no desktop, bg fluido animado, texto 19px bold ── */}
         <a
+          ref={ctaFx}
           href={CHECKOUT}
-          className="flex shrink-0 items-center justify-center bg-[#FF4784] px-6 text-white transition-colors duration-150 hover:bg-[#e02e6b] lg:w-[304px] lg:px-0"
+          className="group relative flex shrink-0 items-center justify-center overflow-hidden cta-btn-fluid px-6 text-white transition-all duration-150 lg:w-[304px] lg:px-0"
           style={{ borderLeft: "1px solid #212124" }}
         >
-          <span className="font-body lg:hidden font-bold text-[15px]">
-            <WhipInUp text="Comprar" />
+          <CtaGlow />
+          <CtaShine />
+          <span className="font-body lg:hidden font-bold text-[15px] text-white">
+            <CtaEcho>Comprar</CtaEcho>
           </span>
-          <span className="font-body hidden lg:inline font-bold text-[19px] whitespace-nowrap">
-            <WhipInUp text={CTA.header.l2} />
+          <span className="font-body hidden lg:inline font-bold text-[19px] whitespace-nowrap text-white">
+            <CtaEcho>{CTA.header.l2}</CtaEcho>
           </span>
         </a>
       </div>

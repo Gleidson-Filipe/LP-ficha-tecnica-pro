@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import { rodape, INSTAGRAM, SLOGAN, CHECKOUT } from "@/lib/content";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 
 export function SiteFooter() {
+  const ctaFx = useCtaFx<HTMLAnchorElement>();
   return (
     <footer className="t-ink bg-ink rule-t">
       {/* ── Bloco Superior: CTA com Linhas Verticais Restritas ── */}
@@ -40,17 +44,22 @@ export function SiteFooter() {
           {/* Botão de Ação (CTA) */}
           <div className="mt-8 sm:mt-10">
             <a
+              ref={ctaFx}
               href={CHECKOUT}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-col items-center justify-center bg-accent hover:bg-accent-deep text-white font-display py-4 px-8 sm:px-12 transition-all duration-200 active:translate-y-px text-center shadow-lg shadow-accent/20 hover:scale-[1.02]"
+              className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-display py-4 px-8 sm:px-12 transition-all duration-200 active:translate-y-px text-center hover:scale-[1.02]"
             >
-              <span className="text-xs sm:text-sm font-semibold tracking-normal">
-                {rodape.ctaLinha1}
-              </span>
-              <span className="text-sm sm:text-base font-black uppercase tracking-wider mt-0.5">
-                {rodape.ctaLinha2}
-              </span>
+              <CtaGlow />
+              <CtaShine />
+              <CtaEcho className="flex-col items-center">
+                <span className="text-xs sm:text-sm font-semibold tracking-normal">
+                  {rodape.ctaLinha1}
+                </span>
+                <span className="text-sm sm:text-base font-black uppercase tracking-wider mt-0.5">
+                  {rodape.ctaLinha2}
+                </span>
+              </CtaEcho>
             </a>
           </div>
         </div>

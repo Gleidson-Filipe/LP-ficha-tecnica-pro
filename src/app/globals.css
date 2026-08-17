@@ -13,6 +13,11 @@
    - UMA cor de destaque (#ff4785).
    - Duas famílias tipográficas, nunca três.
    - Nenhum texto em cinza claro sobre fundo claro.
+
+   Exceção pontual: os 5 CTAs de conversão (header, hero, solução, preço,
+   rodapé) têm glow + shine sutis via GSAP (ver components/ui/cta-fx.tsx).
+   De propósito, não é AI slop escapando — é a única exceção à regra acima
+   e não se estende a mais nada na página.
    ============================================================= */
 @theme {
   /* Superfícies */
@@ -322,6 +327,53 @@ body {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   will-change: transform;
+}
+
+/* =============================================================
+   CTA AUTONOMOUS FLUID GRADIENT & MORPHIC GLOW
+   ============================================================= */
+@keyframes cta-gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.cta-btn-fluid {
+  background: linear-gradient(
+    115deg,
+    #ff0055 0%,
+    #ff2a70 25%,
+    #ff4785 50%,
+    #d81b60 75%,
+    #ff0055 100%
+  );
+  background-size: 240% 240%;
+  animation: cta-gradient-flow 6s ease-in-out infinite;
+  will-change: background-position;
+}
+
+@keyframes cta-morphic-glow {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.25;
+    filter: blur(6px);
+  }
+  50% {
+    transform: scale(1.01) translateY(0.5px);
+    opacity: 0.38;
+    filter: blur(8px);
+  }
+}
+
+.animate-morphic-glow {
+  animation: cta-morphic-glow 3.4s ease-in-out infinite;
+  will-change: transform, opacity, filter;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { CHECKOUT } from "@/lib/content";
 import { WhipInUp, CountUpStat } from "@/components/ui/whip-in-up";
 import { Highlighter } from "@/components/magicui/highlighter";
+import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 
 gsap.registerPlugin(useGSAP);
 
@@ -23,6 +24,7 @@ gsap.registerPlugin(useGSAP);
  */
 export function Hero() {
   const root = useRef<HTMLDivElement>(null);
+  const ctaFx = useCtaFx<HTMLAnchorElement>();
 
   useGSAP(
     () => {
@@ -55,19 +57,27 @@ export function Hero() {
         ref={root}
         className="relative mx-auto w-full max-w-[1920px] h-auto lg:h-[calc(100vh-113px)] lg:min-h-[760px] overflow-hidden bg-[#09090a]"
       >
-        {/* ── Painel Cinza do Mockup (left:949px top:139px w:971px terminando na borda inferior) ── */}
+        {/* ── Painel Cinza do Mockup (com cadeia de linhas finas de ~1px ao fundo) ── */}
         <div
-          className="hidden lg:block absolute left-[949px] top-[72px] w-[971px] bottom-0 bg-[#0d0d0f]"
+          className="hidden lg:block absolute left-[949px] top-[72px] w-[971px] bottom-0 bg-[#0d0d0f] overflow-hidden"
           style={{ border: "1px solid #212124", borderBottom: "none" }}
-        />
+        >
+          {/* Cadeia de linhas finas de 1px por trás da imagem */}
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(90deg, transparent 0px, transparent 19px, rgba(255, 255, 255, 0.06) 19px, rgba(255, 255, 255, 0.06) 20px)",
+            }}
+          />
+        </div>
 
         {/* ── Divisórias Verticais Encostando na base do Header (top: 88px) ── */}
         <div className="hidden lg:block absolute inset-0 pointer-events-none z-10">
           <div className="absolute left-[63px] top-[72px] w-[1px] h-[calc(100vh-185px)] min-h-[688px] bg-[#212124]" />
           <div className="absolute left-[408px] top-[72px] w-[1px] h-[calc(100vh-185px)] min-h-[688px] bg-[#212124]" />
           <div className="absolute left-[818px] top-[72px] w-[1px] h-[calc(100vh-185px)] min-h-[688px] bg-[#212124]" />
-          <div className="absolute left-[1217px] top-[72px] w-[1px] h-[calc(100vh-185px)] min-h-[688px] bg-[#212124]" />
-          <div className="absolute left-[1643px] top-[72px] w-[1px] h-[calc(100vh-185px)] min-h-[688px] bg-[#212124]" />
         </div>
 
         {/* ── Conteúdo Textual (Headline + Sub + CTA) ── */}
@@ -95,16 +105,21 @@ export function Hero() {
 
           {/* Botão CTA exato de teste1.html (left:64px top:716px w:584px h:70px) */}
           <a
+            ref={ctaFx}
             href={CHECKOUT}
-            className="hero-fade font-body mt-8 inline-flex items-center justify-center gap-1.5 bg-[#FF4784] px-6 py-4 text-white transition-colors duration-150 hover:bg-[#e02e6b] lg:mt-0 lg:absolute lg:left-[64px] lg:top-[649px] lg:w-[584px] lg:h-[70px] lg:px-0 lg:py-0 lg:justify-center"
+            className="hero-fade group relative font-body mt-8 inline-flex items-center justify-center gap-1.5 overflow-hidden cta-btn-fluid px-6 py-4 text-white transition-all duration-150 lg:mt-0 lg:absolute lg:left-[64px] lg:top-[649px] lg:w-[584px] lg:h-[70px] lg:px-0 lg:py-0 lg:justify-center"
             style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
           >
-            <span className="text-[17px] lg:text-[20px] font-medium whitespace-nowrap">
-              <WhipInUp text="Quero saber meu custo real e" />
-            </span>
-            <span className="text-[19px] lg:text-[25px] font-bold whitespace-nowrap">
-              <WhipInUp text="precificar certo" />
-            </span>
+            <CtaGlow />
+            <CtaShine />
+            <CtaEcho className="items-center gap-1.5 text-white">
+              <span className="text-[17px] lg:text-[20px] font-medium whitespace-nowrap text-white">
+                Quero saber meu custo real e
+              </span>
+              <span className="text-[19px] lg:text-[25px] font-bold whitespace-nowrap text-white">
+                precificar certo
+              </span>
+            </CtaEcho>
           </a>
         </div>
 

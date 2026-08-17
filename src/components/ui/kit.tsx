@@ -1,7 +1,10 @@
+"use client";
+
 import { forwardRef, type ReactNode } from "react";
 import { CTA, CHECKOUT } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 
 /** Bloco de seção. Define o tom (escuro/claro) e o respiro vertical. */
 export const Section = forwardRef<
@@ -90,38 +93,45 @@ export function Buy({
   /** Linha principal, sempre presente. */
   l2: string;
 }) {
+  const fx = useCtaFx<HTMLAnchorElement>();
   return (
     <a
+      ref={fx}
       href={href}
       className={cn(
-        "inline-flex items-center justify-center text-center transition-colors duration-150",
+        "group relative inline-flex items-center justify-center overflow-hidden text-center transition-all duration-150",
         "active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2",
         variant === "accent"
-          ? "bg-accent text-white hover:bg-accent-deep focus-visible:outline-accent"
+          ? "cta-btn-fluid text-white focus-visible:outline-accent"
           : "bg-ink text-on-ink hover:bg-ink-raise focus-visible:outline-ink",
         size === "lg" ? "px-10 py-5" : "px-6 py-3.5",
         className,
       )}
     >
+      {variant === "accent" && <CtaGlow />}
+      <CtaShine />
       {/* Uma linha só: texto de apoio em peso normal + a ação em negrito */}
       {size === "sm" && (
-        <span className="font-display text-[0.9375rem] font-semibold sm:hidden">
-          <WhipInUp text={CTA.heroMobile.l2} />
+        <span className="font-display text-[0.9375rem] font-semibold sm:hidden text-white">
+          <CtaEcho>{CTA.heroMobile.l2}</CtaEcho>
         </span>
       )}
       <span
         className={cn(
-          "leading-tight",
+          "leading-tight text-white",
           size === "lg" ? "text-[1.0625rem]" : "hidden text-[0.9375rem] sm:inline",
         )}
       >
-        {l1 && (
-          <span className="font-normal opacity-90">
-            <WhipInUp text={l1} /> </span>
-        )}
-        <span className="font-display font-bold">
-          <WhipInUp text={l2} />
-        </span>
+        <CtaEcho>
+          {l1 && (
+            <span className="font-normal opacity-90">
+              {l1}{" "}
+            </span>
+          )}
+          <span className="font-display font-bold">
+            {l2}
+          </span>
+        </CtaEcho>
       </span>
     </a>
   );
