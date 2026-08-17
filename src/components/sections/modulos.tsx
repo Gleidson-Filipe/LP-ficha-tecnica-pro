@@ -110,7 +110,7 @@ export function Modulos() {
                     onClick={() => go(-1)}
                     disabled={activeIdx === 0}
                     aria-label="Módulo anterior"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-sm text-white transition-all hover:border-accent hover:text-accent disabled:opacity-25 cursor-pointer disabled:cursor-not-allowed"
+                    className="peer flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-sm text-white transition-all hover:border-accent hover:bg-accent disabled:opacity-25 disabled:hover:border-white/20 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed"
                   >
                     ‹
                   </button>
@@ -119,7 +119,7 @@ export function Modulos() {
                     onClick={() => go(1)}
                     disabled={activeIdx === total - 1}
                     aria-label="Próximo módulo"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-accent bg-accent text-sm text-white transition-all hover:bg-accent-deep disabled:opacity-25 disabled:border-white/20 disabled:bg-transparent disabled:text-white cursor-pointer disabled:cursor-not-allowed"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-accent bg-accent text-sm text-white transition-all hover:bg-accent-deep peer-hover:border-white/20 peer-hover:bg-transparent disabled:opacity-25 disabled:border-white/20 disabled:bg-transparent disabled:text-white cursor-pointer disabled:cursor-not-allowed"
                   >
                     ›
                   </button>
@@ -160,6 +160,7 @@ export function Modulos() {
                 width={activeItem.w}
                 height={activeItem.h}
                 sizes="(max-width: 1024px) 100vw, 70vw"
+                quality={100}
                 className={cn(
                   "max-h-full max-w-full w-auto h-auto object-contain rounded-xl drop-shadow-2xl transition-transform duration-300",
                   isEquilibrio && "scale-[1.28] sm:scale-[1.34] md:scale-[1.4] lg:scale-[1.46] xl:scale-[1.52]"
