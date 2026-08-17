@@ -66,7 +66,7 @@ export const problema = {
   title: "Feita para quem vive de gastronomia.",
   lead: "Se você define preço de prato, monta cardápio ou responde pelo caixa, essa planilha é pra você.",
   /* Abre a comparação — copy original do site antigo, intacta. */
-  problemaLabel: "O problema",
+  problemaLabel: "Problema invisível",
   problemaTitle: "O faturamento engana. A falta de controle de custos quebra.",
   problemaLead: "Veja o que muda quando cada custo entra na conta.",
   gruposNegocio: [

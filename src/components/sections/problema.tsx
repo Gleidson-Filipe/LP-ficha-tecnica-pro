@@ -26,7 +26,7 @@ export function Problema() {
         <h2 className="mt-7 max-w-[20ch] font-display text-h2 text-balance">
           <WhipInUp text={p.title} />
         </h2>
-        <p className="measure mt-6 text-lead soft">
+        <p className="mt-6 max-w-[46ch] text-lead soft">
           <WhipInUp text={p.lead} />
         </p>
       </div>
@@ -34,8 +34,7 @@ export function Problema() {
       <Reveal stagger={0.08} className="cols rule-t md:grid-cols-3">
         {p.gruposNegocio.map((g) => (
           <div key={g.grupo}>
-            <p className="num text-[1.125rem] leading-none text-accent">{g.n}</p>
-            <h3 className="mt-5 font-display text-h3">
+            <h3 className="font-display text-h3">
               <WhipInUp text={g.grupo} />
             </h3>
             <p className="mt-2 text-[0.9375rem] soft">
