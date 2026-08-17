@@ -101,9 +101,11 @@ export function Problema() {
       {/* ─── C. A FALSA MARGEM (FUNDO ESCURO COM FOCO INTERATIVO) ─── */}
       <div className="t-ink bg-ink rule-t pad py-16 md:py-24 flex flex-col justify-center">
         <div className="mx-auto max-w-[46rem] text-center">
-          <div className="flex justify-center">
-            <Label>{r.label}</Label>
-          </div>
+          <p className="flex items-center justify-center gap-3 text-label uppercase text-accent">
+            <span aria-hidden className="inline-block h-[2px] w-7 bg-accent" />
+            <WhipInUp text={r.label} />
+            <span aria-hidden className="inline-block h-[2px] w-7 bg-accent" />
+          </p>
           <h2 className="mx-auto mt-4 font-display text-h2 text-balance">
             <WhipInUp text={r.titlePre} />
             <span className="underline decoration-accent decoration-[5px] underline-offset-[10px]">
