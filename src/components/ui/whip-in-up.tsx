@@ -55,8 +55,42 @@ export function WhipInUp({
       // depois animava, deixando a letra presa fora de posição mesmo após
       // o tween "terminar". Definindo tudo pelo GSAP desde o início, o
       // cache interno dele fica consistente com o que realmente anima.
+      // As letras ficam quebradas em spans só enquanto a animação precisa
+      // delas. Feito o tween, cada palavra volta a ser um texto único —
+      // sem isso, a página inteira fica permanentemente cheia de spans por
+      // letra, o que quebra a seleção (o navegador desenha um retângulo por
+      // span, ficando "picotada") e o copy/paste (o espaçamento entre
+      // palavras é feito via margin, não caractere de espaço real, então
+      // colar gruda as palavras). Recomendação da própria autora do GSAP
+      // SplitText (Cassie Evans) para esse exato problema: reverter o split
+      // assim que a animação terminar, em vez de manter o DOM fragmentado.
+      //
+      // Importante: o revert some com as letras, mas mantém o <span> de
+      // cada palavra (o wrapper com align-top/padding que evita cortar
+      // rabichos de letras como "g" e "j" durante o slide). Trocar isso por
+      // texto solto (sem wrapper nenhum) muda a métrica vertical da linha —
+      // o texto "salta" ~6px pra cima no instante do revert, porque o
+      // wrapper tem alinhamento/altura diferentes do fluxo normal de texto.
+      // Mantendo o wrapper e só limpando as letras de dentro dele, a caixa
+      // nunca muda: revert fica imperceptível.
+      //
+      // O "overflow-hidden" em si só existe pra mascarar o slide da letra
+      // durante a animação — uma vez revertido não sobra nada pra cortar, e
+      // deixá-lo ligado faz o Chrome pintar a seleção de texto com uma
+      // reentrância exatamente no espaço entre palavras (cada wrapper vira
+      // seu próprio "clipping container" e a marcação de seleção nele fica
+      // ligeiramente destacada da marcação do espaço ao lado). Desligar o
+      // overflow no revert não mexe em tamanho/posição — só no que fica
+      // visível — então é seguro e resolve o serrilhado da seleção.
+      const revertWord = (wordEl: HTMLElement, word: string) => {
+        wordEl.textContent = word;
+        wordEl.style.overflow = "visible";
+      };
+
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        gsap.set(letters, { clearProps: "transform,opacity" });
+        el.querySelectorAll<HTMLElement>(".wiu-word").forEach((w) =>
+          revertWord(w, w.dataset.word ?? ""),
+        );
         return;
       }
       ensureWhipEase();
@@ -70,6 +104,11 @@ export function WhipInUp({
             duration: 0.58,
             ease: "whipInUp",
             stagger: 0.007,
+            onComplete: () => {
+              el.querySelectorAll<HTMLElement>(".wiu-word").forEach((w) =>
+                revertWord(w, w.dataset.word ?? ""),
+              );
+            },
           });
           io.disconnect();
         },
@@ -88,22 +127,34 @@ export function WhipInUp({
   const words = text.split(" ");
 
   return (
-    <span ref={root} className={className}>
+    // font-kerning:none nos dois estados (letras separadas e texto revertido)
+    // — sem isso, o navegador aplica kerning só depois do revert (letras
+    // separadas nunca têm kerning entre si), e a diferença de largura entre
+    // pares de letras kerned some de uma vez, deslocando várias palavras ao
+    // mesmo tempo (percebido como um "salto" coletivo do texto).
+    <span ref={root} className={className} style={{ fontKerning: "none" }}>
       {words.map((word, wi) => (
-        <span
-          key={wi}
-          className="mr-[0.22em] inline-block overflow-hidden align-top last:mr-0"
-          style={{ paddingBottom: "0.2em", marginBottom: "-0.2em" }}
-        >
-          {Array.from(word).map((ch, ci) => (
-            <span
-              key={ci}
-              className="wiu-letter inline-block"
-              style={{ opacity: 0 }}
-            >
-              {ch}
-            </span>
-          ))}
+        <span key={wi}>
+          <span
+            className="wiu-word inline-block overflow-hidden align-top"
+            data-word={word}
+            style={{ paddingBottom: "0.2em", marginBottom: "-0.2em" }}
+          >
+            {Array.from(word).map((ch, ci) => (
+              <span
+                key={ci}
+                className="wiu-letter inline-block"
+                style={{ opacity: 0 }}
+              >
+                {ch}
+              </span>
+            ))}
+          </span>
+          {wi < words.length - 1 ? (
+            <span style={{ verticalAlign: "top" }}> </span>
+          ) : (
+            ""
+          )}
         </span>
       ))}
     </span>
