@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useRef, type ReactNode } from "react";
 import { Video } from "@/components/sections/video";
 
 /**
@@ -7,10 +9,12 @@ import { Video } from "@/components/sections/video";
  * cobrindo o vídeo conforme o scroll avança.
  */
 export function VideoCover({ children }: { children: ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative">
       <div className="sticky top-0 z-0 flex h-screen w-full items-center justify-center">
-        <Video />
+        <Video containerRef={containerRef} />
       </div>
       <div className="relative z-10">
         {children}

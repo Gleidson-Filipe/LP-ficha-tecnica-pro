@@ -25,55 +25,100 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
  * saindo por baixo — efeito de "tesoura", não é mais scrub contínuo, é um
  * gatilho único que reverte se o usuário rolar pra cima de novo.
  */
-export function Video() {
+export function Video({
+  containerRef,
+}: {
+  containerRef?: React.RefObject<HTMLDivElement | null>;
+}) {
   const [tocando, setTocando] = useState(false);
   const root = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set([".video-title", ".video-tablet-wrap"], { clearProps: "transform,opacity" });
+        return;
+      }
 
-      gsap.set(".video-title", { y: -140, opacity: 0 });
-      gsap.set(".video-tablet-wrap", { y: 180, opacity: 0 });
+      // O trigger precisa ser o container pai estático (não-sticky),
+      // pois elementos position: sticky alteram suas coordenadas de viewport durante o scroll.
+      const triggerEl = containerRef?.current || root.current;
+      if (!triggerEl) return;
 
-      // Entrada: título desce, iPad sobe, convergindo no centro da seção.
-      gsap
-        .timeline({
+      // Entrada, espera (visível) e saída, tudo numa timeline só por
+      // elemento, com UMA ScrollTrigger cada — nunca duas ScrollTriggers
+      // com scrub disputando as mesmas propriedades do mesmo alvo. É um bug
+      // documentado do próprio GSAP (greensock/GSAP#497: "scrubbing
+      // animations cause other scrubbing animations to jump"): a segunda
+      // sempre atropela a primeira a cada evento de scroll, porque cada
+      // scrub re-renderiza pro seu próprio progresso clampado em TODO
+      // scroll, mesmo fora do próprio intervalo. Já tentamos desligar uma
+      // via disable()/enable() (dispara refresh() global, que arrasta o
+      // scroll da página por causa da seção com pin:true em
+      // story-scroll.tsx, e ainda deixou a ScrollTrigger "surda" depois de
+      // reativada) e via overwrite:true (mata a outra na hora da CRIAÇÃO,
+      // não na hora do trigger, quebrando a entrada desde o mount). Uma
+      // timeline com scrub cobrindo o intervalo inteiro evita o conflito
+      // por construção — não existe uma segunda ScrollTrigger pra brigar.
+      //
+      // A posição de cada trecho é calculada em px (não em % fixo da
+      // timeline) porque a entrada é uma janela de scroll bem menor que a
+      // distância total até a saída — sem isso, a proporção ficaria
+      // arbitrária e a entrada aconteceria rápido/lenta demais.
+      //
+      // start/end são FUNÇÕES, não números fixos: um número (px) calculado
+      // uma vez no mount fica errado pra sempre se a página ainda não tinha
+      // a altura final naquele instante (ex.: fonte ainda carregando) —
+      // ScrollTrigger.refresh() só recalcula expressões dinâmicas (string
+      // ou função), nunca um número já resolvido. invalidateOnRefresh
+      // garante que a função é reexecutada a cada refresh (não só a
+      // primeira vez), pegando a geometria atual de verdade.
+      const geometry = () => {
+        const vh = window.innerHeight;
+        const rect = triggerEl.getBoundingClientRect();
+        const containerTop = rect.top + window.scrollY;
+        const containerBottom = rect.bottom + window.scrollY;
+        const enterStart = containerTop - vh * 0.8; // "top 80%"
+        const enterEnd = containerTop - vh * 0.1; // "top 10%"
+        const exitStart = containerBottom - vh * 0.5; // "bottom 50%"
+        const exitEnd = exitStart + vh * 0.35; // duração da saída em px de scroll
+        return { enterStart, enterEnd, exitStart, exitEnd };
+      };
+
+      // Frações fixas (aproximação): só definem a proporção RELATIVA entre
+      // entrada/espera/saída dentro do intervalo, recalculado a cada
+      // refresh via geometry() acima — não precisam ser dinâmicas também.
+      const { enterStart, enterEnd, exitStart, exitEnd } = geometry();
+      const totalRange = exitEnd - enterStart;
+      const enterEndFrac = (enterEnd - enterStart) / totalRange;
+      const exitStartFrac = (exitStart - enterStart) / totalRange;
+
+      const buildTimeline = (target: string, fromY: number, exitY: number) => {
+        const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: root.current,
-            start: "top bottom",
-            end: "center center",
-            scrub: 1,
+            trigger: triggerEl,
+            start: () => geometry().enterStart,
+            end: () => geometry().exitEnd,
+            scrub: 0.8,
+            invalidateOnRefresh: true,
           },
-        })
-        .to(".video-title", { y: 0, opacity: 1, ease: "power2.out" }, 0)
-        .to(".video-tablet-wrap", { y: 0, opacity: 1, ease: "power2.out" }, 0);
+        });
+        tl.fromTo(
+          target,
+          { y: fromY, opacity: 0 },
+          { y: 0, opacity: 1, ease: "power2.out", duration: enterEndFrac },
+          0,
+        ).to(
+          target,
+          { y: exitY, opacity: 0, ease: "back.in(1.8)", duration: 1 - exitStartFrac },
+          exitStartFrac,
+        );
+      };
 
-      // Saída: gatilho único (não scrub) quando a próxima seção já subiu
-      // pela metade — título dá um bounce e sobe, iPad desce. Reverte se
-      // o usuário voltar a rolar para cima.
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: root.current,
-            start: "bottom 50%",
-            toggleActions: "play none none reverse",
-          },
-        })
-        .to(".video-title", {
-          y: -180,
-          opacity: 0,
-          duration: 0.7,
-          ease: "back.in(1.8)",
-        }, 0)
-        .to(".video-tablet-wrap", {
-          y: 220,
-          opacity: 0,
-          duration: 0.6,
-          ease: "power2.in",
-        }, 0);
+      buildTimeline(".video-title", -140, -180);
+      buildTimeline(".video-tablet-wrap", 180, 220);
     },
-    { scope: root },
+    { scope: root, dependencies: [containerRef] },
   );
 
   return (

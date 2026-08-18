@@ -113,6 +113,53 @@ export function SiteHeader() {
     { scope: root },
   );
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setAtivo(null);
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setAtivo(id);
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+      if (window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    }
+  };
+
+  const handleMobileNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setAberto(false);
+    setAtivo(id);
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+      if (window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    }
+  };
+
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (CHECKOUT.startsWith("#")) {
+      e.preventDefault();
+      const target = document.querySelector(CHECKOUT);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+        if (window.location.hash) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
+    }
+  };
+
   return (
     <header
       ref={root}
@@ -124,9 +171,10 @@ export function SiteHeader() {
 
         {/* ── Container Logo + Slogan (w:408px no desktop, removendo o espaço excessivo à direita) ── */}
         <a
-          href="#topo"
+          href="/"
+          onClick={handleLogoClick}
           aria-label="Ficha Técnica Pro"
-          className="relative flex shrink-0 items-stretch pl-5 pr-6 sm:pl-8 xl:w-[408px] xl:px-0"
+          className="relative flex shrink-0 items-stretch pl-5 pr-6 sm:pl-8 xl:w-[408px] xl:px-0 cursor-pointer"
         >
           {/* Responsivo (mobile/tablet) */}
           <div
@@ -171,7 +219,7 @@ export function SiteHeader() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              onClick={() => setAtivo(item.id)}
+              onClick={(e) => handleNavClick(e, item.id)}
               aria-current={ativo === item.id ? "true" : undefined}
               className={cn(
                 "font-body relative flex flex-1 items-center justify-start pl-8 text-left transition-colors duration-150 whitespace-nowrap",
@@ -221,6 +269,7 @@ export function SiteHeader() {
         <a
           ref={ctaFx}
           href={CHECKOUT}
+          onClick={handleCtaClick}
           className="group relative flex shrink-0 items-center justify-center overflow-hidden cta-btn-fluid px-6 text-white transition-all duration-150 xl:w-[304px] xl:px-0"
           style={{ borderLeft: "1px solid #212124" }}
         >
@@ -250,7 +299,7 @@ export function SiteHeader() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              onClick={() => setAberto(false)}
+              onClick={(e) => handleMobileNavClick(e, item.id)}
               className="block py-4 pl-5 text-[1.0625rem] font-semibold text-[#dbdbdb] sm:pl-8"
               style={{ borderBottom: "1px solid #212124" }}
             >
