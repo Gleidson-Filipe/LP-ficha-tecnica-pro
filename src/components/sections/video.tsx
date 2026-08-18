@@ -77,11 +77,18 @@ export function Video({
         const vh = window.innerHeight;
         const rect = triggerEl.getBoundingClientRect();
         const containerTop = rect.top + window.scrollY;
-        const containerBottom = rect.bottom + window.scrollY;
         const enterStart = containerTop - vh * 0.8; // "top 80%"
         const enterEnd = containerTop - vh * 0.1; // "top 10%"
-        const exitStart = containerBottom - vh * 0.5; // "bottom 50%"
-        const exitEnd = exitStart + vh * 0.35; // duração da saída em px de scroll
+        // O vídeo ocupa exatamente 1 viewport (h-screen) — "meio coberto"
+        // pela próxima seção (Para quem é) é quando ela já subiu até a
+        // metade da tela, ou seja, meio viewport depois do fim do vídeo.
+        // Não usar o fundo do CONTAINER inteiro (vídeo + Para quem é
+        // somados): isso dispararia a saída só perto do fim de "Para quem
+        // é", tarde e abrupto demais.
+        const exitStart = containerTop + vh * 0.5;
+        // Mesma distância de scroll da entrada (enterEnd - enterStart),
+        // pra saída ter a mesma duração/suavidade — nunca mais curta.
+        const exitEnd = exitStart + (enterEnd - enterStart);
         return { enterStart, enterEnd, exitStart, exitEnd };
       };
 
@@ -93,7 +100,11 @@ export function Video({
       const enterEndFrac = (enterEnd - enterStart) / totalRange;
       const exitStartFrac = (exitStart - enterStart) / totalRange;
 
-      const buildTimeline = (target: string, fromY: number, exitY: number) => {
+      // Saída no mesmo estilo da entrada (mesmo deslocamento, mesma ease
+      // power2) — não é mais um "bounce" distinto, é a entrada tocando ao
+      // contrário: título volta a subir/sumir por cima, tablet volta a
+      // descer/sumir por baixo, exatamente pelo caminho que vieram.
+      const buildTimeline = (target: string, fromY: number) => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: triggerEl,
@@ -110,13 +121,13 @@ export function Video({
           0,
         ).to(
           target,
-          { y: exitY, opacity: 0, ease: "back.in(1.8)", duration: 1 - exitStartFrac },
+          { y: fromY, opacity: 0, ease: "power2.out", duration: 1 - exitStartFrac },
           exitStartFrac,
         );
       };
 
-      buildTimeline(".video-title", -140, -180);
-      buildTimeline(".video-tablet-wrap", 180, 220);
+      buildTimeline(".video-title", -140);
+      buildTimeline(".video-tablet-wrap", 180);
     },
     { scope: root, dependencies: [containerRef] },
   );
