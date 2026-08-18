@@ -5,9 +5,9 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { ClippedCircle } from "@/components/unlumen-ui/primitives/clipped-circle";
 
-export interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string;
-  description?: string;
+export interface TiltCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+  title: React.ReactNode;
+  description?: React.ReactNode;
   /** left half of the split badge pill; shown as a simple pill if `badgeLabel` is omitted */
   price?: string;
   /** right half of the split pill, coloured by `badgeVariant` */

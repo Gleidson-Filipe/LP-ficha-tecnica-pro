@@ -98,8 +98,8 @@ export function Problema() {
               }`}
             >
               <TiltCard
-                title={l.antes}
-                description={l.antesTexto}
+                title={<WhipInUp text={l.antes} />}
+                description={<WhipInUp text={l.antesTexto} />}
                 className={cn(
                   "!h-full w-full !bg-transparent !border-0 !rounded-none !shadow-none hover:!scale-100",
                   `py-8 sm:py-10 ${index === 0 ? "pl-8" : ""} ${
@@ -114,7 +114,7 @@ export function Problema() {
                 )}
               >
                 <span className="font-display font-light text-[4.5rem] md:text-[5.5rem] leading-none text-on-paper/30 select-none transition-colors duration-300 group-hover:text-accent">
-                  {l.n}
+                  <WhipInUp text={l.n} />
                 </span>
               </TiltCard>
             </div>

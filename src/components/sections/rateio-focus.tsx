@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { WhipInUp } from "@/components/ui/whip-in-up";
 
 type Segment = { text: string; mark: boolean };
 
@@ -208,7 +209,11 @@ export function RateioFocus({
       >
         {segments.map((seg, i) => {
           if (!seg.mark) {
-            return <span key={i}>{seg.text}</span>;
+            return (
+              <span key={i}>
+                <WhipInUp text={seg.text} />
+              </span>
+            );
           }
           const action = EMPHASIS_ACTIONS[markIndex % EMPHASIS_ACTIONS.length];
           const delay = markIndex * 140; // 0ms, 140ms, 280ms
@@ -216,7 +221,7 @@ export function RateioFocus({
 
           return (
             <span key={i} className="relative inline-block whitespace-nowrap">
-              {seg.text}
+              <WhipInUp text={seg.text} />
               {action === "underline" ? (
                 <HandUnderline show={active === index} delay={delay} />
               ) : (
