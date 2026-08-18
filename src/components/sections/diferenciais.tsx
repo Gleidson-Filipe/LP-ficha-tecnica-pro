@@ -304,9 +304,7 @@ export function Diferenciais() {
         <Label>{d.label}</Label>
         <h2 className="mt-6 max-w-[26ch] font-display text-h2 text-balance">
           <WhipInUp text={d.titlePre} />
-          <span className="underline decoration-accent decoration-[4px] underline-offset-[8px]">
-            <WhipInUp text={d.titleMark} />
-          </span>
+          <WhipInUp text={d.titleMark} />
           <WhipInUp text={d.titlePost} />
         </h2>
       </div>

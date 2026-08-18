@@ -130,9 +130,7 @@ export function Problema() {
           </p>
           <h2 className="mx-auto mt-4 font-display text-h2 text-balance">
             <WhipInUp text={r.titlePre} />
-            <span className="underline decoration-accent decoration-[5px] underline-offset-[10px]">
-              <WhipInUp text={`"${r.titleMark}"`} />
-            </span>
+            <WhipInUp text={`"${r.titleMark}"`} />
             <WhipInUp text={r.titlePost} />
           </h2>
         </div>
