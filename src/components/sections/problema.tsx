@@ -67,7 +67,8 @@ export function Problema() {
         <a
           ref={ctaFx}
           href={CHECKOUT}
-          className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-body py-4.5 px-8 sm:px-10 transition-all duration-200 active:translate-y-px text-center hover:scale-[1.02] shrink-0"
+          className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-body py-4.5 px-8 sm:px-10 text-center shrink-0"
+          style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
         >
           <CtaGlow />
           <CtaShine />

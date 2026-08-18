@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { NAV, SLOGAN, CTA, CHECKOUT } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { FitWidth } from "@/components/ui/fit-width";
 import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -79,6 +80,15 @@ export function SiteHeader() {
         setAtivo(atual ? atual.id : null);
       };
 
+      // Só a ScrollTrigger cuida do scroll (ela já escuta scroll de forma
+      // otimizada internamente) — não duplicar com um addEventListener
+      // "scroll" manual chamando a MESMA função a cada tick: isso rodava o
+      // mesmo getBoundingClientRect() em todas as seções DUAS vezes por
+      // evento de scroll, sobrecarregando a thread principal durante
+      // rolagem contínua e competindo com outras animações (ex.: a entrada
+      // "torta" do CTA de Problema ficava com stutter só quando chegava lá
+      // rolando de verdade, mas suave num reload — a diferença era
+      // exatamente essa duplicação só acontecer sob scroll real).
       const st = ScrollTrigger.create({
         start: 0,
         end: "max",
@@ -86,7 +96,6 @@ export function SiteHeader() {
         onRefresh: atualizar,
       });
 
-      window.addEventListener("scroll", atualizar, { passive: true });
       window.addEventListener("resize", atualizar, { passive: true });
       atualizar();
 
@@ -105,7 +114,6 @@ export function SiteHeader() {
       }
 
       return () => {
-        window.removeEventListener("scroll", atualizar);
         window.removeEventListener("resize", atualizar);
         gs.forEach((g) => g.kill());
       };
@@ -205,10 +213,12 @@ export function SiteHeader() {
               }}
             />
             <div
-              className="font-body absolute left-[64px] -ml-[1px] top-[42px] text-[16px] font-semibold text-[#f5f4ea] whitespace-nowrap"
+              className="absolute left-[64px] -ml-[1px] top-[42px] w-[277px]"
               style={{ lineHeight: "normal" }}
             >
-              <WhipInUp text={SLOGAN} />
+              <FitWidth width={277} className="font-body text-[16px] font-semibold text-[#f5f4ea]">
+                <WhipInUp text={SLOGAN} />
+              </FitWidth>
             </div>
           </div>
         </a>

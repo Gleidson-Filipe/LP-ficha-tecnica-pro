@@ -11,11 +11,14 @@ gsap.registerPlugin(useGSAP);
  * Entrada "torta" do CTA (mesma do botão principal do Hero): nasce
  * deslocado e rotacionado, e assenta retinho quando entra no viewport.
  *
- * O deslocamento/rotação inicial é setado via gsap.set (nunca via transform
- * bruto no style inline) porque este mesmo elemento também recebe o hover
- * de useCtaFx (scale) depois — se o transform inicial vier de CSS puro, o
- * cache interno do GSAP perde a rotação/translação ao compor com o próximo
- * tween (mesmo problema do yPercent documentado em whip-in-up.tsx).
+ * O estado inicial (opacity:0 + translate/rotate) já nasce no JSX via style
+ * inline no elemento que usa este hook (igual ao "hero-fade" do Hero) —
+ * evita o "flash" de aparecer pronto e só depois pular pra escondido. Nada
+ * de gsap.set aqui: setar de novo via JS, depois do primeiro paint, é
+ * exatamente esse salto perceptível (o botão pinta normal, some de
+ * repente, só então anima de volta — parece rodar a animação duas vezes).
+ * GSAP lê o transform CSS já presente normalmente ao criar o `.to()`
+ * abaixo, sem precisar que o estado inicial tenha sido setado por ele.
  */
 export function useCrookedIn(ref: RefObject<HTMLElement | null>) {
   useGSAP(() => {
@@ -26,8 +29,6 @@ export function useCrookedIn(ref: RefObject<HTMLElement | null>) {
       gsap.set(el, { clearProps: "transform,opacity" });
       return;
     }
-
-    gsap.set(el, { opacity: 0, x: 22, y: 26, rotation: 6 });
 
     const io = new IntersectionObserver(
       (entries) => {

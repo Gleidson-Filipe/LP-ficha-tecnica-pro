@@ -114,7 +114,7 @@ export function Hero() {
             <CtaShine />
             <CtaEcho className="items-center whitespace-nowrap text-white">
               <span className="font-bold text-[18px] sm:text-[20px] lg:text-[22px] whitespace-nowrap text-white">
-                Quero saber meu custo real e precificar certo
+                <WhipInUp text="Quero saber meu custo real e precificar certo" />
               </span>
             </CtaEcho>
           </a>
