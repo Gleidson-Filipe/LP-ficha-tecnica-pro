@@ -25,10 +25,20 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="antialiased" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://api.fontshare.com" />
+
         <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f%5B%5D=switzer@400,500,600,700,800&f%5B%5D=general-sans@400,500,600&display=swap"
+          rel="preload"
+          href="/fonts/switzer-700.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/generalsans-400.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
         />
       </head>
       <body suppressHydrationWarning>{children}</body>

@@ -227,10 +227,14 @@ export function SiteHeader() {
           <CtaGlow />
           <CtaShine />
           <span className="font-body xl:hidden font-bold text-[15px] text-white">
-            <CtaEcho>Comprar</CtaEcho>
+            <CtaEcho>
+              <WhipInUp text="Comprar" />
+            </CtaEcho>
           </span>
           <span className="font-body hidden xl:inline font-bold text-[19px] whitespace-nowrap text-white">
-            <CtaEcho>{CTA.header.l2}</CtaEcho>
+            <CtaEcho>
+              <WhipInUp text={CTA.header.l2} />
+            </CtaEcho>
           </span>
         </a>
       </div>

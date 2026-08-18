@@ -1,11 +1,54 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useRef, type ReactNode, type RefObject } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(useGSAP);
+
+/**
+ * Entrada "torta" do CTA (mesma do botão principal do Hero): nasce
+ * deslocado e rotacionado, e assenta retinho quando entra no viewport.
+ *
+ * O deslocamento/rotação inicial é setado via gsap.set (nunca via transform
+ * bruto no style inline) porque este mesmo elemento também recebe o hover
+ * de useCtaFx (scale) depois — se o transform inicial vier de CSS puro, o
+ * cache interno do GSAP perde a rotação/translação ao compor com o próximo
+ * tween (mesmo problema do yPercent documentado em whip-in-up.tsx).
+ */
+export function useCrookedIn(ref: RefObject<HTMLElement | null>) {
+  useGSAP(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set(el, { clearProps: "transform,opacity" });
+      return;
+    }
+
+    gsap.set(el, { opacity: 0, x: 22, y: 26, rotation: 6 });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting) return;
+        gsap.to(el, {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotation: 0,
+          duration: 1.1,
+          ease: "back.out(1.6)",
+        });
+        io.disconnect();
+      },
+      { rootMargin: "0px" },
+    );
+    io.observe(el);
+
+    return () => io.disconnect();
+  }, [ref]);
+}
 
 /**
  * Hook GSAP para controle de animação sutil do botão no hover.

@@ -7,7 +7,7 @@ import { WhipInUp } from "@/components/ui/whip-in-up";
 import { SpinDot } from "@/components/ui/spin-dot";
 import { TiltCard } from "@/components/unlumen-ui/tilt-card";
 import { RateioFocus } from "@/components/sections/rateio-focus";
-import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
+import { useCtaFx, useCrookedIn, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 import { cn } from "@/lib/utils";
 
 /**
@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 export function Problema() {
   const { comparacao: c, rateio: r } = p;
   const ctaFx = useCtaFx<HTMLAnchorElement>();
+  useCrookedIn(ctaFx);
 
   return (
     <Section id="problema" tone="ink" className="rule-t">
@@ -72,7 +73,7 @@ export function Problema() {
           <CtaShine />
           <CtaEcho className="items-center whitespace-nowrap">
             <span className="font-body font-bold text-[16px] sm:text-[18px] lg:text-[19px] whitespace-nowrap text-white">
-              Automatizar minha operação
+              <WhipInUp text="Automatizar minha operação" />
             </span>
           </CtaEcho>
         </a>
