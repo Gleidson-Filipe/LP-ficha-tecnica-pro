@@ -446,7 +446,7 @@ export const preco = {
   valor: "197",
   nota: "pagamento único",
   inclui: [
-    "Acesso vitalício à Ficha Técnica Pro",
+    "Acesso vitalício à Ficha Técnica Pro (Google Sheets)",
     "Atualização automática de CMV e Margem de Contribuição",
     "Cálculo automatizado de Gás, Energia e Mão de Obra",
     "Suporte especializado e aulas práticas",

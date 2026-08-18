@@ -1,25 +1,29 @@
 "use client";
 
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import { useRef, useState, useEffect } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { modulos } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { cn } from "@/lib/utils";
 
-gsap.registerPlugin(useGSAP);
-
 /**
- * Modulos: Showcase amplo com transição fluida via GSAP.
- * Sem quadros cinzas, sem vazamento ou sobreposição entre imagens de tamanhos diferentes,
- * com imagens grandes centralizadas que ocupam toda a altura da seção.
+ * Modulos – Carousel de módulos integrado com lightbox zoom.
+ *
+ * Estrutura:
+ *  - Todos os slides permanecem no DOM simultaneamente com key={item.tab} (estável).
+ *  - Transições suaves de opacidade entre slides (sem remontar DOM, zero layout shift).
+ *  - Hover zoom proporcional e consistente em todos os módulos (inclusivo Equilíbrio).
+ *  - Lightbox ampliado renderizado via createPortal(document.body) com dimensionamento
+ *    responsivo generoso (tanto para imagens panorâmicas quanto quadradas/verticais).
  */
 export function Modulos() {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [zoomImage, setZoomImage] = useState<string | null>(null);
+  const [isInView, setIsInView] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const imageStageRef = useRef<HTMLDivElement>(null);
   const isInteracting = useRef(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -27,158 +31,264 @@ export function Modulos() {
   const total = items.length;
   const activeItem = items[activeIdx] || items[0];
 
-  // Transição suave, nítida e cinematográfica usando GSAP (0.8s)
-  useGSAP(
-    () => {
-      const stage = imageStageRef.current;
-      if (!stage) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const activeZoomItem = items.find((it) => it.image === zoomImage) || activeItem;
+  const ratio = activeZoomItem.w / activeZoomItem.h;
+  const maxW =
+    activeZoomItem.tab === "Equilíbrio"
+      ? 1020
+      : activeZoomItem.tab === "Precificar"
+      ? 820
+      : 1280;
 
-      gsap.fromTo(
-        stage,
-        { opacity: 0, scale: 0.98, y: 10 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power2.out" }
-      );
-    },
-    { dependencies: [activeIdx] }
-  );
+  useEffect(() => { setMounted(true); }, []);
 
-  // Autoplay pausado e confortável (14s por módulo)
+  // Fechar lightbox ao pressionar Escape
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (isInteracting.current) return;
-      setActiveIdx((prev) => (prev + 1) % total);
-    }, 14000);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoomImage(null);
+    };
+    if (zoomImage) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [zoomImage]);
 
-    return () => clearInterval(interval);
-  }, [total]);
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => setIsInView(e.isIntersecting),
+      { rootMargin: "150px 0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const iv = setInterval(() => {
+      if (isInteracting.current || zoomImage) return;
+      setActiveIdx((p) => (p + 1) % total);
+    }, 14000);
+    return () => clearInterval(iv);
+  }, [isInView, total, zoomImage]);
 
   const setManualIdx = (idx: number) => {
     isInteracting.current = true;
     if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      isInteracting.current = false;
-    }, 20000);
-
+    timerRef.current = setTimeout(() => { isInteracting.current = false; }, 20000);
     setActiveIdx(idx);
   };
 
-  const go = (dir: 1 | -1) => {
-    const next = Math.min(total - 1, Math.max(0, activeIdx + dir));
-    setManualIdx(next);
-  };
-
-  const isEquilibrio = activeItem.tab === "Equilíbrio";
+  const go = (dir: 1 | -1) =>
+    setManualIdx(Math.min(total - 1, Math.max(0, activeIdx + dir)));
 
   return (
-    <Section
-      id="modulos"
-      tone="ink"
-      className="rule-t relative overflow-hidden flex flex-col justify-center min-h-[620px] lg:min-h-[660px] py-8 lg:py-10"
-      ref={containerRef}
-    >
-      <div className="pad w-full">
-        {/* Layout de 2 Colunas: Esquerda (Header no topo + Info embaixo) | Direita (Imagem gigante ocupando toda a altura) */}
-        <div className="grid gap-8 lg:grid-cols-[360px_1fr] xl:grid-cols-[400px_1fr] items-stretch lg:gap-10 xl:gap-14">
-          {/* Coluna da Esquerda: Header no topo e Módulo Info na base */}
-          <div className="flex flex-col justify-between py-1 min-h-[440px] lg:min-h-[560px]">
-            {/* Topo: Cabeçalho da Seção */}
-            <div>
-              <Label>{modulos.label}</Label>
-              <h2 className="mt-2.5 max-w-[15ch] font-display text-h2 leading-tight">
-                <WhipInUp text={modulos.title} />
-              </h2>
-            </div>
+    <>
+      <Section
+        id="modulos"
+        tone="ink"
+        className="rule-t relative overflow-hidden flex flex-col justify-center min-h-[620px] lg:min-h-[660px] py-8 lg:py-10"
+        ref={containerRef}
+      >
+        <div className="pad w-full">
+          <div className="grid gap-8 lg:grid-cols-[360px_1fr] xl:grid-cols-[400px_1fr] items-start lg:gap-10 xl:gap-14">
 
-            {/* Base: Informações do Módulo Ativo e Controles */}
-            <div className="pt-6">
-              <span className="text-xs uppercase tracking-wider font-semibold text-accent mb-2 block">
-                Módulo {String(activeIdx + 1).padStart(2, "0")}
-              </span>
-              <h3 className="font-display text-2xl lg:text-[1.75rem] font-bold text-white tracking-tight leading-snug">
-                {activeItem.titulo}
-              </h3>
-              <p className="mt-2.5 text-body text-on-ink-soft leading-relaxed max-w-[36ch]">
-                {activeItem.texto}
-              </p>
+            {/* ── Coluna Esquerda ── */}
+            <div className="flex flex-col justify-between py-1 min-h-[440px] lg:min-h-[560px]">
+              <div>
+                <Label>{modulos.label}</Label>
+                <h2 className="mt-2.5 max-w-[15ch] font-display text-h2 leading-tight">
+                  <WhipInUp text={modulos.title} />
+                </h2>
+              </div>
 
-              {/* Controles e Stepper */}
-              <div className="mt-6 flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => go(-1)}
-                    disabled={activeIdx === 0}
-                    aria-label="Módulo anterior"
-                    className="peer flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-sm text-white transition-all hover:border-accent hover:bg-accent disabled:opacity-25 disabled:hover:border-white/20 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => go(1)}
-                    disabled={activeIdx === total - 1}
-                    aria-label="Próximo módulo"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-accent bg-accent text-sm text-white transition-all hover:bg-accent-deep peer-hover:border-white/20 peer-hover:bg-transparent disabled:opacity-25 disabled:border-white/20 disabled:bg-transparent disabled:text-white cursor-pointer disabled:cursor-not-allowed"
-                  >
-                    ›
-                  </button>
-                </div>
+              <div className="pt-6">
+                <span className="text-xs uppercase tracking-wider font-semibold text-accent mb-2 block">
+                  Módulo {String(activeIdx + 1).padStart(2, "0")}
+                </span>
+                <h3 className="font-display text-2xl lg:text-[1.75rem] font-bold text-white tracking-tight leading-snug">
+                  {activeItem.titulo}
+                </h3>
+                <p className="mt-2.5 text-body text-on-ink-soft leading-relaxed max-w-[36ch]">
+                  {activeItem.texto}
+                </p>
 
-                <div className="flex items-center gap-1.5">
-                  {items.map((it, idx) => (
+                <div className="mt-6 flex items-center gap-4">
+                  <div className="flex items-center gap-2">
                     <button
-                      key={it.tab}
                       type="button"
-                      onClick={() => setManualIdx(idx)}
-                      aria-label={`Ir para módulo ${it.tab}`}
-                      className={cn(
-                        "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
-                        idx === activeIdx
-                          ? "w-7 bg-accent"
-                          : idx < activeIdx
-                          ? "w-2.5 bg-accent/40 hover:bg-accent/70"
-                          : "w-2.5 bg-white/20 hover:bg-white/40"
-                      )}
-                    />
-                  ))}
+                      onClick={() => go(-1)}
+                      disabled={activeIdx === 0}
+                      aria-label="Módulo anterior"
+                      className="peer flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-sm text-white transition-all hover:border-accent hover:bg-accent disabled:opacity-25 disabled:hover:border-white/20 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => go(1)}
+                      disabled={activeIdx === total - 1}
+                      aria-label="Próximo módulo"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-accent bg-accent text-sm text-white transition-all hover:bg-accent-deep peer-hover:border-white/20 peer-hover:bg-transparent disabled:opacity-25 disabled:border-white/20 disabled:bg-transparent disabled:text-white cursor-pointer disabled:cursor-not-allowed"
+                    >
+                      ›
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    {items.map((it, idx) => (
+                      <button
+                        key={it.tab}
+                        type="button"
+                        onClick={() => setManualIdx(idx)}
+                        aria-label={`Ir para módulo ${it.tab}`}
+                        className={cn(
+                          "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                          idx === activeIdx
+                            ? "w-7 bg-accent"
+                            : idx < activeIdx
+                            ? "w-2.5 bg-accent/40 hover:bg-accent/70"
+                            : "w-2.5 bg-white/20 hover:bg-white/40"
+                        )}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Coluna da Direita: Imagem Ocupando Toda a Altura da Seção até o Nível do Título */}
-          <div className="relative flex h-[380px] sm:h-[460px] md:h-[520px] lg:h-[560px] xl:h-[600px] w-full items-center justify-center overflow-hidden">
+            {/* ── Coluna Direita ── */}
             <div
-              ref={imageStageRef}
-              className="relative flex h-full w-full items-center justify-center select-none"
+              className="group/img relative w-full h-[360px] sm:h-[440px] md:h-[500px] lg:h-[540px] xl:h-[580px] overflow-hidden rounded-xl cursor-zoom-in"
+              onClick={() => setZoomImage(activeItem.image)}
+              title="Clique para ampliar a imagem"
             >
-              <Image
-                key={activeItem.image}
-                src={activeItem.image}
-                alt={`Módulo ${activeItem.tab} - ${activeItem.titulo}`}
-                width={activeItem.w}
-                height={activeItem.h}
-                sizes="(max-width: 1024px) 100vw, 70vw"
-                quality={100}
-                className={cn(
-                  "max-h-full max-w-full w-auto h-auto object-contain rounded-xl drop-shadow-2xl transition-transform duration-300",
-                  isEquilibrio && "scale-[1.28] sm:scale-[1.34] md:scale-[1.4] lg:scale-[1.46] xl:scale-[1.52]"
-                )}
-                style={{ borderRadius: 12 }}
-                priority={true}
-              />
+              {items.map((item, idx) => {
+                const isActive = idx === activeIdx;
+                const isEquilibrio = item.tab === "Equilíbrio";
+                return (
+                  <div
+                    key={item.tab}
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center",
+                      "transition-opacity duration-350 ease-in-out",
+                      isActive
+                        ? "opacity-100 pointer-events-auto"
+                        : "opacity-0 pointer-events-none"
+                    )}
+                  >
+                    <Image
+                      src={item.image}
+                      alt={`Módulo ${item.tab} — ${item.titulo}`}
+                      width={item.w}
+                      height={item.h}
+                      sizes="(max-width: 1024px) 100vw, 65vw"
+                      quality={100}
+                      className={cn(
+                        "max-h-[92%] max-w-[94%] w-auto h-auto object-contain drop-shadow-2xl rounded-xl",
+                        "transition-transform duration-300 ease-out origin-center",
+                        isEquilibrio
+                          ? "scale-[1.18] group-hover/img:scale-[1.22]"
+                          : "scale-100 group-hover/img:scale-[1.03]"
+                      )}
+                      style={{ borderRadius: 12 }}
+                      priority={idx <= 1}
+                    />
+                  </div>
+                );
+              })}
+
+              {/* Badge Ampliar */}
+              <span className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10 rounded-md bg-ink/75 backdrop-blur-sm px-2.5 py-1.5 text-xs font-medium text-white opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5 shadow-lg border border-white/10">
+                <svg className="w-3.5 h-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                </svg>
+                Ampliar
+              </span>
             </div>
+
           </div>
         </div>
-      </div>
-    </Section>
+      </Section>
+
+      {/* ── Modal Lightbox Ampliado via Portal ── */}
+      {mounted && zoomImage && createPortal(
+        <div
+          onClick={() => setZoomImage(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "rgba(0,0,0,0.85)",
+            backdropFilter: "blur(12px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+            cursor: "zoom-out",
+            animation: "lbFadeIn 0.2s ease-out both",
+          }}
+        >
+          <style>{`@keyframes lbFadeIn { from { opacity:0 } to { opacity:1 } }`}</style>
+          <button
+            type="button"
+            onClick={() => setZoomImage(null)}
+            style={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              zIndex: 10,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.15)",
+              border: "none",
+              color: "#fff",
+              width: 44,
+              height: 44,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 20,
+              cursor: "pointer",
+            }}
+            aria-label="Fechar ampliação"
+          >
+            ✕
+          </button>
+
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "relative",
+              background: "#fff",
+              borderRadius: 16,
+              padding: 8,
+              boxShadow: "0 25px 60px rgba(0,0,0,0.6)",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Image
+              src={zoomImage}
+              alt={`Módulo ${activeZoomItem.tab} ampliado`}
+              width={activeZoomItem.w}
+              height={activeZoomItem.h}
+              quality={100}
+              style={{
+                width: `min(92vw, ${maxW}px, calc(82vh * ${ratio.toFixed(4)}))`,
+                height: "auto",
+                aspectRatio: `${activeZoomItem.w} / ${activeZoomItem.h}`,
+                objectFit: "contain",
+                borderRadius: 10,
+                display: "block",
+              }}
+              priority
+            />
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
-
-
-
-
-
-
-

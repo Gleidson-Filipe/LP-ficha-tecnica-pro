@@ -131,17 +131,17 @@ export function Preco() {
 
                   {/* Bloco de Valor */}
                   <div className="py-6 border-b border-white/10">
-                    <div className="flex items-baseline gap-2">
+                    <div className="flex items-baseline gap-3 flex-wrap">
                       <span className="font-display text-2xl font-semibold soft">
                         R$
                       </span>
                       <span className="num text-[4.5rem] sm:text-[5.25rem] leading-[0.85] text-white">
                         {p.valor}
                       </span>
+                      <span className="text-xs sm:text-sm uppercase text-accent tracking-wider font-semibold">
+                        / {p.nota}
+                      </span>
                     </div>
-                    <p className="mt-3 text-xs sm:text-sm uppercase text-accent tracking-wider font-semibold">
-                      / {p.nota}
-                    </p>
                   </div>
 
                   {/* Checklist dos Entregáveis com Lottie Animado */}

@@ -1,7 +1,7 @@
 import { solucao as s } from "@/lib/content";
 import { Section, Label, Buy } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
-import { WhipInUp } from "@/components/ui/whip-in-up";
+import { WhipInUp, CountUpWhip } from "@/components/ui/whip-in-up";
 import { ParallaxMockup } from "@/components/ui/parallax-mockup";
 import { ChecklistReveal } from "@/components/ui/checklist-reveal";
 import { AnimatedCheck } from "@/components/ui/animated-check";
@@ -24,7 +24,7 @@ export function Solucao() {
             {s.stats.map((st) => (
               <div key={st.rotulo} className="rule-l first:rule-l-0 px-6 py-5 sm:px-8">
                 <p className="font-display text-[1.375rem] font-bold leading-none">
-                  <WhipInUp text={st.valor} />
+                  <CountUpWhip value={st.valor} />
                 </p>
                 <p className="mt-1.5 text-[0.8125rem] soft">
                   <WhipInUp text={st.rotulo} />

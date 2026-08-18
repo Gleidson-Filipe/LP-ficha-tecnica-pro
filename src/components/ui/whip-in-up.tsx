@@ -142,15 +142,11 @@ export function CountUpStat({
       }
       ensureWhipEase();
 
-      const from = Math.max(0, Math.round(to * 0.25));
+      const from = 0;
       const counter = { val: from };
       el.textContent = `${prefix}${from}${suffix}`;
       gsap.set(el, { yPercent: 200, opacity: 1 });
 
-      // Observa o WRAPPER (sem transform), nunca o próprio número que se
-      // move — o mesmo padrão do WhipInUp. Observar o elemento que é
-      // transformado faz o navegador medir a interseção na posição
-      // deslocada (escondida), não na posição de repouso.
       const io = new IntersectionObserver(
         (entries) => {
           if (!entries[0].isIntersecting) return;
@@ -161,13 +157,13 @@ export function CountUpStat({
               counter,
               {
                 val: to,
-                duration: 1,
+                duration: 1.3,
                 ease: "power2.out",
                 onUpdate: () => {
                   el.textContent = `${prefix}${Math.round(counter.val)}${suffix}`;
                 },
               },
-              "-=0.55",
+              "+=0.04",
             );
           io.disconnect();
         },
@@ -194,6 +190,89 @@ export function CountUpStat({
         {prefix}
         {to}
         {suffix}
+      </span>
+    </span>
+  );
+}
+
+/**
+ * Componente que recebe uma string como "6", "100%", "30s", "7 dias",
+ * executa o efeito de chicotear de baixo para cima (Whip In Up) e,
+ * imediatamente após assentar, dispara a contagem (Counter Up) de 0 até o valor final.
+ */
+export function CountUpWhip({
+  value,
+  className,
+}: {
+  value: string;
+  className?: string;
+}) {
+  const wrap = useRef<HTMLSpanElement>(null);
+  const num = useRef<HTMLSpanElement>(null);
+
+  const match = value.match(/^([^\d]*?)(\d+)(.*)$/);
+  const prefix = match ? match[1] : "";
+  const to = match ? parseInt(match[2], 10) : 0;
+  const suffix = match ? match[3] : "";
+
+  useGSAP(
+    () => {
+      const wrapEl = wrap.current;
+      const el = num.current;
+      if (!wrapEl || !el) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        el.textContent = value;
+        gsap.set(el, { clearProps: "transform,opacity" });
+        return;
+      }
+      ensureWhipEase();
+
+      const counter = { val: 0 };
+      el.textContent = `${prefix}0${suffix}`;
+      gsap.set(el, { yPercent: 200, opacity: 1 });
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          gsap
+            .timeline()
+            .to(el, { yPercent: 0, duration: 0.58, ease: "whipInUp" })
+            .to(
+              counter,
+              {
+                val: to,
+                duration: 1.4,
+                ease: "power2.out",
+                onUpdate: () => {
+                  el.textContent = `${prefix}${Math.round(counter.val)}${suffix}`;
+                },
+              },
+              "+=0.04",
+            );
+          io.disconnect();
+        },
+        { rootMargin: "0px" },
+      );
+      io.observe(wrapEl);
+
+      return () => io.disconnect();
+    },
+    { scope: wrap },
+  );
+
+  return (
+    <span
+      ref={wrap}
+      className="inline-block overflow-hidden align-top"
+      style={{ paddingBottom: "0.2em", marginBottom: "-0.2em" }}
+    >
+      <span
+        ref={num}
+        className={cn("inline-block tabular-nums", className)}
+        style={{ opacity: 0 }}
+      >
+        {value}
       </span>
     </span>
   );

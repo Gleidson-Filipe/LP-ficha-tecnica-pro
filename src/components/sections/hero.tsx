@@ -112,12 +112,9 @@ export function Hero() {
           >
             <CtaGlow />
             <CtaShine />
-            <CtaEcho className="items-center gap-1.5 text-white">
-              <span className="text-[17px] lg:text-[20px] font-medium whitespace-nowrap text-white">
-                Quero saber meu custo real e
-              </span>
-              <span className="text-[19px] lg:text-[25px] font-bold whitespace-nowrap text-white">
-                precificar certo
+            <CtaEcho className="items-center whitespace-nowrap text-white">
+              <span className="font-bold text-[18px] sm:text-[20px] lg:text-[22px] whitespace-nowrap text-white">
+                Quero saber meu custo real e precificar certo
               </span>
             </CtaEcho>
           </a>

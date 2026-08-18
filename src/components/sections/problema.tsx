@@ -1,12 +1,13 @@
 "use client";
 
-import { problema as p } from "@/lib/content";
+import { problema as p, CHECKOUT } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { SpinDot } from "@/components/ui/spin-dot";
 import { TiltCard } from "@/components/unlumen-ui/tilt-card";
 import { RateioFocus } from "@/components/sections/rateio-focus";
+import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 import { cn } from "@/lib/utils";
 
 /**
@@ -17,6 +18,7 @@ import { cn } from "@/lib/utils";
  */
 export function Problema() {
   const { comparacao: c, rateio: r } = p;
+  const ctaFx = useCtaFx<HTMLAnchorElement>();
 
   return (
     <Section id="problema" tone="ink" className="rule-t">
@@ -55,6 +57,26 @@ export function Problema() {
           </div>
         ))}
       </Reveal>
+
+      {/* ─── Barra de Ação (Abaixo das colunas) ─── */}
+      <div className="rule-t pad py-10 md:py-12 flex flex-col sm:flex-row items-center justify-between gap-6 md:gap-8">
+        <p className="text-body soft max-w-[48ch] text-center sm:text-left text-sm sm:text-base leading-relaxed">
+          <WhipInUp text="A Ficha Técnica Pro foi feita para se adaptar a qualquer um desses negócios citados acima." />
+        </p>
+        <a
+          ref={ctaFx}
+          href={CHECKOUT}
+          className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-body py-4.5 px-8 sm:px-10 transition-all duration-200 active:translate-y-px text-center hover:scale-[1.02] shrink-0"
+        >
+          <CtaGlow />
+          <CtaShine />
+          <CtaEcho className="items-center whitespace-nowrap">
+            <span className="font-body font-bold text-[16px] sm:text-[18px] lg:text-[19px] whitespace-nowrap text-white">
+              Automatizar minha operação
+            </span>
+          </CtaEcho>
+        </a>
+      </div>
 
       {/* ─── B. O PROBLEMA (FUNDO CLARO COM 4 COLUNAS) ─── */}
       <div className="t-paper bg-paper rule-t pad py-16 md:py-20">

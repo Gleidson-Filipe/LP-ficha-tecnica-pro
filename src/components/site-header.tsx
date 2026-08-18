@@ -27,26 +27,55 @@ export function SiteHeader() {
 
   useGSAP(
     () => {
-      // Alvos válidos, resolvidos uma vez (evitam getElementById repetido a cada scroll).
-      const secoes = NAV.map((item) => ({
-        id: item.id,
-        el: document.getElementById(item.id),
-      })).filter((s): s is { id: string; el: HTMLElement } => !!s.el);
-
-      // Mesma linha de referência do scroll-margin-top das âncoras (altura
-      // real do header, seção encostando na nav): a seção que contém essa
-      // linha na tela é a seção "ativa". Calcular tudo num único lugar (em
-      // vez de vários ScrollTrigger independentes competindo via onToggle)
-      // evita a corrida em que o clique acendia o item vizinho em vez do
-      // clicado.
-      const linha = () => (root.current?.offsetHeight ?? 0) + 2;
+      const getSecoes = () =>
+        NAV.map((item) => ({
+          id: item.id,
+          el: document.getElementById(item.id),
+        })).filter((s): s is { id: typeof NAV[number]["id"]; el: HTMLElement } => s.el instanceof HTMLElement);
 
       const atualizar = () => {
-        const y = linha();
-        const atual = secoes.find(({ el }) => {
+        const headerH = root.current?.offsetHeight ?? 72;
+        const viewportH = window.innerHeight;
+        const triggerY = headerH + Math.min(viewportH * 0.35, 280);
+
+        // 1. Se o usuário estiver no Rodapé (footer entrou na linha de foco), nenhum botão fica selecionado
+        const footerEl = document.querySelector("footer");
+        if (footerEl && footerEl.getBoundingClientRect().top <= triggerY) {
+          setAtivo(null);
+          return;
+        }
+
+        const secoes = getSecoes();
+        if (secoes.length === 0) return;
+
+        // 2. Se o usuário ainda estiver no Hero/Topo da página (antes da 1ª seção entrar)
+        const firstSec = secoes[0];
+        if (firstSec.el.getBoundingClientRect().top > triggerY) {
+          setAtivo(null);
+          return;
+        }
+
+        // 3. Procura a seção que cruza a linha de leitura principal
+        let atual = secoes.find(({ el }) => {
           const r = el.getBoundingClientRect();
-          return r.top <= y && r.bottom > y;
+          return r.top <= triggerY && r.bottom > triggerY;
         });
+
+        // 4. Fallback: seção com maior área visível na tela
+        if (!atual) {
+          let maxVisible = 0;
+          for (const s of secoes) {
+            const r = s.el.getBoundingClientRect();
+            const top = Math.max(r.top, headerH);
+            const bottom = Math.min(r.bottom, viewportH);
+            const visible = Math.max(0, bottom - top);
+            if (visible > maxVisible && visible > 100) {
+              maxVisible = visible;
+              atual = s;
+            }
+          }
+        }
+
         setAtivo(atual ? atual.id : null);
       };
 
@@ -56,14 +85,14 @@ export function SiteHeader() {
         onUpdate: atualizar,
         onRefresh: atualizar,
       });
+
+      window.addEventListener("scroll", atualizar, { passive: true });
+      window.addEventListener("resize", atualizar, { passive: true });
       atualizar();
 
       const gs: ScrollTrigger[] = [st];
 
       // Logo descendo de cima pra baixo ao carregar a página, com fade.
-      // Estado inicial (y:-90 opacity:0) já nasce no JSX via style inline —
-      // evita o "flash": aparecer na posição final e só depois pular pra
-      // escondida antes de animar, caso o efeito demore a montar.
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         gsap.set(".site-logo", { clearProps: "transform,opacity" });
       } else {
@@ -75,7 +104,11 @@ export function SiteHeader() {
         });
       }
 
-      return () => gs.forEach((g) => g.kill());
+      return () => {
+        window.removeEventListener("scroll", atualizar);
+        window.removeEventListener("resize", atualizar);
+        gs.forEach((g) => g.kill());
+      };
     },
     { scope: root },
   );
@@ -110,13 +143,13 @@ export function SiteHeader() {
             />
           </div>
 
-          {/* Desktop (lg): Logo 302×32px (left:65px top:16px) e Slogan (left:64px top:48px) */}
+          {/* Desktop (lg/xl): Logo perfeitamente rente à largura do Slogan (277px) */}
           <div className="hidden xl:block xl:w-full xl:h-full xl:relative">
             <div
-              className="site-logo absolute left-[65px] top-[10px] w-[302px] h-[32px]"
+              className="site-logo absolute left-[64px] top-[12px] w-[277px] h-[29.34px]"
               style={{
                 backgroundImage: "url('/images/logo-ftp.png')",
-                backgroundPosition: "center",
+                backgroundPosition: "left center",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "contain",
                 transform: "translateY(-160px)",
@@ -124,7 +157,7 @@ export function SiteHeader() {
               }}
             />
             <div
-              className="font-body absolute left-[64px] top-[40px] text-[16px] font-semibold text-[#dbdbdb] whitespace-nowrap"
+              className="font-body absolute left-[64px] -ml-[1px] top-[42px] text-[16px] font-semibold text-[#f5f4ea] whitespace-nowrap"
               style={{ lineHeight: "normal" }}
             >
               <WhipInUp text={SLOGAN} />
@@ -138,6 +171,7 @@ export function SiteHeader() {
             <a
               key={item.id}
               href={`#${item.id}`}
+              onClick={() => setAtivo(item.id)}
               aria-current={ativo === item.id ? "true" : undefined}
               className={cn(
                 "font-body relative flex flex-1 items-center justify-start pl-8 text-left transition-colors duration-150 whitespace-nowrap",

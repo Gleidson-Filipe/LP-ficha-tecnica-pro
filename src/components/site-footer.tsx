@@ -48,16 +48,13 @@ export function SiteFooter() {
               href={CHECKOUT}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-display py-4 px-8 sm:px-12 transition-all duration-200 active:translate-y-px text-center hover:scale-[1.02]"
+              className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-body py-4.5 px-8 sm:px-12 transition-all duration-200 active:translate-y-px text-center hover:scale-[1.02]"
             >
               <CtaGlow />
               <CtaShine />
-              <CtaEcho className="flex-col items-center">
-                <span className="text-xs sm:text-sm font-semibold tracking-normal">
-                  {rodape.ctaLinha1}
-                </span>
-                <span className="text-sm sm:text-base font-black uppercase tracking-wider mt-0.5">
-                  {rodape.ctaLinha2}
+              <CtaEcho className="items-center whitespace-nowrap">
+                <span className="font-body font-bold text-[16px] sm:text-[18px] lg:text-[20px] whitespace-nowrap text-white">
+                  Quero saber meu custo real e precificar certo
                 </span>
               </CtaEcho>
             </a>
@@ -72,16 +69,16 @@ export function SiteFooter() {
       <div className="relative pad py-8 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-4">
         {/* Bloco Esquerda: Logo Image + Slogan com mesma largura + Pill GF */}
         <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 lg:gap-10">
-          {/* Logo Imagem + Slogan Claro na mesma largura */}
-          <div className="flex flex-col items-center sm:items-start w-[205px]">
+          {/* Logo Imagem + Slogan Claro perfeitamente pareados */}
+          <div className="flex flex-col items-center sm:items-start w-[210px]">
             <Image
               src="/images/logo-ftp.png"
               alt="Ficha Técnica Pro"
               width={944}
               height={100}
-              className="w-[205px] h-auto object-contain block"
+              className="w-[210px] h-auto object-contain block"
             />
-            <p className="text-[0.75rem] text-[#f5f4ea] font-sans tracking-tight whitespace-nowrap mt-1 text-center sm:text-left">
+            <p className="text-[12.2px] font-medium text-[#f5f4ea] font-sans -ml-[1px] whitespace-nowrap mt-1 text-center sm:text-left">
               {SLOGAN}
             </p>
           </div>
