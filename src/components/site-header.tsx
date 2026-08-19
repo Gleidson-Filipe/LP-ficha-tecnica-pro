@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { NAV, SLOGAN, CTA, CHECKOUT } from "@/lib/content";
 import { setPendingNavTarget } from "@/lib/pending-nav-target";
+import { scrollToId, scrollToTop } from "@/lib/smooth-scroll";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { FitWidth } from "@/components/ui/fit-width";
@@ -81,6 +82,22 @@ export function SiteHeader() {
         setAtivo(atual ? atual.id : null);
       };
 
+      // `atualizar` faz até 8 leituras de getBoundingClientRect (força
+      // layout) por chamada. Throttle pra no máximo 1x a cada 100ms — o
+      // destaque do nav não precisa de precisão de frame, e sem isso o
+      // onUpdate roda a cada tick de scroll (até 60x/s durante um scroll
+      // suave), competindo pela mesma thread que está pintando o próprio
+      // scroll. Mesma família do bug já documentado abaixo (duplicação de
+      // listener causando stutter só sob scroll real).
+      let ultimaExec = 0;
+      const THROTTLE_MS = 100;
+      const atualizarThrottled = () => {
+        const agora = performance.now();
+        if (agora - ultimaExec < THROTTLE_MS) return;
+        ultimaExec = agora;
+        atualizar();
+      };
+
       // Só a ScrollTrigger cuida do scroll (ela já escuta scroll de forma
       // otimizada internamente) — não duplicar com um addEventListener
       // "scroll" manual chamando a MESMA função a cada tick: isso rodava o
@@ -93,7 +110,7 @@ export function SiteHeader() {
       const st = ScrollTrigger.create({
         start: 0,
         end: "max",
-        onUpdate: atualizar,
+        onUpdate: atualizarThrottled,
         onRefresh: atualizar,
       });
 
@@ -128,7 +145,7 @@ export function SiteHeader() {
     if (window.location.hash) {
       window.history.replaceState(null, "", window.location.pathname);
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToTop();
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -136,8 +153,8 @@ export function SiteHeader() {
     setAtivo(id);
     const target = document.getElementById(id);
     if (target) {
-      setPendingNavTarget(id);
-      target.scrollIntoView({ behavior: "smooth" });
+      setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
+      scrollToId(id);
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
       }
@@ -150,8 +167,8 @@ export function SiteHeader() {
     setAtivo(id);
     const target = document.getElementById(id);
     if (target) {
-      setPendingNavTarget(id);
-      target.scrollIntoView({ behavior: "smooth" });
+      setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
+      scrollToId(id);
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
       }
@@ -161,10 +178,11 @@ export function SiteHeader() {
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (CHECKOUT.startsWith("#")) {
       e.preventDefault();
-      const target = document.querySelector(CHECKOUT);
+      const id = CHECKOUT.slice(1);
+      const target = document.getElementById(id);
       if (target) {
-        setPendingNavTarget(CHECKOUT.slice(1));
-        target.scrollIntoView({ behavior: "smooth" });
+        setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
+        scrollToId(id);
         if (window.location.hash) {
           window.history.replaceState(null, "", window.location.pathname);
         }

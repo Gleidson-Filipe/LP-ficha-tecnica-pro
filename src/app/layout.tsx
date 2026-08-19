@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { ScrollRestore } from "@/components/scroll-restore";
+import { LenisProvider } from "@/components/lenis-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -63,6 +64,7 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
+        <LenisProvider />
         <ScrollRestore />
         {children}
       </body>
