@@ -158,8 +158,8 @@ export function ParallaxMockup() {
           aria-hidden
           width={6600}
           height={5000}
-          quality={100}
-          sizes="3200px"
+          quality={82}
+          sizes="(min-width: 1024px) 86vw, 136vw"
           className="h-full w-full object-cover object-center"
         />
       </div>
@@ -172,8 +172,8 @@ export function ParallaxMockup() {
           aria-hidden
           width={6600}
           height={5000}
-          quality={100}
-          sizes="3200px"
+          quality={82}
+          sizes="(min-width: 1024px) 86vw, 136vw"
           className="h-full w-full object-cover object-center"
         />
       </div>
@@ -185,8 +185,8 @@ export function ParallaxMockup() {
           alt="Notebook mostrando a tela de gestão do cardápio da Ficha Técnica Pro, com custo, preço e lucro de cada produto"
           width={6600}
           height={5000}
-          quality={100}
-          sizes="3200px"
+          quality={85}
+          sizes="(min-width: 1024px) 172vw, 272vw"
           className="h-full w-full object-cover object-center"
         />
       </div>

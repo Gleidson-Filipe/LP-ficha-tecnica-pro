@@ -184,7 +184,7 @@ export function Modulos() {
                       width={item.w}
                       height={item.h}
                       sizes="(max-width: 1024px) 100vw, 65vw"
-                      quality={100}
+                      quality={90}
                       className={cn(
                         "max-h-[92%] max-w-[94%] w-auto h-auto object-contain drop-shadow-2xl rounded-xl",
                         "transition-transform duration-300 ease-out origin-center",
@@ -193,7 +193,6 @@ export function Modulos() {
                           : "scale-100 group-hover/img:scale-[1.03]"
                       )}
                       style={{ borderRadius: 12 }}
-                      priority={idx <= 1}
                     />
                   </div>
                 );
@@ -274,7 +273,7 @@ export function Modulos() {
               alt={`Módulo ${activeZoomItem.tab} ampliado`}
               width={activeZoomItem.w}
               height={activeZoomItem.h}
-              quality={100}
+              quality={90}
               style={{
                 width: `min(92vw, ${maxW}px, calc(82vh * ${ratio.toFixed(4)}))`,
                 height: "auto",

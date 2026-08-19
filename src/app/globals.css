@@ -437,6 +437,31 @@ body {
   will-change: transform, opacity, filter;
 }
 
+/*
+  Entrada do mockup do Hero em CSS puro, não GSAP: esse elemento é o LCP
+  da página (medido via PerformanceObserver) — se a entrada dele depender
+  de gsap.to() num useGSAP, ele fica opacity:0 até o JS baixar, parsear e
+  rodar, e o LCP vira "render delay" em vez do tempo real de carregar a
+  imagem (medido: 1.770ms de 1.785ms do LCP eram só isso). Com @keyframes,
+  o navegador anima no primeiro paint, sem esperar JS nenhum.
+  Delay/duração espelham o timeline antigo (".hero-mockup" entrava em
+  "-=0.7" de um tween de 1.1s, ou seja, 0.4s depois do início, por 0.8s).
+*/
+@keyframes hero-mockup-in {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hero-mockup {
+  animation: hero-mockup-in 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

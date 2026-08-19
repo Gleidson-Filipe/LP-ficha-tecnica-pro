@@ -233,9 +233,8 @@ export function Calculo() {
                         width={step.w}
                         height={step.h}
                         sizes="(max-width: 1024px) 95vw, 50vw"
-                        quality={100}
+                        quality={90}
                         className="max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[415px] w-auto max-w-full object-contain rounded-xl shadow-md transition-transform duration-300 group-hover/img:scale-[1.015]"
-                        priority={idx === 0}
                       />
 
                       {/* Badge sutil de Zoom no canto exato da imagem */}
@@ -278,7 +277,7 @@ export function Calculo() {
               alt="Planilha ampliada"
               width={2278}
               height={1100}
-              quality={100}
+              quality={90}
               className="max-h-[85vh] max-w-[92vw] w-auto h-auto object-contain rounded-xl"
               priority
             />

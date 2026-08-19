@@ -28,24 +28,25 @@ export function Hero() {
 
   useGSAP(
     () => {
+      // O mockup (.hero-mockup) é o LCP da página e entra via @keyframes em
+      // globals.css, não por aqui — ver comentário lá. Só o CTA continua
+      // animado por JS (não é o LCP, e usa back.out, que exige overshoot
+      // controlado por JS).
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        gsap.set([".hero-fade", ".hero-mockup"], { clearProps: "transform,opacity" });
+        gsap.set(".hero-fade", { clearProps: "transform,opacity" });
         return;
       }
 
       // Estado inicial (opacity:0 + offset) já nasce no JSX via style inline —
       // evita o "flash" de aparecer pronto e só depois pular pra escondido.
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .to(".hero-fade", {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          rotation: 0,
-          duration: 1.1,
-          ease: "back.out(1.6)",
-        })
-        .to(".hero-mockup", { opacity: 1, x: 0, duration: 0.8 }, "-=0.7");
+      gsap.to(".hero-fade", {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        rotation: 0,
+        duration: 1.1,
+        ease: "back.out(1.6)",
+      });
     },
     { scope: root }
   );
@@ -84,7 +85,7 @@ export function Hero() {
         <div className="relative z-20 px-6 pt-[108px] pb-12 lg:px-0 lg:pt-0 lg:pb-0">
           {/* Headline exata de teste1.html (left:64px top:203px w:755px) */}
           <h1 className="font-display font-bold tracking-[-0.6px] text-left text-[#F5F4F2] text-[2.5rem] leading-[1.1] lg:absolute lg:left-[64px] lg:top-[136px] lg:w-[755px] lg:text-[90px] lg:leading-[99px]">
-            <WhipInUp text="Descubra o custo real e o lucro de " className="inline" />
+            <WhipInUp text="Descubra o custo real e o lucro de " className="inline" eager />
             <Highlighter
               action="underline"
               color="#FF4785"
@@ -93,14 +94,14 @@ export function Hero() {
               delay={700}
               iterations={4}
             >
-              <WhipInUp text="cada ítem" className="inline" />
+              <WhipInUp text="cada ítem" className="inline" eager />
             </Highlighter>{" "}
-            <WhipInUp text="do seu cardápio." className="inline" />
+            <WhipInUp text="do seu cardápio." className="inline" eager />
           </h1>
 
           {/* Subtítulo exato de teste1.html (left:64px top:614px w:742px) */}
           <p className="font-body mt-6 text-[#ababab] text-lg font-normal lg:mt-0 lg:absolute lg:left-[64px] lg:top-[547px] lg:w-[742px] lg:text-[25px] lg:leading-[38px]">
-            <WhipInUp text="Tenha preços que geram lucro e não apenas faturamento." />
+            <WhipInUp text="Tenha preços que geram lucro e não apenas faturamento." eager />
           </p>
 
           {/* Botão CTA exato de teste1.html (left:64px top:716px w:584px h:70px) */}
@@ -114,17 +115,14 @@ export function Hero() {
             <CtaShine />
             <CtaEcho className="items-center whitespace-nowrap text-white">
               <span className="font-bold text-[18px] sm:text-[20px] lg:text-[22px] whitespace-nowrap text-white">
-                <WhipInUp text="Quero saber meu custo real e precificar certo" />
+                <WhipInUp text="Quero saber meu custo real e precificar certo" eager />
               </span>
             </CtaEcho>
           </a>
         </div>
 
         {/* ── Imagem do Mockup (Encostando na borda inferior) ── */}
-        <div
-          className="hero-mockup relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[691px] lg:bottom-0 lg:top-auto lg:w-[1370px] lg:h-[698px] pointer-events-none flex items-end"
-          style={{ opacity: 0, transform: "translateX(30px)" }}
-        >
+        <div className="hero-mockup relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[691px] lg:bottom-0 lg:top-auto lg:w-[1370px] lg:h-[698px] pointer-events-none flex items-end">
           <Image
             src="/images/mockup-hero.webp"
             alt="Planilha Ficha Técnica Pro"

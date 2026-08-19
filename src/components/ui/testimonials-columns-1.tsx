@@ -49,8 +49,8 @@ export const TestimonialsColumn = (props: {
                       alt={`Depoimento de cliente ${i + 1}`}
                       width={item.w || 1080}
                       height={item.h || 1080}
+                      sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, 92vw"
                       className="w-full h-auto object-contain rounded-2xl"
-                      priority={loopIdx === 0 && i < 2}
                     />
                   </div>
                 );

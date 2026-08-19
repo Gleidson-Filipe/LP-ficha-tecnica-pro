@@ -3,11 +3,9 @@
 import { useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import type { AnimationItem } from "lottie-web";
+import type { LottieHost } from "@/components/ui/animated-check";
 
 gsap.registerPlugin(useGSAP);
-
-type LottieHost = HTMLElement & { __lottie?: AnimationItem };
 
 /**
  * Lista de checkboxes (Lottie: círculo + tique desenhando) com animação
@@ -42,9 +40,17 @@ export function ChecklistReveal({
 
       const lotties = items.map((it) => it.querySelector<LottieHost>(".chk-lottie")!);
 
+      // O player do lottie carrega sob demanda (ver animated-check.tsx) —
+      // se ainda não chegou quando o dominó tenta tocar, marca um "play
+      // pendente" no host em vez de virar um no-op silencioso; o
+      // AnimatedCheck honra esse pedido assim que a instância existir.
       const playLottie = (host: LottieHost | undefined) => {
-        const anim = host?.__lottie;
-        if (!anim) return;
+        if (!host) return;
+        const anim = host.__lottie;
+        if (!anim) {
+          host.__lottiePending = true;
+          return;
+        }
         anim.setDirection(1);
         anim.goToAndStop(0, true);
         anim.play();
@@ -52,8 +58,13 @@ export function ChecklistReveal({
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         lotties.forEach((host) => {
-          const anim = host?.__lottie;
-          anim?.goToAndStop(anim.totalFrames - 1, true);
+          if (!host) return;
+          const anim = host.__lottie;
+          if (!anim) {
+            host.__lottieStatic = true;
+            return;
+          }
+          anim.goToAndStop(anim.totalFrames - 1, true);
         });
         return;
       }

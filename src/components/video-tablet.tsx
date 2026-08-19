@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
-import * as THREE from "three";
-import {
-  createIPadTabletModel,
-  IPAD_SPECS,
-} from "@/lib/generated/createIPadTabletMockupModel";
+import dynamic from "next/dynamic";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { IPAD_SPECS } from "@/lib/ipad-specs";
 
 // Proporção exata do corpo do iPad Pro (10.0 / 5.912438 = 1.69135)
 const CONTAINER_ASPECT = IPAD_SPECS.aspectRatio;
@@ -23,102 +20,75 @@ export const TABLET_SCREEN_INSET = {
   right: `${(SIDE_MARGIN + IPAD_SPECS.bezelRight * 100 * SCALE_FACTOR).toFixed(3)}%`,
 };
 
+// three.js só entra no bundle quando este componente realmente monta (ver
+// IntersectionObserver abaixo) — nunca no chunk inicial da página.
+const TabletCanvas = dynamic(
+  () => import("@/components/video-tablet-canvas").then((m) => m.VideoTabletCanvas),
+  { ssr: false, loading: () => null },
+);
+
+/**
+ * Shell do tablet — SEM three.js. Define a geometria (altura via
+ * aspectRatio, sombra, border-radius concêntrico) inteiramente com
+ * matemática de IPAD_SPECS, então a altura do subtree nunca muda quando o
+ * three.js carrega depois: é essa invariante que mantém o scrub de
+ * video.tsx imune sem precisar de ScrollTrigger.refresh() nenhum.
+ *
+ * Um chassi CSS (mesma cor média do corpo do iPad) fica PERMANENTEMENTE
+ * atrás do canvas, então não existe frame "sem moldura" — o WebGL só pinta
+ * por cima quando estiver pronto, sem piscada nem swap perceptível.
+ */
 export function VideoTablet({ children }: { children: ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasHostRef = useRef<HTMLDivElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
+  const [precisaCanvas, setPrecisaCanvas] = useState(false);
+  const [canvasPronto, setCanvasPronto] = useState(false);
 
+  // Border-radius circular concêntrico em pixels — só matemática de
+  // IPAD_SPECS, sem depender do three.js estar carregado.
   useEffect(() => {
     const host = canvasHostRef.current;
     if (!host) return;
 
-    // -------------------------------------------------------------
-    // THREE.JS SCENE SETUP - CAMERA ENQUADRADA COM MARGEM DE BOTÕES
-    // -------------------------------------------------------------
-    const scene = new THREE.Scene();
-
-    const fov = 24;
-    const camera = new THREE.PerspectiveCamera(fov, CONTAINER_ASPECT, 0.1, 100);
-
-    const fitHeight = IPAD_SPECS.bodyHeight * (1 + CAMERA_MARGIN);
-    const distance = fitHeight / (2 * Math.tan((fov * Math.PI) / 360));
-    camera.position.set(0, 0, distance);
-    camera.lookAt(0, 0, 0);
-
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.domElement.style.background = "transparent";
-    renderer.domElement.style.display = "block";
-    renderer.domElement.style.width = "100%";
-    renderer.domElement.style.height = "100%";
-    host.appendChild(renderer.domElement);
-
-    // Adiciona o modelo fiel do iPad Pro
-    const ipadModel = createIPadTabletModel();
-    scene.add(ipadModel);
-
-    // -------------------------------------------------------------
-    // ILUMINAÇÃO DE ESTÚDIO FOTOGRÁFICO EQUILIBRADA
-    // -------------------------------------------------------------
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
-    scene.add(ambientLight);
-
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
-    keyLight.position.set(6, 8, 7);
-    scene.add(keyLight);
-
-    const rimLight = new THREE.DirectionalLight(0xe8f0ff, 0.85);
-    rimLight.position.set(-6, 5, 4);
-    scene.add(rimLight);
-
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
-    fillLight.position.set(0, -6, 4);
-    scene.add(fillLight);
-
-    const render = () => {
-      renderer.render(scene, camera);
-    };
-    render();
-
-    // -------------------------------------------------------------
-    // RESIZE OBSERVER PARA BORDER-RADIUS CIRCULAR CONCÊNTRICO EM PIXELS
-    // -------------------------------------------------------------
     const ro = new ResizeObserver(() => {
-      const { clientWidth: w, clientHeight: h } = host;
-      if (!w || !h) return;
+      const { clientWidth: w } = host;
+      if (!w) return;
 
-      renderer.setSize(w, h);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      render();
-
-      // Raio do corpo do iPad em pixels (100% circular, idêntico à malha 3D)
       const bodyPxRadius = w * (IPAD_SPECS.cornerRadius / IPAD_SPECS.bodyWidth) * SCALE_FACTOR;
       if (shadowRef.current) {
         shadowRef.current.style.borderRadius = `${bodyPxRadius.toFixed(1)}px`;
       }
 
-      // Raio da tela interna em pixels
+      const screenPxRadius = w * (IPAD_SPECS.screenCornerRadius / IPAD_SPECS.bodyWidth) * SCALE_FACTOR;
       if (screenRef.current) {
-        const screenPxRadius = w * (IPAD_SPECS.screenCornerRadius / IPAD_SPECS.bodyWidth) * SCALE_FACTOR;
         screenRef.current.style.borderRadius = `${screenPxRadius.toFixed(1)}px`;
       }
     });
     ro.observe(host);
 
-    return () => {
-      ro.disconnect();
-      renderer.dispose();
-      if (host.contains(renderer.domElement)) {
-        host.removeChild(renderer.domElement);
-      }
-    };
+    return () => ro.disconnect();
+  }, []);
+
+  // Só busca o chunk do three.js quando o tablet está perto da tela — a
+  // seção de vídeo vem logo após o Hero, então a margem é generosa (o
+  // usuário chega lá rápido, e o three carrega enquanto ainda lê o Hero).
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting) return;
+        setPrecisaCanvas(true);
+        io.disconnect();
+      },
+      { rootMargin: "600px 0px" },
+    );
+    io.observe(el);
+
+    return () => io.disconnect();
   }, []);
 
   return (
@@ -144,12 +114,29 @@ export function VideoTablet({ children }: { children: ReactNode }) {
         }}
       />
 
-      {/* Three.js Canvas Layer (iPad Chassis, Chanfro PBR, Botões e Câmera) */}
+      {/* Host do canvas three.js — o chassi CSS abaixo cobre até o WebGL montar */}
       <div
         ref={canvasHostRef}
         className="absolute inset-0 pointer-events-none z-[1]"
         style={{ background: "transparent" }}
-      />
+      >
+        {/* Rede de segurança só até o primeiro frame no tamanho certo ser
+            pintado — depois disso o modelo 3D (com a margem de câmera dos
+            botões) nunca cobre 100% do canvas, e essa cor fixa ficaria
+            permanentemente visível como um anel que não bate nem com o
+            bezel nem com o fundo da página. Uma vez pronto, some e deixa a
+            sombra (já pensada pra essa transição) mostrar o fundo real. */}
+        {!canvasPronto && (
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{ borderRadius: "inherit", background: "#3a3d42" }}
+          />
+        )}
+        {precisaCanvas && (
+          <TabletCanvas host={canvasHostRef} onReady={() => setCanvasPronto(true)} />
+        )}
+      </div>
 
       {/* Screen Video Layer (Display 16:9 perfeitamente enquadrado dentro do bezel) */}
       <div

@@ -195,6 +195,7 @@ export function SiteHeader() {
               width={944}
               height={100}
               priority
+              sizes="176px"
               className="block h-auto w-[140px] sm:w-[176px]"
             />
           </div>
@@ -217,7 +218,7 @@ export function SiteHeader() {
               style={{ lineHeight: "normal" }}
             >
               <FitWidth width={277} className="font-body text-[16px] font-semibold text-[#f5f4ea]">
-                <WhipInUp text={SLOGAN} />
+                <WhipInUp text={SLOGAN} eager />
               </FitWidth>
             </div>
           </div>
@@ -241,7 +242,7 @@ export function SiteHeader() {
                 fontWeight: 500,
               }}
             >
-              <WhipInUp text={item.label} />
+              <WhipInUp text={item.label} eager />
               {/* Underline 3px #ff4785 na base da célula ativa */}
               {ativo === item.id && (
                 <span
@@ -271,7 +272,7 @@ export function SiteHeader() {
             <span className={cn("block h-[2px] w-4 bg-current transition-transform", aberto && "-translate-y-[6px] -rotate-45")} />
           </span>
           <span className="hidden sm:inline">
-            <WhipInUp text="Menu" />
+            <WhipInUp text="Menu" eager />
           </span>
         </button>
 
@@ -287,12 +288,12 @@ export function SiteHeader() {
           <CtaShine />
           <span className="font-body xl:hidden font-bold text-[15px] text-white">
             <CtaEcho>
-              <WhipInUp text="Comprar" />
+              <WhipInUp text="Comprar" eager />
             </CtaEcho>
           </span>
           <span className="font-body hidden xl:inline font-bold text-[19px] whitespace-nowrap text-white">
             <CtaEcho>
-              <WhipInUp text={CTA.header.l2} />
+              <WhipInUp text={CTA.header.l2} eager />
             </CtaEcho>
           </span>
         </a>

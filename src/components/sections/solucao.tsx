@@ -46,7 +46,9 @@ export function Solucao() {
               {s.blocos.map((b, bi) => (
                 <div key={b.n} className={bi > 0 ? "mt-6 lg:mt-5" : undefined}>
                   <p className="flex items-baseline gap-3 font-display text-[1.0625rem] font-semibold">
-                    <span className="text-accent">{b.n}.</span>
+                    <span className="text-accent">
+                      <WhipInUp text={`${b.n}.`} />
+                    </span>
                     <WhipInUp text={b.titulo} />
                   </p>
                   <ul className="mt-2.5 space-y-1.5 pl-8">

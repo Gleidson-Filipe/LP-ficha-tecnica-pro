@@ -4,7 +4,7 @@ import { forwardRef, type ReactNode } from "react";
 import { CTA, CHECKOUT } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
-import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
+import { useCtaFx, useCrookedIn, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 
 /** Bloco de seção. Define o tom (escuro/claro) e o respiro vertical. */
 export const Section = forwardRef<
@@ -94,26 +94,30 @@ export function Buy({
   l2: string;
 }) {
   const fx = useCtaFx<HTMLAnchorElement>();
+  useCrookedIn(fx);
   return (
     <a
       ref={fx}
       href={href}
       className={cn(
-        "group relative inline-flex items-center justify-center overflow-hidden text-center transition-all duration-150",
-        "active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2",
+        "group relative inline-flex items-center justify-center overflow-hidden text-center",
+        "focus-visible:outline-2 focus-visible:outline-offset-2",
         variant === "accent"
           ? "cta-btn-fluid text-white focus-visible:outline-accent"
           : "bg-ink text-on-ink hover:bg-ink-raise focus-visible:outline-ink",
         size === "lg" ? "px-10 py-5" : "px-6 py-3.5",
         className,
       )}
+      style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
     >
       {variant === "accent" && <CtaGlow />}
       <CtaShine />
       {/* Uma linha só: texto de apoio em peso normal + a ação em negrito */}
       {size === "sm" && (
         <span className="font-display text-[0.9375rem] font-semibold sm:hidden text-white">
-          <CtaEcho>{CTA.heroMobile.l2}</CtaEcho>
+          <CtaEcho>
+            <WhipInUp text={CTA.heroMobile.l2} />
+          </CtaEcho>
         </span>
       )}
       <span
@@ -125,11 +129,11 @@ export function Buy({
         <CtaEcho>
           {l1 && (
             <span className="font-normal opacity-90">
-              {l1}{" "}
+              <WhipInUp text={l1} />{" "}
             </span>
           )}
           <span className="font-display font-bold">
-            {l2}
+            <WhipInUp text={l2} />
           </span>
         </CtaEcho>
       </span>

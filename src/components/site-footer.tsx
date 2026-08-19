@@ -76,6 +76,7 @@ export function SiteFooter() {
               alt="Ficha Técnica Pro"
               width={944}
               height={100}
+              sizes="210px"
               className="w-[210px] h-auto object-contain block"
             />
             <p className="text-[12.2px] font-medium text-[#f5f4ea] font-sans -ml-[1px] whitespace-nowrap mt-1 text-center sm:text-left">
@@ -97,6 +98,7 @@ export function SiteFooter() {
               alt={rodape.empresa}
               width={3036}
               height={1718}
+              sizes="42px"
               className="h-5 sm:h-6 w-auto object-contain shrink-0 opacity-95 group-hover:opacity-100 transition-opacity"
             />
             <div className="flex items-center gap-2">

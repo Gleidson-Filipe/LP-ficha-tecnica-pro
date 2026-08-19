@@ -21,10 +21,87 @@ function ensureWhipEase() {
 }
 
 /**
+ * Observer único compartilhado por todas as instâncias de WhipInUp/CountUp
+ * da página (podem passar de 100). Um `new IntersectionObserver` por
+ * componente significa dezenas de observers alocados na hidratação, todos
+ * fazendo o mesmo trabalho de bookkeeping — um só observer com um mapa de
+ * callbacks faz o mesmo (dispara uma vez, ao entrar na tela) por uma fração
+ * do custo.
+ */
+let sharedIO: IntersectionObserver | null = null;
+const ioCallbacks = new Map<Element, () => void>();
+
+function ensureSharedIO() {
+  if (sharedIO) return sharedIO;
+  sharedIO = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const cb = ioCallbacks.get(entry.target);
+        if (!cb) continue;
+        ioCallbacks.delete(entry.target);
+        sharedIO?.unobserve(entry.target);
+        cb();
+      }
+    },
+    // Sem margem: dispara exatamente quando o elemento cruza a borda real
+    // do viewport, nunca antes — não é sobre "entrar na seção", é sobre o
+    // elemento em si entrar na área visível da tela.
+    { rootMargin: "0px" },
+  );
+  return sharedIO;
+}
+
+function observeOnce(el: Element, cb: () => void) {
+  const io = ensureSharedIO();
+  ioCallbacks.set(el, cb);
+  io.observe(el);
+  return () => {
+    ioCallbacks.delete(el);
+    io.unobserve(el);
+  };
+}
+
+/**
+ * Quebra uma palavra (texto puro) em spans por letra, prontos para o tween
+ * de entrada. Espelho exato de `revertWord` (abaixo) na direção contrária —
+ * roda só no instante em que a animação vai disparar, nunca no mount, para
+ * a página não nascer com milhares de spans de letra de seções inteiras que
+ * ninguém está vendo.
+ */
+function splitWord(wordEl: HTMLElement, word: string) {
+  wordEl.style.overflow = "hidden";
+  wordEl.textContent = "";
+  for (const ch of word) {
+    const letter = document.createElement("span");
+    letter.className = "wiu-letter inline-block";
+    letter.textContent = ch;
+    wordEl.appendChild(letter);
+  }
+}
+
+/**
  * Texto que "chicoteia" de baixo para cima, letra a letra, cada palavra
  * mascarada em overflow-hidden (permite quebra de linha normal). Dispara
  * uma vez quando entra no viewport — inclusive no load, se já nascer
  * visível (ex.: Hero), sem precisar de scroll.
+ *
+ * Por padrão nasce como texto puro (sem spans de letra) e só quebra em
+ * letras dentro do próprio callback do IntersectionObserver, no instante em
+ * que vai animar — ver `splitWord`/`revertWord`. O root nasce com
+ * opacity:0 (evita o "flash" de aparecer pronto) e só é revelado depois de
+ * splitWord + gsap.set posicionarem as letras, tudo na mesma volta
+ * síncrona, então não existe frame intermediário onde o texto apareça
+ * pronto ou fora de posição.
+ *
+ * `eager`: para o texto que já nasce visível no primeiro paint (Hero,
+ * SiteHeader) — medido que quebrar em letras ali DENTRO do callback custa
+ * caro demais bem no momento mais crítico (CPU 4× real: LCP saltou de
+ * ~2.000ms pra ~3.600ms). Esses continuam quebrados em letras já no JSX
+ * (como sempre foram, sem custo de criação de DOM em runtime), só a
+ * `opacity:0` no root em vez de por letra. Reservar pra conteúdo que
+ * realmente aparece sem scroll: o resto da página (>85% do texto) usa o
+ * modo padrão e é onde está o ganho real de leveza.
  *
  * Usa IntersectionObserver nativo (não ScrollTrigger): com dezenas dessas
  * animações na mesma página, o bookkeeping interno do ScrollTrigger para
@@ -36,34 +113,29 @@ function ensureWhipEase() {
 export function WhipInUp({
   text,
   className,
+  eager = false,
 }: {
   text: string;
   className?: string;
+  eager?: boolean;
 }) {
   const root = useRef<HTMLSpanElement>(null);
 
   useGSAP(
     () => {
       const el = root.current;
-      const letters = el?.querySelectorAll<HTMLElement>(".wiu-letter");
-      if (!el || !letters?.length) return;
+      const wordEls = el?.querySelectorAll<HTMLElement>(".wiu-word");
+      if (!el || !wordEls?.length) return;
 
-      // JSX nasce só com opacity:0 (evita o "flash" de aparecer pronto).
-      // O yPercent:200 é definido AQUI, pelo próprio GSAP — nunca via CSS
-      // bruto no style inline: o GSAP, ao herdar um transform já escrito
-      // em % puro, cravava um deslocamento fixo em px por cima do que
-      // depois animava, deixando a letra presa fora de posição mesmo após
-      // o tween "terminar". Definindo tudo pelo GSAP desde o início, o
-      // cache interno dele fica consistente com o que realmente anima.
-      // As letras ficam quebradas em spans só enquanto a animação precisa
-      // delas. Feito o tween, cada palavra volta a ser um texto único —
-      // sem isso, a página inteira fica permanentemente cheia de spans por
-      // letra, o que quebra a seleção (o navegador desenha um retângulo por
-      // span, ficando "picotada") e o copy/paste (o espaçamento entre
-      // palavras é feito via margin, não caractere de espaço real, então
-      // colar gruda as palavras). Recomendação da própria autora do GSAP
-      // SplitText (Cassie Evans) para esse exato problema: reverter o split
-      // assim que a animação terminar, em vez de manter o DOM fragmentado.
+      // Quebrar em letras (spans) só enquanto a animação precisa delas.
+      // Feito o tween, cada palavra volta a ser um texto único — sem isso,
+      // a página inteira fica permanentemente cheia de spans por letra, o
+      // que quebra a seleção (o navegador desenha um retângulo por span,
+      // ficando "picotada") e o copy/paste (o espaçamento entre palavras é
+      // feito via margin, não caractere de espaço real, então colar gruda
+      // as palavras). Recomendação da própria autora do GSAP SplitText
+      // (Cassie Evans) para esse exato problema: reverter o split assim
+      // que a animação terminar, em vez de manter o DOM fragmentado.
       //
       // Importante: o revert some com as letras, mas mantém o <span> de
       // cada palavra (o wrapper com align-top/padding que evita cortar
@@ -88,38 +160,48 @@ export function WhipInUp({
       };
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        el.querySelectorAll<HTMLElement>(".wiu-word").forEach((w) =>
-          revertWord(w, w.dataset.word ?? ""),
-        );
+        if (!eager) {
+          // Modo lazy nasceu como texto puro — nada a reverter, só revelar.
+        } else {
+          wordEls.forEach((w) => revertWord(w, w.dataset.word ?? ""));
+        }
+        el.style.opacity = "1";
         return;
       }
-      ensureWhipEase();
-      gsap.set(letters, { yPercent: 200, opacity: 1 });
 
-      const io = new IntersectionObserver(
-        (entries) => {
-          if (!entries[0].isIntersecting) return;
-          gsap.to(letters, {
-            yPercent: 0,
-            duration: 0.58,
-            ease: "whipInUp",
-            stagger: 0.007,
-            onComplete: () => {
-              el.querySelectorAll<HTMLElement>(".wiu-word").forEach((w) =>
-                revertWord(w, w.dataset.word ?? ""),
-              );
-            },
-          });
-          io.disconnect();
-        },
-        // Sem margem: dispara exatamente quando o elemento cruza a borda
-        // real do viewport, nunca antes — não é sobre "entrar na seção",
-        // é sobre o elemento em si entrar na área visível da tela.
-        { rootMargin: "0px" },
-      );
-      io.observe(el);
+      const words = Array.from(wordEls);
 
-      return () => io.disconnect();
+      const runTween = () => {
+        const letters = el.querySelectorAll<HTMLElement>(".wiu-letter");
+        gsap.to(letters, {
+          yPercent: 0,
+          duration: 0.58,
+          ease: "whipInUp",
+          stagger: 0.007,
+          onComplete: () => {
+            words.forEach((w) => revertWord(w, w.dataset.word ?? ""));
+          },
+        });
+      };
+
+      if (eager) {
+        // Já nasce quebrado em letras via JSX — sem custo de criação de
+        // DOM aqui, só posicionar e revelar.
+        ensureWhipEase();
+        const letters = el.querySelectorAll<HTMLElement>(".wiu-letter");
+        gsap.set(letters, { yPercent: 200, opacity: 1 });
+        el.style.opacity = "1";
+        return observeOnce(el, runTween);
+      }
+
+      return observeOnce(el, () => {
+        ensureWhipEase();
+        words.forEach((w) => splitWord(w, w.dataset.word ?? ""));
+        const letters = el.querySelectorAll<HTMLElement>(".wiu-letter");
+        gsap.set(letters, { yPercent: 200, opacity: 1 });
+        el.style.opacity = "1";
+        runTween();
+      });
     },
     { scope: root },
   );
@@ -127,28 +209,34 @@ export function WhipInUp({
   const words = text.split(" ");
 
   return (
-    // font-kerning:none nos dois estados (letras separadas e texto revertido)
-    // — sem isso, o navegador aplica kerning só depois do revert (letras
+    // font-kerning:none nos dois estados (letras separadas e texto puro) —
+    // sem isso, o navegador aplica kerning só no texto puro (letras
     // separadas nunca têm kerning entre si), e a diferença de largura entre
-    // pares de letras kerned some de uma vez, deslocando várias palavras ao
-    // mesmo tempo (percebido como um "salto" coletivo do texto).
-    <span ref={root} className={className} style={{ fontKerning: "none" }}>
+    // pares de letras kerned mudaria a largura da palavra entre os dois
+    // estados, deslocando o texto no instante da quebra/reversão.
+    <span
+      ref={root}
+      className={className}
+      style={{ fontKerning: "none", opacity: 0 }}
+    >
       {words.map((word, wi) => (
         <span key={wi}>
           <span
-            className="wiu-word inline-block overflow-hidden align-top"
+            className="wiu-word inline-block align-top"
             data-word={word}
-            style={{ paddingBottom: "0.2em", marginBottom: "-0.2em" }}
+            style={
+              eager
+                ? { overflow: "hidden", paddingBottom: "0.2em", marginBottom: "-0.2em" }
+                : { paddingBottom: "0.2em", marginBottom: "-0.2em" }
+            }
           >
-            {Array.from(word).map((ch, ci) => (
-              <span
-                key={ci}
-                className="wiu-letter inline-block"
-                style={{ opacity: 0 }}
-              >
-                {ch}
-              </span>
-            ))}
+            {eager
+              ? Array.from(word).map((ch, ci) => (
+                  <span key={ci} className="wiu-letter inline-block">
+                    {ch}
+                  </span>
+                ))
+              : word}
           </span>
           {wi < words.length - 1 ? (
             <span style={{ verticalAlign: "top" }}> </span>
@@ -191,38 +279,30 @@ export function CountUpStat({
         gsap.set(el, { clearProps: "transform,opacity" });
         return;
       }
-      ensureWhipEase();
 
       const from = 0;
       const counter = { val: from };
       el.textContent = `${prefix}${from}${suffix}`;
       gsap.set(el, { yPercent: 200, opacity: 1 });
 
-      const io = new IntersectionObserver(
-        (entries) => {
-          if (!entries[0].isIntersecting) return;
-          gsap
-            .timeline()
-            .to(el, { yPercent: 0, duration: 0.58, ease: "whipInUp" })
-            .to(
-              counter,
-              {
-                val: to,
-                duration: 1.3,
-                ease: "power2.out",
-                onUpdate: () => {
-                  el.textContent = `${prefix}${Math.round(counter.val)}${suffix}`;
-                },
+      return observeOnce(wrapEl, () => {
+        ensureWhipEase();
+        gsap
+          .timeline()
+          .to(el, { yPercent: 0, duration: 0.58, ease: "whipInUp" })
+          .to(
+            counter,
+            {
+              val: to,
+              duration: 1.3,
+              ease: "power2.out",
+              onUpdate: () => {
+                el.textContent = `${prefix}${Math.round(counter.val)}${suffix}`;
               },
-              "+=0.04",
-            );
-          io.disconnect();
-        },
-        { rootMargin: "0px" },
-      );
-      io.observe(wrapEl);
-
-      return () => io.disconnect();
+            },
+            "+=0.04",
+          );
+      });
     },
     { scope: wrap },
   );
@@ -277,37 +357,29 @@ export function CountUpWhip({
         gsap.set(el, { clearProps: "transform,opacity" });
         return;
       }
-      ensureWhipEase();
 
       const counter = { val: 0 };
       el.textContent = `${prefix}0${suffix}`;
       gsap.set(el, { yPercent: 200, opacity: 1 });
 
-      const io = new IntersectionObserver(
-        (entries) => {
-          if (!entries[0].isIntersecting) return;
-          gsap
-            .timeline()
-            .to(el, { yPercent: 0, duration: 0.58, ease: "whipInUp" })
-            .to(
-              counter,
-              {
-                val: to,
-                duration: 1.4,
-                ease: "power2.out",
-                onUpdate: () => {
-                  el.textContent = `${prefix}${Math.round(counter.val)}${suffix}`;
-                },
+      return observeOnce(wrapEl, () => {
+        ensureWhipEase();
+        gsap
+          .timeline()
+          .to(el, { yPercent: 0, duration: 0.58, ease: "whipInUp" })
+          .to(
+            counter,
+            {
+              val: to,
+              duration: 1.4,
+              ease: "power2.out",
+              onUpdate: () => {
+                el.textContent = `${prefix}${Math.round(counter.val)}${suffix}`;
               },
-              "+=0.04",
-            );
-          io.disconnect();
-        },
-        { rootMargin: "0px" },
-      );
-      io.observe(wrapEl);
-
-      return () => io.disconnect();
+            },
+            "+=0.04",
+          );
+      });
     },
     { scope: wrap },
   );
