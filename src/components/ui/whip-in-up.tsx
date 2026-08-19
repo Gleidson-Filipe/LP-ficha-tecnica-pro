@@ -171,25 +171,37 @@ export function WhipInUp({
 
       const words = Array.from(wordEls);
 
-      // fromTo com "from" explícito (nunca .to()/.set() puro) — o GSAP só
-      // precisa ler o valor atual de --wiu-p se não for informado, e essa
-      // leitura é o próprio custo que estamos evitando. Passando os dois
-      // lados, ele nunca consulta o DOM: só escreve o número a cada frame.
+      // fromTo com "from" explícito (nunca .to()/.set() puro): reduz o
+      // trabalho do GSAP, mas NÃO elimina a leitura de DOM — para
+      // propriedades CSS customizadas (o `--wiu-p` daqui), o CSSPlugin do
+      // GSAP sempre chama getComputedStyle no target pra descobrir o
+      // startValue, mesmo com os dois lados explícitos (isso só vale pra
+      // propriedades numéricas comuns). Medido via trace de performance:
+      // com várias instâncias de WhipInUp entrando no viewport juntas (ex.:
+      // título + parágrafo + botão do rodapé), esse getComputedStyle cai
+      // logo depois do splitWord (que acabou de invalidar o layout ao
+      // recriar os spans de letra) — leitura-logo-após-escrita é a receita
+      // clássica de reflow forçado. Empurrar o tween pro próximo frame via
+      // rAF deixa TODOS os splitWord (escrita) deste lote de interseção
+      // terminarem antes de QUALQUER leitura começar, em vez de intercalar
+      // escrita/leitura/escrita/leitura a cada instância.
       const runTween = () => {
-        const letters = el.querySelectorAll<HTMLElement>(".wiu-letter");
-        gsap.fromTo(
-          letters,
-          { "--wiu-p": 200 },
-          {
-            "--wiu-p": 0,
-            duration: 0.58,
-            ease: "whipInUp",
-            stagger: 0.007,
-            onComplete: () => {
-              words.forEach((w) => revertWord(w, w.dataset.word ?? ""));
+        requestAnimationFrame(() => {
+          const letters = el.querySelectorAll<HTMLElement>(".wiu-letter");
+          gsap.fromTo(
+            letters,
+            { "--wiu-p": 200 },
+            {
+              "--wiu-p": 0,
+              duration: 0.58,
+              ease: "whipInUp",
+              stagger: 0.007,
+              onComplete: () => {
+                words.forEach((w) => revertWord(w, w.dataset.word ?? ""));
+              },
             },
-          },
-        );
+          );
+        });
       };
 
       if (eager) {

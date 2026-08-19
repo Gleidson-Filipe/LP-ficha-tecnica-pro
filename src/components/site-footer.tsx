@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { rodape, INSTAGRAM, SLOGAN, CHECKOUT } from "@/lib/content";
 import { WhipInUp } from "@/components/ui/whip-in-up";
-import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
+import { useCtaFx, useCrookedIn, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 
 export function SiteFooter() {
   const ctaFx = useCtaFx<HTMLAnchorElement>();
+  useCrookedIn(ctaFx);
   return (
     <footer className="t-ink bg-ink rule-t">
       {/* ── Bloco Superior: CTA com Linhas Verticais Restritas ── */}
@@ -48,13 +49,14 @@ export function SiteFooter() {
               href={CHECKOUT}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-body py-4.5 px-8 sm:px-12 transition-all duration-200 active:translate-y-px text-center hover:scale-[1.02]"
+              className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-body py-4.5 px-8 sm:px-12 text-center"
+              style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
             >
               <CtaGlow />
               <CtaShine />
               <CtaEcho className="items-center whitespace-nowrap">
                 <span className="font-body font-bold text-[16px] sm:text-[18px] lg:text-[20px] whitespace-nowrap text-white">
-                  Quero saber meu custo real e precificar certo
+                  <WhipInUp text="Quero saber meu custo real e precificar certo" />
                 </span>
               </CtaEcho>
             </a>
