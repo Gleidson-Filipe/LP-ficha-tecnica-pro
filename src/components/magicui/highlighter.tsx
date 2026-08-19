@@ -44,6 +44,8 @@ interface HighlighterProps {
  * usa GSAP/vanilla, nunca Framer Motion. `rough-notation` (o motor do
  * traço à mão) continua o mesmo, não é uma lib de motion.
  */
+import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
+
 export function Highlighter({
   children,
   action = "highlight",
@@ -70,6 +72,13 @@ export function Highlighter({
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) return;
+        if (isNavJumping()) {
+          deferDuringNavJump(element, () => {
+            io.unobserve(element);
+            io.observe(element);
+          });
+          return;
+        }
         setIsInView(true);
         io.disconnect();
       },
@@ -77,7 +86,10 @@ export function Highlighter({
     );
     io.observe(element);
 
-    return () => io.disconnect();
+    return () => {
+      cancelDeferred(element);
+      io.disconnect();
+    };
   }, [isView, controlled]);
 
   // Modo controlado: `show` manda. Senão, mostra direto (ou espera a

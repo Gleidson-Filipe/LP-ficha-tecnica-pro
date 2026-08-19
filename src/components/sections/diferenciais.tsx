@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, MutableRefObject } from "react";
+import { useRef, useCallback } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { diferenciais as d } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { cn } from "@/lib/utils";
+import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
 
 gsap.registerPlugin(useGSAP);
 
@@ -64,20 +65,20 @@ function DiferencialIcon({ icone }: { icone: string }) {
 /* ── Card individual ─────────────────────────────────────────────────── */
 /**
  * Recebe:
- *  - innerRef   → ref do elemento que gira (criado pelo pai)
+ *  - cardRef    → ref callback do elemento que gira
  *  - onFlip     → callback do pai que faz a animação e gerencia o timer
  *  - roundedClasses
  */
 function DiferencialCard({
   c,
   idx,
-  innerRef,
+  cardRef,
   onFlip,
   roundedClasses,
 }: {
   c: (typeof d.cards)[0];
   idx: number;
-  innerRef: MutableRefObject<HTMLDivElement | null>;
+  cardRef: (el: HTMLDivElement | null) => void;
   onFlip: () => void;
   roundedClasses: string;
 }) {
@@ -91,7 +92,7 @@ function DiferencialCard({
     >
       {/* Inner → plataforma que gira com as duas faces */}
       <div
-        ref={innerRef}
+        ref={cardRef}
         className="relative w-full h-[440px] sm:h-[470px] lg:h-[500px]"
         style={{ transformStyle: "preserve-3d" }}
       >
@@ -183,13 +184,9 @@ export function Diferenciais() {
   const sectionRef = useRef<HTMLElement>(null);
 
   // Refs dos elementos que giram (um por card)
-  const innerRefs = useRef<MutableRefObject<HTMLDivElement | null>[]>(
-    d.cards.map(() => ({ current: null }))
-  );
+  const cardElementsRef = useRef<(HTMLDivElement | null)[]>([]);
   // Estado flip por card
-  const flippedRefs = useRef<MutableRefObject<boolean>[]>(
-    d.cards.map(() => ({ current: false }))
-  );
+  const flippedStatesRef = useRef<boolean[]>(d.cards.map(() => false));
   // Timer de auto-desvire
   const flipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -202,8 +199,8 @@ export function Diferenciais() {
 
       const pickAndPeek = () => {
         // Índices disponíveis: cards que existem no DOM e NÃO estão virados
-        const available = innerRefs.current
-          .map((r, i) => (r.current && !flippedRefs.current[i].current ? i : -1))
+        const available = cardElementsRef.current
+          .map((el, i) => (el && !flippedStatesRef.current[i] ? i : -1))
           .filter((i) => i >= 0);
 
         if (available.length === 0) {
@@ -214,7 +211,8 @@ export function Diferenciais() {
 
         // Escolhe um índice aleatório entre os disponíveis
         const chosen = available[Math.floor(Math.random() * available.length)];
-        const inner  = innerRefs.current[chosen].current!;
+        const inner = cardElementsRef.current[chosen];
+        if (!inner) return;
 
         const angle = 6 + Math.random() * 4; // 6–10° sutil
 
@@ -225,13 +223,13 @@ export function Diferenciais() {
             timeout = setTimeout(pickAndPeek, cooldown);
           },
         })
-          .to(inner, { rotateY: angle, duration: 0.8,  ease: "power1.inOut" })
-          .to(inner, { rotateY: 0,     duration: 1.1,  ease: "elastic.out(0.8, 0.6)" });
+          .to(inner, { rotateY: angle, duration: 0.8, ease: "power1.inOut" })
+          .to(inner, { rotateY: 0, duration: 1.1, ease: "elastic.out(0.8, 0.6)" });
       };
 
       const stopPeek = () => {
         clearTimeout(timeout);
-        innerRefs.current.forEach(({ current }) => {
+        cardElementsRef.current.forEach((current) => {
           if (!current) return;
           gsap.killTweensOf(current);
           gsap.set(current, { rotateY: 0 });
@@ -249,6 +247,13 @@ export function Diferenciais() {
       const io = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
+            if (isNavJumping()) {
+              deferDuringNavJump(el, () => {
+                io.unobserve(el);
+                io.observe(el);
+              });
+              return;
+            }
             timeout = setTimeout(pickAndPeek, 600);
           } else {
             stopPeek();
@@ -259,6 +264,7 @@ export function Diferenciais() {
       io.observe(el);
 
       return () => {
+        cancelDeferred(el);
         io.disconnect();
         stopPeek();
       };
@@ -267,45 +273,42 @@ export function Diferenciais() {
   );
 
   // ── Flip via clique (centralizado no pai) ─────────────────────────────
-  // contextSafe garante que tweens criados em handlers não vazam após unmount
-  const { contextSafe } = useGSAP({ scope: sectionRef });
-
   /** Desvira todos os cards que ainda estiverem virados */
-  const unflipAll = contextSafe(() => {
-    innerRefs.current.forEach(({ current }, i) => {
-      if (current && flippedRefs.current[i].current) {
-        flippedRefs.current[i].current = false;
+  const unflipAll = useCallback(() => {
+    cardElementsRef.current.forEach((current, i) => {
+      if (current && flippedStatesRef.current[i]) {
+        flippedStatesRef.current[i] = false;
         gsap.killTweensOf(current);
         gsap.to(current, { rotateY: 0, duration: 0.55, ease: "power2.inOut" });
       }
     });
     flipTimerRef.current = null;
-  });
+  }, []);
 
   /**
    * Chamado pelo card ao ser clicado:
    * - Anima o flip (0↔180°)
    * - Reseta o timer de 10 s; quando disparar, desvira tudo
    */
-  const handleCardFlip = contextSafe((idx: number) => {
-    const inner = innerRefs.current[idx].current;
+  const handleCardFlip = useCallback((idx: number) => {
+    const inner = cardElementsRef.current[idx];
     if (!inner) return;
 
-    flippedRefs.current[idx].current = !flippedRefs.current[idx].current;
+    flippedStatesRef.current[idx] = !flippedStatesRef.current[idx];
     gsap.killTweensOf(inner);
     gsap.to(inner, {
-      rotateY: flippedRefs.current[idx].current ? 180 : 0,
+      rotateY: flippedStatesRef.current[idx] ? 180 : 0,
       duration: 0.55,
       ease: "power2.inOut",
     });
 
     // Reinicia o timer de auto-desvire a cada interação
     if (flipTimerRef.current) clearTimeout(flipTimerRef.current);
-    const anyFlipped = flippedRefs.current.some((r) => r.current);
+    const anyFlipped = flippedStatesRef.current.some(Boolean);
     if (anyFlipped) {
       flipTimerRef.current = setTimeout(unflipAll, 10_000);
     }
-  });
+  }, [unflipAll]);
 
   return (
     <Section ref={sectionRef} id="diferenciais" tone="ink" className="py-16 md:py-24">
@@ -339,7 +342,9 @@ export function Diferenciais() {
                 key={c.n}
                 c={c}
                 idx={idx}
-                innerRef={innerRefs.current[idx]}
+                cardRef={(el) => {
+                  cardElementsRef.current[idx] = el;
+                }}
                 onFlip={() => handleCardFlip(idx)}
                 roundedClasses={roundedClasses}
               />

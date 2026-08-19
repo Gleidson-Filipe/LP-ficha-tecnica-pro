@@ -111,6 +111,7 @@ export function Video({
             start: () => geometry().enterStart,
             end: () => geometry().exitEnd,
             scrub: 0.8,
+            fastScrollEnd: true,
             invalidateOnRefresh: true,
           },
         });

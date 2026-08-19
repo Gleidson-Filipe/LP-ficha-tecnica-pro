@@ -252,7 +252,8 @@ export function Calculo() {
                         e.stopPropagation();
                         setZoomImage(step.image);
                       }}
-                      className="group/img relative inline-flex w-fit max-w-full max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[420px] cursor-zoom-in rounded-xl"
+                      className="group/img isolate relative inline-flex w-fit max-w-full max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[420px] cursor-zoom-in rounded-xl"
+                      style={{ aspectRatio: `${step.w} / ${step.h}` }}
                     >
                       {!loadedSteps.has(step.n) && (
                         <div
@@ -267,8 +268,10 @@ export function Calculo() {
                         height={step.h}
                         sizes="(max-width: 1024px) 95vw, 50vw"
                         quality={90}
+                        priority={idx === 0}
                         onLoad={() => markLoaded(step.n)}
                         className="relative z-10 max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[415px] w-auto max-w-full object-contain rounded-xl shadow-md transition-transform duration-300 group-hover/img:scale-[1.015]"
+                        style={{ aspectRatio: `${step.w} / ${step.h}` }}
                       />
 
                       {/* Badge sutil de Zoom no canto exato da imagem */}
@@ -291,7 +294,7 @@ export function Calculo() {
       {zoomImage && (
         <div
           onClick={() => setZoomImage(null)}
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 md:p-10 cursor-zoom-out animate-in fade-in duration-200"
+          className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 md:p-10 cursor-zoom-out animate-in fade-in duration-200"
         >
           <button
             type="button"

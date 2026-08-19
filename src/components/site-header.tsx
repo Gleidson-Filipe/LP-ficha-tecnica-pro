@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { NAV, SLOGAN, CTA, CHECKOUT } from "@/lib/content";
-import { setPendingNavTarget } from "@/lib/pending-nav-target";
 import { navigateToId, navigateToTop } from "@/lib/smooth-scroll";
 import { isNavJumping, onNavJumpEnd } from "@/lib/nav-jump";
 import { cn } from "@/lib/utils";
@@ -183,7 +183,6 @@ export function SiteHeader() {
     setAtivo(id);
     const target = document.getElementById(id);
     if (target) {
-      setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
       navigateToId(id);
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
@@ -197,7 +196,6 @@ export function SiteHeader() {
     setAtivo(id);
     const target = document.getElementById(id);
     if (target) {
-      setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
       navigateToId(id);
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
@@ -211,7 +209,6 @@ export function SiteHeader() {
       const id = CHECKOUT.slice(1);
       const target = document.getElementById(id);
       if (target) {
-        setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
         navigateToId(id);
         if (window.location.hash) {
           window.history.replaceState(null, "", window.location.pathname);
@@ -230,7 +227,7 @@ export function SiteHeader() {
       <div className="flex h-[56px] items-stretch sm:h-[64px] lg:h-[72px]">
 
         {/* ── Container Logo + Slogan (w:408px no desktop, removendo o espaço excessivo à direita) ── */}
-        <a
+        <Link
           href="/"
           onClick={handleLogoClick}
           aria-label="Ficha Técnica Pro"
@@ -274,7 +271,7 @@ export function SiteHeader() {
               </FitWidth>
             </div>
           </div>
-        </a>
+        </Link>
 
         {/* ── Nav desktop: 4 botões principais com texto ALINHADO À ESQUERDA (pl-8) ── */}
         <nav aria-label="Seções" className="hidden flex-1 items-stretch xl:flex">

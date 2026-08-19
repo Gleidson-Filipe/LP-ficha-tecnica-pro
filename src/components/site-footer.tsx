@@ -4,10 +4,26 @@ import Image from "next/image";
 import { rodape, INSTAGRAM, SLOGAN, CHECKOUT } from "@/lib/content";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { useCtaFx, useCrookedIn, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
+import { navigateToId } from "@/lib/smooth-scroll";
 
 export function SiteFooter() {
   const ctaFx = useCtaFx<HTMLAnchorElement>();
   useCrookedIn(ctaFx);
+
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (CHECKOUT.startsWith("#")) {
+      e.preventDefault();
+      const id = CHECKOUT.slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        navigateToId(id);
+        if (window.location.hash) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
+    }
+  };
+
   return (
     <footer className="t-ink bg-ink rule-t">
       {/* ── Bloco Superior: CTA com Linhas Verticais Restritas ── */}
@@ -47,8 +63,7 @@ export function SiteFooter() {
             <a
               ref={ctaFx}
               href={CHECKOUT}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={handleCtaClick}
               className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-body py-4.5 px-8 sm:px-12 text-center"
               style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
             >

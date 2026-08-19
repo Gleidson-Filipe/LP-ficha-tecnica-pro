@@ -5,6 +5,7 @@ import { CTA, CHECKOUT } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { useCtaFx, useCrookedIn, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
+import { navigateToId } from "@/lib/smooth-scroll";
 
 /** Bloco de seção. Define o tom (escuro/claro) e o respiro vertical. */
 export const Section = forwardRef<
@@ -95,10 +96,26 @@ export function Buy({
 }) {
   const fx = useCtaFx<HTMLAnchorElement>();
   useCrookedIn(fx);
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const id = href.slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        navigateToId(id);
+        if (window.location.hash) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
+    }
+  };
+
   return (
     <a
       ref={fx}
       href={href}
+      onClick={handleClick}
       className={cn(
         "group relative inline-flex items-center justify-center overflow-hidden text-center",
         "focus-visible:outline-2 focus-visible:outline-offset-2",

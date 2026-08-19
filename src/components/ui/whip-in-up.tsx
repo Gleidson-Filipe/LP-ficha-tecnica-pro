@@ -6,6 +6,8 @@ import { CustomEase } from "gsap/CustomEase";
 import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
 
+import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
+
 gsap.registerPlugin(CustomEase, useGSAP);
 
 /**
@@ -37,10 +39,24 @@ function ensureSharedIO() {
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        const cb = ioCallbacks.get(entry.target);
+        const target = entry.target;
+        const cb = ioCallbacks.get(target);
         if (!cb) continue;
-        ioCallbacks.delete(entry.target);
-        sharedIO?.unobserve(entry.target);
+
+        // Durante um voo de navegação da nav/CTA: não quebra o DOM nem dispara
+        // animações de seções intermediárias. Adia a reobservação para o pouso.
+        if (isNavJumping()) {
+          deferDuringNavJump(target, () => {
+            if (sharedIO && ioCallbacks.has(target)) {
+              sharedIO.unobserve(target);
+              sharedIO.observe(target);
+            }
+          });
+          continue;
+        }
+
+        ioCallbacks.delete(target);
+        sharedIO?.unobserve(target);
         cb();
       }
     },
@@ -57,6 +73,7 @@ function observeOnce(el: Element, cb: () => void) {
   ioCallbacks.set(el, cb);
   io.observe(el);
   return () => {
+    cancelDeferred(el);
     ioCallbacks.delete(el);
     io.unobserve(el);
   };

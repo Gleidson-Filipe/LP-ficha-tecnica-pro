@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { peekPendingNavTarget, updatePendingNavTargetTop } from "@/lib/pending-nav-target";
-import { scrollToId } from "@/lib/smooth-scroll";
+import { isNavJumping } from "@/lib/nav-jump";
+import { getLenisInstance } from "@/lib/lenis-instance";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,49 +19,13 @@ const KEY_PREFIX = "ftp:scrollY:";
  *
  * O SALTO em si (scrollTo) acontece num <script> síncrono e bloqueante no
  * <head> (ver `beforeInteractive` em layout.tsx), ANTES da primeira
- * pintura da página — mesmo rodando "cedo" aqui, um useEffect do React só
- * executa DEPOIS que o navegador já pintou o HTML inicial (no topo), então
- * ainda apareceria um flash do header antes de pular pra posição certa.
- * Esse componente só cuida do que sobrou: salvar a posição no pagehide,
- * disparar o refresh do GSAP depois que a página assenta, e corrigir um
- * clique de nav que tenha pousado errado nesse meio-tempo.
+ * pintura da página.
  *
- * O que precisava esperar o layout assentar não era a posição do scroll em
- * si, e sim as ScrollTrigger do GSAP: elas calculam start/end no mount de
- * cada seção, cedo demais em relação à altura final da página — sem
- * recalcular depois, ficam com esses números desatualizados pra sempre e a
- * seção correspondente (ex.: título/tablet da seção de vídeo) nunca sai do
- * estado inicial (escondida), mesmo com o scroll certo. Por isso chamamos
- * `ScrollTrigger.refresh()` DE VERDADE (import direto) no 'load'.
- *
- * A correção do alvo de nav pendente é ortogonal a isso e só age quando a
- * posição do alvo REALMENTE mudou desde o clique (comparada contra o valor
- * guardado em pending-nav-target.ts) — nunca incondicionalmente. Usa
- * `scrollToId` (Lenis) porque `lenis.scrollTo(elemento)` lê a posição atual
- * do elemento e o próprio Lenis administra a substituição de uma animação
- * em voo por outra — diferente do scroll nativo do navegador, que reinicia
- * do zero se chamado de novo no meio do caminho.
- *
- * IMPORTANTE — duas coisas diferentes, dois tratamentos diferentes:
- *
- * 1. `scrollToId` (a correção em si) NÃO espera o scroll ficar ocioso.
- *    Chamar de novo enquanto o Lenis já está animando é exatamente pra
- *    isso que ele serve — ele re-mira suavemente. Esperar o scroll
- *    "terminar" antes de corrigir criava um padrão visível de "chega
- *    perto do alvo, para, aí termina de descer" (duas animações em
- *    sequência em vez de uma só sendo re-mirada no meio).
- *
- * 2. `ScrollTrigger.refresh()` (dentro de `onLoad`) é uma chamada pesada e
- *    separada (recalcula TODAS as ScrollTrigger da página, força reflow —
- *    chegou a travar a thread por 800ms numa medição) — essa sim precisa
- *    esperar o scroll ficar ocioso, porque travar a thread NO MEIO da
- *    rolagem trava a pintura do próximo frame independente de quem está
- *    animando o scroll. `whenScrollIdle` rastreia isso em tempo real
- *    (eventos 'scroll'/'scrollend'), não com um timeout cego — um timeout
- *    cego dispara a checagem "não tem scroll AGORA" antes do usuário
- *    clicar em qualquer coisa (comum: 'load' dispara antes da reação do
- *    usuário) e roda o trabalho pesado bem no meio do scroll que ele só
- *    começa DEPOIS, dentro daquela janela.
+ * Este componente cuida de:
+ * 1. Salvar a posição no pagehide.
+ * 2. Disparar ScrollTrigger.refresh() de forma segura após o load / fonts.ready
+ *    quando o scroll estiver ocioso.
+ * 3. Restaurar a posição salva no reload com a página assentada.
  */
 export function ScrollRestore() {
   useEffect(() => {
@@ -69,19 +33,21 @@ export function ScrollRestore() {
 
     const key = KEY_PREFIX + location.pathname;
 
-    // Corrige a posição do alvo de nav pendente (se ainda houver um E a
-    // posição dele tiver mudado de verdade) — pode rodar a qualquer
-    // momento, inclusive com um scroll do Lenis já em voo.
-    const correctPendingTarget = () => {
-      const pending = peekPendingNavTarget();
-      if (!pending) return;
-      const el = document.getElementById(pending.id);
-      if (!el) return;
-      const top = Math.round(el.getBoundingClientRect().top + window.scrollY);
-      if (Math.abs(top - pending.top) < 4) return;
-      updatePendingNavTargetTop(top);
-      scrollToId(pending.id);
+    let userScrolled = false;
+    let lastCorrectionAt = 0;
+    const markUserScrolled = () => {
+      userScrolled = true;
     };
+    window.addEventListener("wheel", markUserScrolled, { passive: true, once: true });
+    window.addEventListener("touchstart", markUserScrolled, { passive: true, once: true });
+    window.addEventListener("keydown", markUserScrolled, { passive: true, once: true });
+    window.addEventListener("pointerdown", markUserScrolled, { passive: true, once: true });
+    const onAnyScroll = () => {
+      if (userScrolled) return;
+      if (performance.now() - lastCorrectionAt < 120) return;
+      markUserScrolled();
+    };
+    window.addEventListener("scroll", onAnyScroll, { passive: true });
 
     const runIdle = (fn: () => void) => {
       if ("requestIdleCallback" in window) {
@@ -105,21 +71,19 @@ export function ScrollRestore() {
     }
 
     // Só pro trabalho PESADO (ScrollTrigger.refresh()) — nunca interrompe
-    // uma rolagem em andamento. A checagem se repete a cada 'scrollend',
-    // então sempre reflete o estado atual, nunca uma suposição de quando
-    // foi agendada.
+    // uma rolagem em andamento.
     const whenScrollIdle = (fn: () => void) => {
       if (!hasScrollend) {
         runIdle(fn);
         return;
       }
       const attempt = () => {
-        if (isScrolling) {
+        if (isScrolling || isNavJumping()) {
           window.addEventListener("scrollend", attempt, { once: true });
           return;
         }
         runIdle(() => {
-          if (isScrolling) {
+          if (isScrolling || isNavJumping()) {
             attempt();
             return;
           }
@@ -129,11 +93,40 @@ export function ScrollRestore() {
       attempt();
     };
 
+    const refreshKeepingScroll = () => {
+      const lenis = getLenisInstance();
+      const y = lenis ? lenis.animatedScroll : window.scrollY;
+      ScrollTrigger.refresh();
+      lastCorrectionAt = performance.now();
+      if (lenis) {
+        lenis.scrollTo(y, { immediate: true });
+      } else {
+        window.scrollTo(0, y);
+      }
+    };
+
+    const correctReloadRestore = () => {
+      if (userScrolled || location.hash || isNavJumping()) return;
+      const saved = sessionStorage.getItem(key);
+      const y = saved === null ? NaN : parseInt(saved, 10);
+      if (!isFinite(y)) return;
+      if (Math.abs(window.scrollY - y) < 4) return;
+      lastCorrectionAt = performance.now();
+      const lenis = getLenisInstance();
+      if (lenis) {
+        lenis.scrollTo(y, { immediate: true });
+      } else {
+        window.scrollTo(0, y);
+      }
+    };
+
     const onLoad = () => {
       whenScrollIdle(() => {
-        ScrollTrigger.refresh();
+        if (!isNavJumping()) {
+          refreshKeepingScroll();
+          correctReloadRestore();
+        }
       });
-      correctPendingTarget();
     };
 
     const onPageHide = () => {
@@ -145,30 +138,25 @@ export function ScrollRestore() {
     } else {
       window.addEventListener("load", onLoad);
     }
-    document.fonts?.ready?.then(correctPendingTarget);
-    window.addEventListener("pagehide", onPageHide);
-
-    // Debounce de 250ms de silêncio — evita reagir a rajadas de mudanças
-    // no mesmo instante como se fossem N correções separadas.
-    let debounceId: ReturnType<typeof setTimeout> | null = null;
-    const ro = new ResizeObserver(() => {
-      if (debounceId !== null) clearTimeout(debounceId);
-      debounceId = setTimeout(() => {
-        debounceId = null;
-        correctPendingTarget();
-      }, 250);
+    document.fonts?.ready?.then(() => {
+      if (!isNavJumping()) {
+        correctReloadRestore();
+      }
     });
-    ro.observe(document.documentElement);
+    window.addEventListener("pagehide", onPageHide);
 
     return () => {
       window.removeEventListener("load", onLoad);
       window.removeEventListener("pagehide", onPageHide);
+      window.removeEventListener("wheel", markUserScrolled);
+      window.removeEventListener("touchstart", markUserScrolled);
+      window.removeEventListener("keydown", markUserScrolled);
+      window.removeEventListener("pointerdown", markUserScrolled);
+      window.removeEventListener("scroll", onAnyScroll);
       if (hasScrollend) {
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("scrollend", onScrollEnd);
       }
-      ro.disconnect();
-      if (debounceId !== null) clearTimeout(debounceId);
     };
   }, []);
 

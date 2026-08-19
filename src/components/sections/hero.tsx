@@ -8,6 +8,7 @@ import { CHECKOUT } from "@/lib/content";
 import { WhipInUp, CountUpStat } from "@/components/ui/whip-in-up";
 import { Highlighter } from "@/components/magicui/highlighter";
 import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
+import { navigateToId } from "@/lib/smooth-scroll";
 
 gsap.registerPlugin(useGSAP);
 
@@ -50,6 +51,20 @@ export function Hero() {
     },
     { scope: root }
   );
+
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (CHECKOUT.startsWith("#")) {
+      e.preventDefault();
+      const id = CHECKOUT.slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        navigateToId(id);
+        if (window.location.hash) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
+    }
+  };
 
   return (
     <section id="topo" className="relative w-full bg-[#09090a] text-[#F5F4F2]">
@@ -108,6 +123,7 @@ export function Hero() {
           <a
             ref={ctaFx}
             href={CHECKOUT}
+            onClick={handleCtaClick}
             className="hero-fade group relative font-body mt-8 inline-flex items-center justify-center gap-1.5 overflow-hidden cta-btn-fluid px-6 py-4 text-white lg:mt-0 lg:absolute lg:left-[64px] lg:top-[649px] lg:w-[584px] lg:h-[70px] lg:px-0 lg:py-0 lg:justify-center"
             style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
           >

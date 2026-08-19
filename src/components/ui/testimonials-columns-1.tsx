@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -20,10 +20,26 @@ export const TestimonialsColumn = (props: {
   duration?: number;
 }) => {
   const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const duration = props.duration || 20;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: "100px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <div
+      ref={containerRef}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       className={cn("overflow-hidden select-none", props.className)}
@@ -31,7 +47,7 @@ export const TestimonialsColumn = (props: {
       <div
         style={{
           animationDuration: `${duration}s`,
-          animationPlayState: isPaused ? "paused" : "running",
+          animationPlayState: isPaused || !isInView ? "paused" : "running",
         }}
         className="flex flex-col gap-4 pb-4 animate-testimonials-scroll"
       >

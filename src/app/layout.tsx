@@ -57,7 +57,28 @@ export default function RootLayout({
         />
         <link
           rel="preload"
+          href="/fonts/switzer-600.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
           href="/fonts/generalsans-400.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/generalsans-500.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/generalsans-600.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"

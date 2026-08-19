@@ -8,6 +8,7 @@ import { SpinDot } from "@/components/ui/spin-dot";
 import { TiltCard } from "@/components/unlumen-ui/tilt-card";
 import { RateioFocus } from "@/components/sections/rateio-focus";
 import { useCtaFx, useCrookedIn, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
+import { navigateToId } from "@/lib/smooth-scroll";
 import { cn } from "@/lib/utils";
 
 /**
@@ -20,6 +21,20 @@ export function Problema() {
   const { comparacao: c, rateio: r } = p;
   const ctaFx = useCtaFx<HTMLAnchorElement>();
   useCrookedIn(ctaFx);
+
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (CHECKOUT.startsWith("#")) {
+      e.preventDefault();
+      const id = CHECKOUT.slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        navigateToId(id);
+        if (window.location.hash) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
+    }
+  };
 
   return (
     <Section id="problema" tone="ink" className="rule-t">
@@ -67,6 +82,7 @@ export function Problema() {
         <a
           ref={ctaFx}
           href={CHECKOUT}
+          onClick={handleCtaClick}
           className="group relative inline-flex items-center justify-center overflow-hidden cta-btn-fluid text-white font-body py-4.5 px-8 sm:px-10 text-center shrink-0"
           style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
         >

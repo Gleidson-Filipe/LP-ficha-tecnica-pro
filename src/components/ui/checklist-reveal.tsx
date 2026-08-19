@@ -5,6 +5,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { LottieHost } from "@/components/ui/animated-check";
 
+import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
+
 gsap.registerPlugin(useGSAP);
 
 /**
@@ -91,6 +93,13 @@ export function ChecklistReveal({
       const io = new IntersectionObserver(
         (entries) => {
           if (!entries[0].isIntersecting) return;
+          if (isNavJumping()) {
+            deferDuringNavJump(el, () => {
+              io.unobserve(el);
+              io.observe(el);
+            });
+            return;
+          }
           play(goingDown ? "start" : "end");
         },
         { rootMargin: "0px", threshold: 0.1 },
@@ -98,6 +107,7 @@ export function ChecklistReveal({
       io.observe(el);
 
       return () => {
+        cancelDeferred(el);
         io.disconnect();
         window.removeEventListener("scroll", onScroll);
       };

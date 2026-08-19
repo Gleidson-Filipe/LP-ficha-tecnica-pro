@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import fundoImg from "../../../public/images/solucao/fundo.webp";
@@ -38,6 +38,15 @@ const CLICK_ZOOM_SCALE = 3.2;
 export function ParallaxMockup() {
   const root = useRef<HTMLDivElement>(null);
   const zoomed = useRef(false);
+  // Skeleton cobrindo o mockup inteiro (z-index acima das 3 camadas, do
+  // badge de zoom, de tudo) até as 3 imagens terminarem de carregar. Nasce
+  // já visível no primeiro render (nenhum useEffect/atraso) — é o próprio
+  // valor inicial do state, então não existe frame em que a imagem crua
+  // apareça antes do skeleton.
+  const [loaded, setLoaded] = useState({ fundo: false, sofa: false, notebook: false });
+  const allLoaded = loaded.fundo && loaded.sofa && loaded.notebook;
+  const markLoaded = (layer: keyof typeof loaded) =>
+    setLoaded((prev) => (prev[layer] ? prev : { ...prev, [layer]: true }));
 
   useGSAP(
     () => {
@@ -152,16 +161,16 @@ export function ParallaxMockup() {
   );
 
   return (
-    <div ref={root} className="relative h-full w-full cursor-zoom-in overflow-hidden bg-[#9eb88d]">
+    <div ref={root} className="isolate relative h-full w-full cursor-zoom-in overflow-hidden bg-[#9eb88d]">
       {/* Camada 1: Fundo */}
       <div className="parallax-fundo absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
         <Image
           src={fundoImg}
           alt=""
           aria-hidden
-          placeholder="blur"
           quality={82}
           sizes="(min-width: 1024px) 86vw, 136vw"
+          onLoad={() => markLoaded("fundo")}
           className="h-full w-full object-cover object-center"
         />
       </div>
@@ -172,9 +181,9 @@ export function ParallaxMockup() {
           src={sofaImg}
           alt=""
           aria-hidden
-          placeholder="blur"
           quality={82}
           sizes="(min-width: 1024px) 86vw, 136vw"
+          onLoad={() => markLoaded("sofa")}
           className="h-full w-full object-cover object-center"
         />
       </div>
@@ -184,12 +193,18 @@ export function ParallaxMockup() {
         <Image
           src={notebookImg}
           alt="Notebook mostrando a tela de gestão do cardápio da Ficha Técnica Pro, com custo, preço e lucro de cada produto"
-          placeholder="blur"
           quality={85}
           sizes="(min-width: 1024px) 172vw, 272vw"
+          onLoad={() => markLoaded("notebook")}
           className="h-full w-full object-cover object-center"
         />
       </div>
+
+      {/* Skeleton: por cima de TUDO (camadas + badge de zoom), some só
+          quando as 3 imagens terminarem de carregar. */}
+      {!allLoaded && (
+        <div aria-hidden className="absolute inset-0 z-20 animate-pulse bg-black/25" />
+      )}
     </div>
   );
 }

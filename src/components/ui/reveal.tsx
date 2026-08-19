@@ -4,6 +4,8 @@ import { useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
+import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
+
 gsap.registerPlugin(useGSAP);
 
 /**
@@ -56,6 +58,13 @@ export function Reveal({
       const io = new IntersectionObserver(
         (entries) => {
           if (!entries[0].isIntersecting) return;
+          if (isNavJumping()) {
+            deferDuringNavJump(el, () => {
+              io.unobserve(el);
+              io.observe(el);
+            });
+            return;
+          }
           gsap.to(alvos, {
             opacity: 1,
             y: 0,
@@ -69,7 +78,10 @@ export function Reveal({
       );
       io.observe(el);
 
-      return () => io.disconnect();
+      return () => {
+        cancelDeferred(el);
+        io.disconnect();
+      };
     },
     { scope: root, dependencies: [stagger, grupo] },
   );

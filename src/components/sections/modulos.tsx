@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { createPortal } from "react-dom";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useSyncExternalStore } from "react";
 import { modulos } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
@@ -18,11 +18,15 @@ import { cn } from "@/lib/utils";
  *  - Lightbox ampliado renderizado via createPortal(document.body) com dimensionamento
  *    responsivo generoso (tanto para imagens panorâmicas quanto quadradas/verticais).
  */
+import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
+
+const emptySubscribe = () => () => {};
+
 export function Modulos() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [zoomImage, setZoomImage] = useState<string | null>(null);
   const [isInView, setIsInView] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
   // Só pra mostrar um skeleton sutil enquanto a imagem do slide ativo ainda
   // não carregou — nenhuma das 6 imagens é trocada por import estático
   // (o path em string é a própria chave usada pelo lightbox), então o
@@ -67,8 +71,6 @@ export function Modulos() {
       ? 820
       : 1280;
 
-  useEffect(() => { setMounted(true); }, []);
-
   useEffect(() => {
     activeTabRef.current = activeItem.tab;
   }, [activeItem.tab]);
@@ -88,11 +90,23 @@ export function Modulos() {
     const el = containerRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([e]) => setIsInView(e.isIntersecting),
+      ([e]) => {
+        if (isNavJumping() && e.isIntersecting) {
+          deferDuringNavJump(el, () => {
+            obs.unobserve(el);
+            obs.observe(el);
+          });
+          return;
+        }
+        setIsInView(e.isIntersecting);
+      },
       { rootMargin: "150px 0px" }
     );
     obs.observe(el);
-    return () => obs.disconnect();
+    return () => {
+      cancelDeferred(el);
+      obs.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -201,16 +215,10 @@ export function Modulos() {
 
             {/* ── Coluna Direita ── */}
             <div
-              className="group/img relative w-full h-[360px] sm:h-[440px] md:h-[500px] lg:h-[540px] xl:h-[580px] overflow-hidden rounded-xl cursor-zoom-in"
+              className="group/img isolate relative w-full h-[360px] sm:h-[440px] md:h-[500px] lg:h-[540px] xl:h-[580px] overflow-hidden rounded-xl cursor-zoom-in"
               onClick={() => setZoomImage(activeItem.image)}
               title="Clique para ampliar a imagem"
             >
-              {!loadedTabs.has(activeItem.tab) && (
-                <div
-                  aria-hidden
-                  className="absolute inset-0 z-0 animate-pulse rounded-xl bg-white/[0.06]"
-                />
-              )}
               {items.map((item, idx) => {
                 const isActive = idx === activeIdx;
                 const isEquilibrio = item.tab === "Equilíbrio";
@@ -253,6 +261,15 @@ export function Modulos() {
                 </svg>
                 Ampliar
               </span>
+
+              {/* Skeleton: por cima de TUDO (imagens + badge), some só quando
+                  a imagem do módulo ativo termina de carregar. */}
+              {!loadedTabs.has(activeItem.tab) && (
+                <div
+                  aria-hidden
+                  className="absolute inset-0 z-20 animate-pulse rounded-xl bg-white/20"
+                />
+              )}
             </div>
 
           </div>
