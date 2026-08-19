@@ -181,17 +181,14 @@ export function Calculo() {
                 "group relative w-full rule-b transition-all duration-300 ease-out cursor-pointer overflow-hidden select-none",
                 isActive
                   ? "bg-paper-panel/35 py-6 sm:py-7 lg:py-8"
-                  : "bg-transparent hover:bg-paper-panel/15 py-4 sm:py-5 lg:py-5.5"
+                  : "bg-transparent hover:bg-paper-panel/25 py-4 sm:py-5 lg:py-5.5"
               )}
             >
               <div className="pad relative grid gap-6 lg:grid-cols-[1fr_1.4fr] xl:grid-cols-[0.9fr_1.5fr] lg:items-start">
                 {/* Coluna da Esquerda: Apenas o Título quando fechado, e Textos quando aberto */}
                 <div className="flex flex-col justify-start pt-0.5 lg:pt-1 pr-14 lg:pr-10">
                   <h3
-                    className={cn(
-                      "font-display text-xl sm:text-2xl lg:text-[1.85rem] font-bold tracking-tight transition-colors duration-300",
-                      isActive ? "text-on-paper" : "text-on-paper/75 group-hover:text-on-paper"
-                    )}
+                    className="font-display text-xl sm:text-2xl lg:text-[1.85rem] font-bold tracking-tight text-on-paper"
                   >
                     <WhipInUp text={step.titulo} />
                   </h3>
