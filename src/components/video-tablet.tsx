@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { IPAD_SPECS } from "@/lib/ipad-specs";
+import { deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
 
 // Proporção exata do corpo do iPad Pro (10.0 / 5.912438 = 1.69135)
 const CONTAINER_ASPECT = IPAD_SPECS.aspectRatio;
@@ -81,6 +82,14 @@ export function VideoTablet({ children }: { children: ReactNode }) {
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) return;
+        // Igual ao animated-check: não busca o chunk do three.js (o maior
+        // da página) durante um voo de navegação, só reobserva.
+        if (deferDuringNavJump(el, () => {
+          io.unobserve(el);
+          io.observe(el);
+        })) {
+          return;
+        }
         setPrecisaCanvas(true);
         io.disconnect();
       },
@@ -88,7 +97,10 @@ export function VideoTablet({ children }: { children: ReactNode }) {
     );
     io.observe(el);
 
-    return () => io.disconnect();
+    return () => {
+      cancelDeferred(el);
+      io.disconnect();
+    };
   }, []);
 
   return (

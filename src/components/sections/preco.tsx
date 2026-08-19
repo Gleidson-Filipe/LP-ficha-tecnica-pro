@@ -4,6 +4,7 @@ import { useState } from "react";
 import { preco as p, CHECKOUT } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { Reveal } from "@/components/ui/reveal";
 import { AnimatedCheck } from "@/components/ui/animated-check";
 import { ChecklistReveal } from "@/components/ui/checklist-reveal";
 import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
@@ -86,9 +87,9 @@ export function Preco() {
                 key={b.titulo}
                 className="pl-[var(--pad)] pr-6 lg:pr-8 py-5 sm:py-6 flex items-start gap-4 sm:gap-5 group hover:bg-white/[0.015] transition-colors"
               >
-                <div className="mt-0.5">
+                <Reveal className="mt-0.5" noFlash>
                   <BenefitIcon icone={b.icone} />
-                </div>
+                </Reveal>
                 <div>
                   <h3 className="font-display text-base sm:text-lg font-bold text-white leading-snug">
                     <WhipInUp text={b.titulo} />
@@ -122,10 +123,10 @@ export function Preco() {
                   {/* Título do Produto */}
                   <div className="border-b border-white/10 pb-5">
                     <p className="text-[0.6875rem] sm:text-xs uppercase text-accent font-semibold tracking-wider font-display">
-                      Licença Definitiva
+                      <WhipInUp text="Licença Definitiva" />
                     </p>
                     <h3 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-white">
-                      Ficha Técnica Pro
+                      <WhipInUp text="Ficha Técnica Pro" />
                     </h3>
                   </div>
 
@@ -133,13 +134,13 @@ export function Preco() {
                   <div className="py-6 border-b border-white/10">
                     <div className="flex items-baseline gap-3 flex-wrap">
                       <span className="font-display text-2xl font-semibold soft">
-                        R$
+                        <WhipInUp text="R$" />
                       </span>
                       <span className="num text-[4.5rem] sm:text-[5.25rem] leading-[0.85] text-white">
-                        {p.valor}
+                        <WhipInUp text={p.valor} />
                       </span>
                       <span className="text-xs sm:text-sm uppercase text-accent tracking-wider font-semibold">
-                        / {p.nota}
+                        <WhipInUp text={`/ ${p.nota}`} />
                       </span>
                     </div>
                   </div>
@@ -171,10 +172,10 @@ export function Preco() {
                     >
                       <CtaGlow />
                       <CtaShine />
-                      <CtaEcho>{p.cta}</CtaEcho>
+                      <CtaEcho><WhipInUp text={p.cta} /></CtaEcho>
                     </a>
                     <p className="mt-2.5 text-center text-xs soft">
-                      🔒 Pagamento seguro · Acesso vitalício imediato
+                      <WhipInUp text="🔒 Pagamento seguro · Acesso vitalício imediato" />
                     </p>
                   </div>
                 </div>
@@ -182,25 +183,27 @@ export function Preco() {
                 {/* Box de Garantia Integrada */}
                 <div className="mt-6 pt-5 border-t border-white/10">
                   <div className="flex items-center gap-2.5 mb-1.5">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 256 256"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="16"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-5 h-5 text-accent shrink-0"
-                    >
-                      <path d="M208,40H48A8,8,0,0,0,40,48v64c0,72,80,112,88,112s88-40,88-112V48A8,8,0,0,0,208,40Z" />
-                      <polyline points="88 120 112 144 168 88" />
-                    </svg>
+                    <Reveal noFlash>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 256 256"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="16"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-5 h-5 text-accent shrink-0"
+                      >
+                        <path d="M208,40H48A8,8,0,0,0,40,48v64c0,72,80,112,88,112s88-40,88-112V48A8,8,0,0,0,208,40Z" />
+                        <polyline points="88 120 112 144 168 88" />
+                      </svg>
+                    </Reveal>
                     <h4 className="font-display text-sm font-bold text-white">
-                      {p.garantiaTitulo}
+                      <WhipInUp text={p.garantiaTitulo} />
                     </h4>
                   </div>
                   <p className="text-xs soft leading-relaxed">
-                    {p.garantiaTexto}
+                    <WhipInUp text={p.garantiaTexto} />
                   </p>
                 </div>
               </div>

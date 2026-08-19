@@ -25,6 +25,13 @@ function FaqRow({
   const badgeRef = useRef<HTMLSpanElement>(null);
   const titleRef = useRef<HTMLSpanElement>(null);
   const isFirstRender = useRef(true);
+  // A resposta anima com WhipInUp só na primeira vez que a pergunta abre.
+  // Marca ao FECHAR (nunca ao abrir): se marcasse na abertura, o re-render
+  // causado pelo próprio setState derrubaria o WhipInUp antes dele
+  // terminar de animar — mesmo cuidado do modulos.tsx/calculo.tsx. Como
+  // aqui o conteúdo nunca desmonta (só encolhe via height:0), a troca de
+  // ramo (WhipInUp vs texto puro) é o que evita reanimar.
+  const [everOpened, setEverOpened] = useState(false);
 
   useGSAP(
     () => {
@@ -75,12 +82,8 @@ function FaqRow({
           ease: "power2.out",
         });
 
-        // Revelação do texto
-        gsap.fromTo(
-          textRef.current,
-          { y: 8, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.4, delay: 0.08, ease: "power2.out" }
-        );
+        // Revelação do texto: na primeira vez, o próprio WhipInUp cuida
+        // (ver JSX) — nas próximas, o texto já nasce pronto, sem tween.
       } else {
         // Fundo voltando suavemente para transparente
         gsap.to(rowRef.current, {
@@ -119,6 +122,8 @@ function FaqRow({
           duration: 0.35,
           ease: "power2.inOut",
         });
+
+        if (!everOpened) setEverOpened(true);
       }
     },
     { dependencies: [isOpen], scope: rowRef }
@@ -129,13 +134,16 @@ function FaqRow({
       ref={rowRef}
       className="w-full will-change-[background-color]"
     >
-      <div className="pad max-w-4xl mx-auto w-full">
-        <button
-          type="button"
-          onClick={onToggle}
-          className="w-full py-5 sm:py-6 flex items-center justify-between gap-4 text-left cursor-pointer select-none group focus-visible:outline-2 focus-visible:outline-accent"
-          aria-expanded={isOpen}
-        >
+      {/* Botão ocupa a linha INTEIRA (borda a borda) — o padding/centralização
+          fica no conteúdo de dentro, não no botão, pra clicar em qualquer
+          ponto da linha abrir a pergunta, não só em cima do texto. */}
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full text-left cursor-pointer select-none group focus-visible:outline-2 focus-visible:outline-accent"
+        aria-expanded={isOpen}
+      >
+        <div className="pad max-w-4xl mx-auto w-full py-5 sm:py-6 flex items-center justify-between gap-4">
           <span
             ref={titleRef}
             className="font-display text-[1rem] sm:text-[1.125rem] md:text-[1.1875rem] font-bold leading-snug text-ink transition-colors duration-200 group-hover:text-accent"
@@ -165,21 +173,23 @@ function FaqRow({
               <line x1="128" y1="40" x2="128" y2="216" />
             </svg>
           </span>
-        </button>
+        </div>
+      </button>
 
-        {/* Resposta com animação GSAP */}
-        <div
-          ref={contentRef}
-          className="overflow-hidden"
-          style={{ height: 0, opacity: 0 }}
-        >
+      {/* Resposta com animação GSAP */}
+      <div
+        ref={contentRef}
+        className="overflow-hidden"
+        style={{ height: 0, opacity: 0 }}
+      >
+        <div className="pad max-w-4xl mx-auto w-full">
           <p
             ref={textRef}
             className={`pb-7 text-sm sm:text-base leading-relaxed max-w-[65ch] ${
               isOpen ? "text-on-ink-soft" : "text-ink/75"
             }`}
           >
-            {item.a}
+            {everOpened ? item.a : <WhipInUp text={item.a} />}
           </p>
         </div>
       </div>

@@ -23,9 +23,36 @@ export function Modulos() {
   const [zoomImage, setZoomImage] = useState<string | null>(null);
   const [isInView, setIsInView] = useState(false);
   const [mounted, setMounted] = useState(false);
+  // Só pra mostrar um skeleton sutil enquanto a imagem do slide ativo ainda
+  // não carregou — nenhuma das 6 imagens é trocada por import estático
+  // (o path em string é a própria chave usada pelo lightbox), então o
+  // "flash de layer" aqui se resolve por fora, sem tocar em content.ts.
+  const [loadedTabs, setLoadedTabs] = useState<Set<string>>(new Set());
+  const markLoaded = (tab: string) =>
+    setLoadedTabs((prev) => (prev.has(tab) ? prev : new Set(prev).add(tab)));
   const containerRef = useRef<HTMLDivElement>(null);
   const isInteracting = useRef(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  // Cada módulo (eyebrow/título/texto) anima só na PRIMEIRA vez que fica
+  // ativo — revisitar um módulo já visto mostra o texto direto, sem
+  // re-animar. Não dá pra só trocar o `text` prop do WhipInUp já montado:
+  // ele manipula o DOM diretamente (splitWord/revertWord) por fora do
+  // React, e trocar o texto depois disso dessincroniza a árvore do React
+  // da árvore real. Por isso o gate troca de RAMO (WhipInUp vs texto puro)
+  // em vez de só trocar o texto — cada ramo é uma montagem limpa.
+  //
+  // Precisa ser state (não ref): ler ref durante o render é proibido pelas
+  // regras do React (react-hooks/refs) — o valor pode não refletir o que
+  // foi commitado. E marca o módulo que está SAINDO, nunca o que está
+  // entrando: se marcasse o que acabou de entrar, o re-render disparado
+  // pelo próprio setState desmontaria o WhipInUp antes dele conseguir
+  // animar.
+  const [animatedTabs, setAnimatedTabs] = useState<Set<string>>(new Set());
+  const markSeen = (tab: string) =>
+    setAnimatedTabs((prev) => (prev.has(tab) ? prev : new Set(prev).add(tab)));
+  // Espelha o tab ativo sem entrar nas deps do intervalo do autoplay (que
+  // não pode reiniciar a cada troca, senão o ciclo de 14s nunca fecha).
+  const activeTabRef = useRef("");
 
   const items = modulos.items;
   const total = items.length;
@@ -41,6 +68,10 @@ export function Modulos() {
       : 1280;
 
   useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    activeTabRef.current = activeItem.tab;
+  }, [activeItem.tab]);
 
   // Fechar lightbox ao pressionar Escape
   useEffect(() => {
@@ -68,6 +99,7 @@ export function Modulos() {
     if (!isInView) return;
     const iv = setInterval(() => {
       if (isInteracting.current || zoomImage) return;
+      markSeen(activeTabRef.current);
       setActiveIdx((p) => (p + 1) % total);
     }, 14000);
     return () => clearInterval(iv);
@@ -77,6 +109,7 @@ export function Modulos() {
     isInteracting.current = true;
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => { isInteracting.current = false; }, 20000);
+    markSeen(activeTabRef.current);
     setActiveIdx(idx);
   };
 
@@ -104,15 +137,23 @@ export function Modulos() {
               </div>
 
               <div className="pt-6">
-                <span className="text-xs uppercase tracking-wider font-semibold text-accent mb-2 block">
-                  Módulo {String(activeIdx + 1).padStart(2, "0")}
-                </span>
-                <h3 className="font-display text-2xl lg:text-[1.75rem] font-bold text-white tracking-tight leading-snug">
-                  {activeItem.titulo}
-                </h3>
-                <p className="mt-2.5 text-body text-on-ink-soft leading-relaxed max-w-[36ch]">
-                  {activeItem.texto}
-                </p>
+                {(() => {
+                  const jaVisto = animatedTabs.has(activeItem.tab);
+                  const eyebrowText = `Módulo ${String(activeIdx + 1).padStart(2, "0")}`;
+                  return (
+                    <>
+                      <span className="text-xs uppercase tracking-wider font-semibold text-accent mb-2 block">
+                        {jaVisto ? eyebrowText : <WhipInUp key={activeItem.tab} text={eyebrowText} />}
+                      </span>
+                      <h3 className="font-display text-2xl lg:text-[1.75rem] font-bold text-white tracking-tight leading-snug">
+                        {jaVisto ? activeItem.titulo : <WhipInUp key={activeItem.tab} text={activeItem.titulo} />}
+                      </h3>
+                      <p className="mt-2.5 text-body text-on-ink-soft leading-relaxed max-w-[36ch]">
+                        {jaVisto ? activeItem.texto : <WhipInUp key={activeItem.tab} text={activeItem.texto} />}
+                      </p>
+                    </>
+                  );
+                })()}
 
                 <div className="mt-6 flex items-center gap-4">
                   <div className="flex items-center gap-2">
@@ -164,6 +205,12 @@ export function Modulos() {
               onClick={() => setZoomImage(activeItem.image)}
               title="Clique para ampliar a imagem"
             >
+              {!loadedTabs.has(activeItem.tab) && (
+                <div
+                  aria-hidden
+                  className="absolute inset-0 z-0 animate-pulse rounded-xl bg-white/[0.06]"
+                />
+              )}
               {items.map((item, idx) => {
                 const isActive = idx === activeIdx;
                 const isEquilibrio = item.tab === "Equilíbrio";
@@ -185,8 +232,9 @@ export function Modulos() {
                       height={item.h}
                       sizes="(max-width: 1024px) 100vw, 65vw"
                       quality={90}
+                      onLoad={() => markLoaded(item.tab)}
                       className={cn(
-                        "max-h-[92%] max-w-[94%] w-auto h-auto object-contain drop-shadow-2xl rounded-xl",
+                        "relative z-10 max-h-[92%] max-w-[94%] w-auto h-auto object-contain drop-shadow-2xl rounded-xl",
                         "transition-transform duration-300 ease-out origin-center",
                         isEquilibrio
                           ? "scale-[1.18] group-hover/img:scale-[1.22]"

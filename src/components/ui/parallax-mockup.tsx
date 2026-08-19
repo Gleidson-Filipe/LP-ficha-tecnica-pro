@@ -4,6 +4,9 @@ import Image from "next/image";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import fundoImg from "../../../public/images/solucao/fundo.webp";
+import sofaImg from "../../../public/images/solucao/sofa.webp";
+import notebookImg from "../../../public/images/solucao/notebook.webp";
 
 gsap.registerPlugin(useGSAP);
 
@@ -153,11 +156,10 @@ export function ParallaxMockup() {
       {/* Camada 1: Fundo */}
       <div className="parallax-fundo absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
         <Image
-          src="/images/solucao/fundo.webp"
+          src={fundoImg}
           alt=""
           aria-hidden
-          width={6600}
-          height={5000}
+          placeholder="blur"
           quality={82}
           sizes="(min-width: 1024px) 86vw, 136vw"
           className="h-full w-full object-cover object-center"
@@ -167,11 +169,10 @@ export function ParallaxMockup() {
       {/* Camada 2: Sofá */}
       <div className="parallax-sofa pointer-events-none absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
         <Image
-          src="/images/solucao/sofa.webp"
+          src={sofaImg}
           alt=""
           aria-hidden
-          width={6600}
-          height={5000}
+          placeholder="blur"
           quality={82}
           sizes="(min-width: 1024px) 86vw, 136vw"
           className="h-full w-full object-cover object-center"
@@ -181,10 +182,9 @@ export function ParallaxMockup() {
       {/* Camada 3: Notebook */}
       <div className="parallax-notebook pointer-events-none absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
         <Image
-          src="/images/solucao/notebook.webp"
+          src={notebookImg}
           alt="Notebook mostrando a tela de gestão do cardápio da Ficha Técnica Pro, com custo, preço e lucro de cada produto"
-          width={6600}
-          height={5000}
+          placeholder="blur"
           quality={85}
           sizes="(min-width: 1024px) 172vw, 272vw"
           className="h-full w-full object-cover object-center"

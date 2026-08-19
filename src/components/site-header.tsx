@@ -7,7 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { NAV, SLOGAN, CTA, CHECKOUT } from "@/lib/content";
 import { setPendingNavTarget } from "@/lib/pending-nav-target";
-import { scrollToId, scrollToTop } from "@/lib/smooth-scroll";
+import { navigateToId, navigateToTop } from "@/lib/smooth-scroll";
+import { isNavJumping, onNavJumpEnd } from "@/lib/nav-jump";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { FitWidth } from "@/components/ui/fit-width";
@@ -36,13 +37,22 @@ export function SiteHeader() {
           el: document.getElementById(item.id),
         })).filter((s): s is { id: typeof NAV[number]["id"]; el: HTMLElement } => s.el instanceof HTMLElement);
 
+      // footerEl não muda depois do mount; headerH só muda com o layout do
+      // próprio header (breakpoint). Relê-los em toda chamada de `atualizar`
+      // forçava layout duas vezes à toa — cacheados e recomputados só no
+      // resize.
+      let footerEl: HTMLElement | null = document.querySelector("footer");
+      let headerH = root.current?.offsetHeight ?? 72;
+      const recomputeStatics = () => {
+        footerEl = document.querySelector("footer");
+        headerH = root.current?.offsetHeight ?? 72;
+      };
+
       const atualizar = () => {
-        const headerH = root.current?.offsetHeight ?? 72;
         const viewportH = window.innerHeight;
         const triggerY = headerH + Math.min(viewportH * 0.35, 280);
 
         // 1. Se o usuário estiver no Rodapé (footer entrou na linha de foco), nenhum botão fica selecionado
-        const footerEl = document.querySelector("footer");
         if (footerEl && footerEl.getBoundingClientRect().top <= triggerY) {
           setAtivo(null);
           return;
@@ -92,9 +102,22 @@ export function SiteHeader() {
       let ultimaExec = 0;
       const THROTTLE_MS = 100;
       const atualizarThrottled = () => {
+        // Durante um voo de navegação (clique no nav saltando várias
+        // seções), o Lenis dispara scroll a cada frame — sem esse gate,
+        // essas leituras de getBoundingClientRect competiam exatamente
+        // pelo frame mais crítico (medido: parte do ForcedReflow de ~2s
+        // registrado num salto até o FAQ). O destaque otimista já foi
+        // setado no clique (ver handleNavClick); `onNavJumpEnd` resincroniza
+        // no pouso.
+        if (isNavJumping()) return;
         const agora = performance.now();
         if (agora - ultimaExec < THROTTLE_MS) return;
         ultimaExec = agora;
+        atualizar();
+      };
+
+      const onRefresh = () => {
+        if (isNavJumping()) return;
         atualizar();
       };
 
@@ -111,11 +134,17 @@ export function SiteHeader() {
         start: 0,
         end: "max",
         onUpdate: atualizarThrottled,
-        onRefresh: atualizar,
+        onRefresh,
       });
 
-      window.addEventListener("resize", atualizar, { passive: true });
+      const onResize = () => {
+        recomputeStatics();
+        atualizar();
+      };
+      window.addEventListener("resize", onResize, { passive: true });
       atualizar();
+
+      const unsubNavEnd = onNavJumpEnd(atualizar);
 
       const gs: ScrollTrigger[] = [st];
 
@@ -132,7 +161,8 @@ export function SiteHeader() {
       }
 
       return () => {
-        window.removeEventListener("resize", atualizar);
+        window.removeEventListener("resize", onResize);
+        unsubNavEnd();
         gs.forEach((g) => g.kill());
       };
     },
@@ -145,7 +175,7 @@ export function SiteHeader() {
     if (window.location.hash) {
       window.history.replaceState(null, "", window.location.pathname);
     }
-    scrollToTop();
+    navigateToTop();
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -154,7 +184,7 @@ export function SiteHeader() {
     const target = document.getElementById(id);
     if (target) {
       setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
-      scrollToId(id);
+      navigateToId(id);
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
       }
@@ -168,7 +198,7 @@ export function SiteHeader() {
     const target = document.getElementById(id);
     if (target) {
       setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
-      scrollToId(id);
+      navigateToId(id);
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
       }
@@ -182,7 +212,7 @@ export function SiteHeader() {
       const target = document.getElementById(id);
       if (target) {
         setPendingNavTarget(id, target.getBoundingClientRect().top + window.scrollY);
-        scrollToId(id);
+        navigateToId(id);
         if (window.location.hash) {
           window.history.replaceState(null, "", window.location.pathname);
         }

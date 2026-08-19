@@ -86,6 +86,31 @@ export function Calculo() {
   const [zoomImage, setZoomImage] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const imgRefs = useRef<(HTMLDivElement | null)[]>([]);
+  // Skeleton sutil enquanto a imagem de cada etapa carrega — mesmo motivo
+  // do modulos.tsx: `step.image` (string) é a própria chave do lightbox,
+  // então nada de import estático aqui.
+  const [loadedSteps, setLoadedSteps] = useState<Set<string>>(new Set());
+  const markLoaded = (n: string) =>
+    setLoadedSteps((prev) => (prev.has(n) ? prev : new Set(prev).add(n)));
+  // O texto/checks de cada etapa (`step.texto`) só existe no DOM quando a
+  // etapa está aberta (`{isActive && (...)}`) — fecha e reabre = desmonta e
+  // remonta de verdade. Sem essa marcação, reabrir a MESMA etapa re-anima o
+  // WhipInUp toda vez.
+  //
+  // Marcar isso num `useEffect` com cleanup (rodando quando `activeIdx`
+  // muda) parece natural, mas quebra: o React Strict Mode do dev monta,
+  // desmonta e remonta o componente uma vez de propósito pra pegar bugs —
+  // esse desmonte falso dispara o cleanup como se o usuário tivesse
+  // fechado a etapa 0 antes de qualquer clique real, marcando "Ingredientes"
+  // como visto e matando a animação já na primeira carga. Por isso a marca
+  // é feita direto no clique (só dispara em interação de verdade, nunca em
+  // remontagem sintética do React) — marca a etapa que está sendo
+  // FECHADA/trocada, nunca a que está abrindo.
+  const [seenSteps, setSeenSteps] = useState<Set<string>>(new Set());
+  const markSeenStep = (idx: number) => {
+    const n = steps[idx].n;
+    setSeenSteps((prev) => (prev.has(n) ? prev : new Set(prev).add(n)));
+  };
 
   // Transição GSAP suave ao clicar nas etapas
   useGSAP(
@@ -148,7 +173,10 @@ export function Calculo() {
           return (
             <div
               key={step.n}
-              onClick={() => setActiveIdx((prev) => (prev === idx ? null : idx))}
+              onClick={() => {
+                if (activeIdx !== null) markSeenStep(activeIdx);
+                setActiveIdx((prev) => (prev === idx ? null : idx));
+              }}
               className={cn(
                 "group relative w-full rule-b transition-all duration-300 ease-out cursor-pointer overflow-hidden select-none",
                 isActive
@@ -165,14 +193,14 @@ export function Calculo() {
                       isActive ? "text-on-paper" : "text-on-paper/75 group-hover:text-on-paper"
                     )}
                   >
-                    {step.titulo}
+                    <WhipInUp text={step.titulo} />
                   </h3>
 
                   {/* Textos explicativos e checkmarks visíveis EXCLUSIVAMENTE quando o retângulo estiver ABERTO */}
                   {isActive && (
                     <div className="mt-3 animate-in fade-in duration-300">
                       <p className="text-[0.9375rem] md:text-body text-on-paper-soft leading-relaxed max-w-[44ch]">
-                        {step.texto}
+                        {seenSteps.has(step.n) ? step.texto : <WhipInUp text={step.texto} />}
                       </p>
 
                       {/* Lista de Checkmarks para a etapa 06 */}
@@ -181,7 +209,9 @@ export function Calculo() {
                           {step.checks.map((ck) => (
                             <li key={ck} className="flex items-center gap-2">
                               <span className="text-accent font-bold text-sm">✔</span>
-                              <span>{ck}</span>
+                              <span>
+                                {seenSteps.has(step.n) ? ck : <WhipInUp text={ck} />}
+                              </span>
                             </li>
                           ))}
                         </ul>
@@ -227,6 +257,12 @@ export function Calculo() {
                       }}
                       className="group/img relative inline-flex w-fit max-w-full max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[420px] cursor-zoom-in rounded-xl"
                     >
+                      {!loadedSteps.has(step.n) && (
+                        <div
+                          aria-hidden
+                          className="absolute inset-0 z-0 animate-pulse rounded-xl bg-black/[0.05]"
+                        />
+                      )}
                       <Image
                         src={step.image}
                         alt={`Etapa - ${step.titulo}`}
@@ -234,7 +270,8 @@ export function Calculo() {
                         height={step.h}
                         sizes="(max-width: 1024px) 95vw, 50vw"
                         quality={90}
-                        className="max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[415px] w-auto max-w-full object-contain rounded-xl shadow-md transition-transform duration-300 group-hover/img:scale-[1.015]"
+                        onLoad={() => markLoaded(step.n)}
+                        className="relative z-10 max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[415px] w-auto max-w-full object-contain rounded-xl shadow-md transition-transform duration-300 group-hover/img:scale-[1.015]"
                       />
 
                       {/* Badge sutil de Zoom no canto exato da imagem */}

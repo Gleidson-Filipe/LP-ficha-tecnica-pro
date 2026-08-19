@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { AnimationItem } from "lottie-web";
 import { cn } from "@/lib/utils";
+import { deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
 
 export type LottieHost = HTMLElement & {
   __lottie?: AnimationItem;
@@ -68,6 +69,17 @@ export function AnimatedCheck({ className }: { className?: string }) {
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) return;
+        // Durante um voo de navegação, não dispara o import do chunk do
+        // lottie aqui — só reobserva. O `rootMargin` de 600px faz vários
+        // checkmarks entrarem nesse raio ao mesmo tempo num salto rápido,
+        // concentrando vários `import()` + `loadAnimation` (renderer SVG)
+        // no mesmo frame.
+        if (deferDuringNavJump(el, () => {
+          io.unobserve(el);
+          io.observe(el);
+        })) {
+          return;
+        }
         io.disconnect();
         void carregar();
       },
@@ -77,6 +89,7 @@ export function AnimatedCheck({ className }: { className?: string }) {
 
     return () => {
       cancelado = true;
+      cancelDeferred(el);
       io.disconnect();
       anim?.destroy();
     };

@@ -2,14 +2,13 @@
 
 import { useRef, MutableRefObject } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { diferenciais as d } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { cn } from "@/lib/utils";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP);
 
 /* ── Ícones ─────────────────────────────────────────────────────────── */
 function DiferencialIcon({ icone }: { icone: string }) {
@@ -123,12 +122,12 @@ function DiferencialCard({
               </span>
             </div>
             <h3 className="font-display font-bold text-xl lg:text-[1.35rem] leading-snug text-on-paper">
-              {c.titulo}
+              <WhipInUp text={c.titulo} />
             </h3>
           </div>
           <div className="mt-auto pt-6">
             <p className="text-[0.875rem] lg:text-[0.9375rem] text-on-paper-soft leading-relaxed">
-              {c.texto}
+              <WhipInUp text={c.texto} />
             </p>
           </div>
         </div>
@@ -194,13 +193,12 @@ export function Diferenciais() {
   // Timer de auto-desvire
   const flipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /* ── Loop de peek sequencial ── */
+  /* ── Loop de peek sequencial — só roda enquanto a seção está na tela ── */
   useGSAP(
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       let timeout: ReturnType<typeof setTimeout>;
-      let triggered = false;
 
       const pickAndPeek = () => {
         // Índices disponíveis: cards que existem no DOM e NÃO estão virados
@@ -231,26 +229,38 @@ export function Diferenciais() {
           .to(inner, { rotateY: 0,     duration: 1.1,  ease: "elastic.out(0.8, 0.6)" });
       };
 
-      // Dispara o primeiro peek assim que a seção entra na viewport
-      // (dica visual de que os cards são interativos)
-      const st = ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 75%",
-        once: true,
-        onEnter: () => {
-          if (triggered) return;
-          triggered = true;
-          // Pequeno delay para não brigar com animações de entrada da seção
-          timeout = setTimeout(pickAndPeek, 600);
-        },
-      });
-
-      return () => {
-        st.kill();
+      const stopPeek = () => {
         clearTimeout(timeout);
         innerRefs.current.forEach(({ current }) => {
-          if (current) gsap.killTweensOf(current);
+          if (!current) return;
+          gsap.killTweensOf(current);
+          gsap.set(current, { rotateY: 0 });
         });
+      };
+
+      // Sem `pin: true` — a seção nunca fica "presa" fora da tela, então
+      // não faz sentido usar ScrollTrigger só pra isso; IntersectionObserver
+      // dá play/pause de verdade: entrou, começa; saiu, pára de vez (não só
+      // "não dispara mais", o loop existente é morto e os cards voltam à
+      // posição neutra), e reentrar recomeça do zero.
+      const el = sectionRef.current;
+      if (!el) return;
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            timeout = setTimeout(pickAndPeek, 600);
+          } else {
+            stopPeek();
+          }
+        },
+        { rootMargin: "0px 0px -25% 0px" }, // equivalente a "top 75%"
+      );
+      io.observe(el);
+
+      return () => {
+        io.disconnect();
+        stopPeek();
       };
     },
     { scope: sectionRef }

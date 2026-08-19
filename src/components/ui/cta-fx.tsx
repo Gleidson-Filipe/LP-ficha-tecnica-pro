@@ -47,7 +47,9 @@ export function useCrookedIn(ref: RefObject<HTMLElement | null>) {
     );
     io.observe(el);
 
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+    };
   }, [ref]);
 }
 

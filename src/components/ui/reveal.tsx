@@ -8,9 +8,18 @@ gsap.registerPlugin(useGSAP);
 
 /**
  * Entrada discreta ao entrar no viewport.
- * À prova de falha: o conteúdo é renderizado VISÍVEL e o estado inicial é
- * aplicado pelo GSAP em layout effect (antes da pintura). Se o JS não
- * carregar, nada some da página.
+ * Por padrão, à prova de falha: o conteúdo é renderizado VISÍVEL e o
+ * estado inicial é aplicado pelo GSAP em layout effect (antes da
+ * pintura). Se o JS não carregar, nada some da página. Isso deixa uma
+ * janela teórica de flash (o layout effect precisa rodar antes do
+ * primeiro paint do navegador) — normalmente imperceptível, mas visível
+ * em alguns casos.
+ *
+ * `noFlash`: troca essa garantia por zero flash garantido — igual ao
+ * WhipInUp, escreve `opacity:0` direto no JSX, antes de qualquer JS
+ * rodar. Só usar quando o elemento é puramente decorativo (ex.: um
+ * ícone ao lado de um texto que já tem sua própria garantia de
+ * fallback) — sem JS, ele fica invisível para sempre.
  *
  * Usa IntersectionObserver nativo (não ScrollTrigger): se o elemento monta
  * já além do ponto de ativação (F5 no meio da seção, back/forward),
@@ -25,10 +34,12 @@ export function Reveal({
   children,
   className,
   stagger,
+  noFlash,
 }: {
   children: ReactNode;
   className?: string;
   stagger?: number;
+  noFlash?: boolean;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const grupo = stagger !== undefined;
@@ -64,7 +75,11 @@ export function Reveal({
   );
 
   return (
-    <div ref={root} className={className}>
+    <div
+      ref={root}
+      className={className}
+      style={noFlash ? { opacity: 0, transform: "translateY(14px)" } : undefined}
+    >
       {children}
     </div>
   );

@@ -49,3 +49,19 @@ export function peekPendingNavTarget(): { id: string; top: number } | null {
 export function updatePendingNavTargetTop(top: number) {
   if (pendingId !== null) pendingTop = top;
 }
+
+/**
+ * Descarta o alvo pendente antes da expiração natural. Usado quando o
+ * usuário interrompe o voo de navegação (roda/touch/teclado) — sem isso,
+ * uma correção tardia (troca de fonte, resize) dentro da janela de 6s
+ * puxaria o usuário de volta ao destino contra a vontade dele, mesmo tendo
+ * ele assumido o controle do scroll explicitamente.
+ */
+export function clearPendingNavTarget() {
+  pendingId = null;
+  pendingTop = null;
+  if (clearTimer) {
+    clearTimeout(clearTimer);
+    clearTimer = null;
+  }
+}
