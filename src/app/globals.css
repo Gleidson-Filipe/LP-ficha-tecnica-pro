@@ -462,6 +462,22 @@ body {
   animation: hero-mockup-in 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s both;
 }
 
+/*
+  WhipInUp: o deslocamento vertical da letra é resolvido aqui via
+  calc(--wiu-p * 1%), não por yPercent do GSAP. yPercent obriga o GSAP a
+  medir a altura de CADA letra (getBoundingClientRect/offsetHeight) pra
+  converter porcentagem em pixel — com dezenas de letras animando juntas
+  (Hero + Header no load), isso virava ~230ms de reflow forçado num bloco
+  síncrono só, o "tranco" sentido na entrada do Hero. Resolvendo a
+  porcentagem em CSS puro, o navegador calcula isso na pintura, sem
+  nenhuma leitura de layout via JS — o GSAP só anima um número (--wiu-p),
+  nunca lê geometria. Continua responsivo: a mesma % de sempre, só que
+  resolvida pelo motor de CSS em vez de JS.
+*/
+.wiu-letter {
+  transform: translateY(calc(var(--wiu-p, 0) * 1%));
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

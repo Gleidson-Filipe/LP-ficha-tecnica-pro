@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import { useGSAP } from "@gsap/react";
@@ -171,25 +171,31 @@ export function WhipInUp({
 
       const words = Array.from(wordEls);
 
+      // fromTo com "from" explícito (nunca .to()/.set() puro) — o GSAP só
+      // precisa ler o valor atual de --wiu-p se não for informado, e essa
+      // leitura é o próprio custo que estamos evitando. Passando os dois
+      // lados, ele nunca consulta o DOM: só escreve o número a cada frame.
       const runTween = () => {
         const letters = el.querySelectorAll<HTMLElement>(".wiu-letter");
-        gsap.to(letters, {
-          yPercent: 0,
-          duration: 0.58,
-          ease: "whipInUp",
-          stagger: 0.007,
-          onComplete: () => {
-            words.forEach((w) => revertWord(w, w.dataset.word ?? ""));
+        gsap.fromTo(
+          letters,
+          { "--wiu-p": 200 },
+          {
+            "--wiu-p": 0,
+            duration: 0.58,
+            ease: "whipInUp",
+            stagger: 0.007,
+            onComplete: () => {
+              words.forEach((w) => revertWord(w, w.dataset.word ?? ""));
+            },
           },
-        });
+        );
       };
 
       if (eager) {
-        // Já nasce quebrado em letras via JSX — sem custo de criação de
-        // DOM aqui, só posicionar e revelar.
+        // Já nasce quebrado em letras via JSX, com --wiu-p:200 já no
+        // inline style (ver JSX) — nada a posicionar aqui, só revelar.
         ensureWhipEase();
-        const letters = el.querySelectorAll<HTMLElement>(".wiu-letter");
-        gsap.set(letters, { yPercent: 200, opacity: 1 });
         el.style.opacity = "1";
         return observeOnce(el, runTween);
       }
@@ -197,8 +203,6 @@ export function WhipInUp({
       return observeOnce(el, () => {
         ensureWhipEase();
         words.forEach((w) => splitWord(w, w.dataset.word ?? ""));
-        const letters = el.querySelectorAll<HTMLElement>(".wiu-letter");
-        gsap.set(letters, { yPercent: 200, opacity: 1 });
         el.style.opacity = "1";
         runTween();
       });
@@ -232,7 +236,11 @@ export function WhipInUp({
           >
             {eager
               ? Array.from(word).map((ch, ci) => (
-                  <span key={ci} className="wiu-letter inline-block">
+                  <span
+                    key={ci}
+                    className="wiu-letter inline-block"
+                    style={{ "--wiu-p": 200 } as CSSProperties}
+                  >
                     {ch}
                   </span>
                 ))
