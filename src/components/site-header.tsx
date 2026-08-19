@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { NAV, SLOGAN, CTA, CHECKOUT } from "@/lib/content";
+import { setPendingNavTarget } from "@/lib/pending-nav-target";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { FitWidth } from "@/components/ui/fit-width";
@@ -135,6 +136,7 @@ export function SiteHeader() {
     setAtivo(id);
     const target = document.getElementById(id);
     if (target) {
+      setPendingNavTarget(id);
       target.scrollIntoView({ behavior: "smooth" });
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
@@ -148,6 +150,7 @@ export function SiteHeader() {
     setAtivo(id);
     const target = document.getElementById(id);
     if (target) {
+      setPendingNavTarget(id);
       target.scrollIntoView({ behavior: "smooth" });
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
@@ -160,6 +163,7 @@ export function SiteHeader() {
       e.preventDefault();
       const target = document.querySelector(CHECKOUT);
       if (target) {
+        setPendingNavTarget(CHECKOUT.slice(1));
         target.scrollIntoView({ behavior: "smooth" });
         if (window.location.hash) {
           window.history.replaceState(null, "", window.location.pathname);

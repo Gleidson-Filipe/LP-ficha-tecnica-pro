@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { consumePendingNavTarget } from "@/lib/pending-nav-target";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,6 +32,21 @@ const KEY_PREFIX = "ftp:scrollY:";
  * estado inicial (escondida), mesmo com o scroll certo. Por isso chamamos
  * `ScrollTrigger.refresh()` DE VERDADE (import direto) no 'load', quando a
  * altura final já é conhecida.
+ *
+ * Esse refresh recalcula o espaço reservado pela seção de vídeo (sticky) —
+ * se o usuário clicou num link do nav ANTES do 'load' disparar (comum:
+ * 'load' só acontece depois de TODAS as imagens da página baixarem), o
+ * scroll suave já em voo tinha calculado o alvo com a altura ANTIGA, e o
+ * refresh desloca onde a seção realmente está. Por isso, depois do
+ * refresh, corrige a posição pro alvo pendente (se ainda houver um).
+ *
+ * Segunda corrida, independente da primeira: as fontes (`font-display:
+ * swap`) podem terminar de trocar DEPOIS do 'load' — 'load' não espera
+ * fontes, só os recursos "de rede" padrão. A troca da fonte fallback pra
+ * Switzer/GeneralSans muda métricas de linha e reflow a página inteira
+ * (ver comentário nas fontes em globals.css). Se o clique no nav acontecer
+ * DEPOIS da correção do 'load' mas ANTES desse reflow de fonte, nada mais
+ * corrigiria — por isso repete a mesma correção em `document.fonts.ready`.
  */
 export function ScrollRestore() {
   useEffect(() => {
@@ -38,10 +54,14 @@ export function ScrollRestore() {
 
     const key = KEY_PREFIX + location.pathname;
 
-    const onLoad = () => {
+    const correct = () => {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           ScrollTrigger.refresh();
+          const pendingId = consumePendingNavTarget();
+          if (pendingId) {
+            document.getElementById(pendingId)?.scrollIntoView({ behavior: "smooth" });
+          }
         });
       });
     };
@@ -51,14 +71,15 @@ export function ScrollRestore() {
     };
 
     if (document.readyState === "complete") {
-      onLoad();
+      correct();
     } else {
-      window.addEventListener("load", onLoad);
+      window.addEventListener("load", correct);
     }
+    document.fonts?.ready?.then(correct);
     window.addEventListener("pagehide", onPageHide);
 
     return () => {
-      window.removeEventListener("load", onLoad);
+      window.removeEventListener("load", correct);
       window.removeEventListener("pagehide", onPageHide);
     };
   }, []);
