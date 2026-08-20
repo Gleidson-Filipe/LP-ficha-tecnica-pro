@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { faq } from "@/lib/content";
 import { Section } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
 
 gsap.registerPlugin(useGSAP);
 
@@ -129,9 +130,83 @@ function FaqRow({
     { dependencies: [isOpen], scope: rowRef }
   );
 
+  // Entrada do badge "+" em scroll — mesmo padrão dos ícones da frente dos
+  // cards de Diferenciais (fade+scale+rotate, zero-flash via `style` no
+  // JSX abaixo, nunca só `gsap.set` dentro do effect). `clearProps` no fim
+  // devolve o elemento ao controle de CSS puro (a classe `group-hover:*`
+  // some com o hover normal antes do primeiro toggle, mas com a
+  // transformação ainda inline via GSAP ela ficaria bloqueada depois —
+  // mesmo problema de especificidade já visto no calculo.tsx).
+  useGSAP(
+    () => {
+      const el = badgeRef.current;
+      if (!el) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(el, { clearProps: "transform,opacity" });
+        return;
+      }
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          if (isNavJumping()) {
+            deferDuringNavJump(el, () => {
+              io.unobserve(el);
+              io.observe(el);
+            });
+            return;
+          }
+          gsap.to(el, {
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            duration: 0.6,
+            ease: "back.out(1.8)",
+            clearProps: "transform,opacity",
+          });
+          io.disconnect();
+        },
+        { rootMargin: "0px 0px -8% 0px" },
+      );
+      io.observe(el);
+
+      return () => {
+        cancelDeferred(el);
+        io.disconnect();
+      };
+    },
+    { scope: rowRef },
+  );
+
+  // Mesmo realce de fundo ao passar o mouse usado nas faixas da seção
+  // "Precificação Inteligente" (calculo.tsx): tingir sutilmente a linha
+  // inteira, não só o texto. Só ativo com a pergunta fechada — aberta, o
+  // fundo já é o escuro do estado ativo e não deve reagir ao hover.
+  const handleMouseEnter = () => {
+    if (isOpen) return;
+    gsap.to(rowRef.current, {
+      backgroundColor: "rgba(234, 232, 217, 0.25)",
+      duration: 0.3,
+      ease: "power2.out",
+    });
+    gsap.to(badgeRef.current, { scale: 1.05, duration: 0.2, ease: "power2.out" });
+  };
+  const handleMouseLeave = () => {
+    if (isOpen) return;
+    gsap.to(rowRef.current, {
+      backgroundColor: "transparent",
+      duration: 0.3,
+      ease: "power2.out",
+    });
+    gsap.to(badgeRef.current, { scale: 1, duration: 0.2, ease: "power2.out" });
+  };
+
   return (
     <div
       ref={rowRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className="w-full will-change-[background-color]"
     >
       {/* Botão ocupa a linha INTEIRA (borda a borda) — o padding/centralização
@@ -155,8 +230,8 @@ function FaqRow({
           <span
             ref={badgeRef}
             aria-hidden
-            style={{ borderRadius: "9999px" }}
-            className="w-8 h-8 sm:w-9 sm:h-9 bg-ink text-white flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105"
+            style={{ borderRadius: "9999px", opacity: 0, transform: "scale(0.6) rotate(-8deg)" }}
+            className="w-8 h-8 sm:w-9 sm:h-9 bg-ink text-white flex items-center justify-center shrink-0"
           >
             <svg
               ref={iconRef}
