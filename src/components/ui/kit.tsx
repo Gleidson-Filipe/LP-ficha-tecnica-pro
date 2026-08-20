@@ -1,11 +1,58 @@
 "use client";
 
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef, useEffect, useRef, useState, type ReactNode } from "react";
 import { CTA, CHECKOUT } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { useCtaFx, useCrookedIn, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 import { navigateToId } from "@/lib/smooth-scroll";
+
+/**
+ * Traço decorativo (2px) que antecede/segue um eyebrow, revelado ao entrar
+ * na tela. Deliberadamente NÃO usa `Reveal`/GSAP aqui: `Reveal` só sabe
+ * renderizar como `<div>`, que é HTML inválido dentro do `<p>` flex que
+ * envolve o eyebrow (causava mismatch de hidratação) — e o `translateY`
+ * de 14px do Reveal (calibrado pra blocos de texto) empurrava um traço de
+ * só 2px visivelmente pra baixo do centro da linha. Aqui é um `<span>`
+ * simples com um IntersectionObserver dedicado e um deslocamento vertical
+ * pequeno (4px), então o traço nasce quase no lugar e assenta exatamente
+ * centralizado com o texto ao lado.
+ */
+export function AccentDash() {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [shown, setShown] = useState(
+    () => typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting) return;
+        setShown(true);
+        io.disconnect();
+      },
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <span
+      aria-hidden
+      ref={ref}
+      className="inline-block h-[2px] w-7 bg-accent origin-left transition-all duration-700 ease-out"
+      style={{
+        opacity: shown ? 1 : 0,
+        transform: shown ? "translateY(0) scaleX(1)" : "translateY(4px) scaleX(0.4)",
+      }}
+    />
+  );
+}
 
 /** Bloco de seção. Define o tom (escuro/claro) e o respiro vertical. */
 export const Section = forwardRef<
@@ -32,7 +79,7 @@ export const Section = forwardRef<
 export function Label({ children }: { children: string }) {
   return (
     <p className="flex items-center gap-3 text-label uppercase text-accent">
-      <span aria-hidden className="inline-block h-[2px] w-7 bg-accent" />
+      <AccentDash />
       <WhipInUp text={children} />
     </p>
   );

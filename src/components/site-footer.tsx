@@ -1,14 +1,23 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { rodape, INSTAGRAM, SLOGAN, CHECKOUT } from "@/lib/content";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { useCtaFx, useCrookedIn, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
-import { navigateToId } from "@/lib/smooth-scroll";
+import { navigateToId, navigateToTop } from "@/lib/smooth-scroll";
 
 export function SiteFooter() {
   const ctaFx = useCtaFx<HTMLAnchorElement>();
   useCrookedIn(ctaFx);
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+    navigateToTop();
+  };
 
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (CHECKOUT.startsWith("#")) {
@@ -87,7 +96,12 @@ export function SiteFooter() {
         {/* Bloco Esquerda: Logo Image + Slogan com mesma largura + Pill GF */}
         <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 lg:gap-10">
           {/* Logo Imagem + Slogan Claro perfeitamente pareados */}
-          <div className="flex flex-col items-center sm:items-start w-[210px]">
+          <Link
+            href="/"
+            onClick={handleLogoClick}
+            aria-label="Ficha Técnica Pro"
+            className="flex flex-col items-center sm:items-start w-[210px] cursor-pointer"
+          >
             <Image
               src="/images/logo-ftp.png"
               alt="Ficha Técnica Pro"
@@ -99,7 +113,7 @@ export function SiteFooter() {
             <p className="text-[12.2px] font-medium text-[#f5f4ea] font-sans -ml-[1px] whitespace-nowrap mt-1 text-center sm:text-left">
               {SLOGAN}
             </p>
-          </div>
+          </Link>
 
           {/* GF Link Pill com Logo GFD e Ícone Colorido Oficial do Instagram */}
           <a

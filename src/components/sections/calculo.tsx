@@ -1,15 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import { useState, useRef, useEffect } from "react";
 import { calculo as c } from "@/lib/content";
-import { Section } from "@/components/ui/kit";
+import { Section, AccentDash } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(useGSAP);
 
 const steps = [
   {
@@ -85,63 +81,41 @@ export function Calculo() {
   const [activeIdx, setActiveIdx] = useState<number | null>(0);
   const [zoomImage, setZoomImage] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  const imgRefs = useRef<(HTMLDivElement | null)[]>([]);
   // Skeleton sutil enquanto a imagem de cada etapa carrega — mesmo motivo
   // do modulos.tsx: `step.image` (string) é a própria chave do lightbox,
   // então nada de import estático aqui.
   const [loadedSteps, setLoadedSteps] = useState<Set<string>>(new Set());
   const markLoaded = (n: string) =>
     setLoadedSteps((prev) => (prev.has(n) ? prev : new Set(prev).add(n)));
+  // Zoom sutil da imagem no hover, via JS (não `group-hover/img:scale-[1.015]`
+  // do Tailwind) — essa classe com valor arbitrário decimal não compila
+  // com consistência em todos os targets. `onMouseEnter/Leave` + `style`
+  // inline garante o transform sem falha.
+  const [hoveredStep, setHoveredStep] = useState<string | null>(null);
   // O texto/checks de cada etapa (`step.texto`) só existe no DOM quando a
   // etapa está aberta (`{isActive && (...)}`) — fecha e reabre = desmonta e
   // remonta de verdade. Sem essa marcação, reabrir a MESMA etapa re-anima o
   // WhipInUp toda vez.
   //
   // Marcar isso num `useEffect` com cleanup (rodando quando `activeIdx`
-  // muda) parece natural, mas quebra: o React Strict Mode do dev monta,
-  // desmonta e remonta o componente uma vez de propósito pra pegar bugs —
-  // esse desmonte falso dispara o cleanup como se o usuário tivesse
-  // fechado a etapa 0 antes de qualquer clique real, marcando "Ingredientes"
-  // como visto e matando a animação já na primeira carga. Por isso a marca
-  // é feita direto no clique (só dispara em interação de verdade, nunca em
-  // remontagem sintética do React) — marca a etapa que está sendo
-  // FECHADA/trocada, nunca a que está abrindo.
+  // muda) quebra no React Strict Mode. Por isso a marca é feita direto no
+  // clique (só dispara em interação de verdade).
   const [seenSteps, setSeenSteps] = useState<Set<string>>(new Set());
   const markSeenStep = (idx: number) => {
     const n = steps[idx].n;
     setSeenSteps((prev) => (prev.has(n) ? prev : new Set(prev).add(n)));
   };
 
-  // Transição GSAP suave ao clicar nas etapas
-  useGSAP(
-    () => {
-      steps.forEach((_, idx) => {
-        const el = imgRefs.current[idx];
-        if (!el) return;
-
-        if (activeIdx === idx) {
-          gsap.to(el, {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            duration: 0.35,
-            ease: "power2.out",
-            pointerEvents: "auto",
-          });
-        } else {
-          gsap.to(el, {
-            opacity: 0,
-            scale: 0.96,
-            y: 10,
-            duration: 0.25,
-            ease: "power2.in",
-            pointerEvents: "none",
-          });
-        }
-      });
-    },
-    { dependencies: [activeIdx], scope: sectionRef }
-  );
+  // Fechar lightbox ao pressionar Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoomImage(null);
+    };
+    if (zoomImage) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [zoomImage]);
 
   return (
     <Section
@@ -153,9 +127,9 @@ export function Calculo() {
       {/* ── Cabeçalho Centralizado ── */}
       <div className="pad mb-12 md:mb-16 text-center flex flex-col items-center">
         <p className="flex items-center gap-3 text-label uppercase text-accent justify-center">
-          <span aria-hidden className="inline-block h-[2px] w-7 bg-accent" />
+          <AccentDash />
           <WhipInUp text={c.label} />
-          <span aria-hidden className="inline-block h-[2px] w-7 bg-accent" />
+          <AccentDash />
         </p>
         <h2 className="mt-4 max-w-[28ch] font-display text-h2 text-balance text-center">
           <WhipInUp text={c.title} />
@@ -217,9 +191,14 @@ export function Calculo() {
                   )}
                 </div>
 
-                {/* Seta diagonal Phosphor (Thin) quando o retângulo estiver FECHADO */}
+                {/* Seta diagonal Phosphor (Thin) — visível apenas quando a etapa está fechada.
+                    Desmontada quando ativa para garantir que o SVG não permaneça no DOM sob a imagem,
+                    eliminando qualquer conflito de composição de camadas/GPU no hover do zoom. */}
                 {!isActive && (
-                  <div className="absolute right-6 sm:right-10 md:right-14 lg:right-16 xl:right-20 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+                  <div
+                    className="absolute right-6 sm:right-10 md:right-14 lg:right-16 xl:right-20 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none transition-opacity duration-200"
+                    aria-hidden="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 256 256"
@@ -236,10 +215,10 @@ export function Calculo() {
                   </div>
                 )}
 
-                {/* Coluna da Direita: Accordion que expande ao clicar com imagem maior e clique para Zoom */}
+                {/* Coluna da Direita: Accordion que expande ao clicar com imagem maior e clique para Zoom. */}
                 <div
                   className={cn(
-                    "grid transition-all duration-300 ease-out",
+                    "relative z-10 grid transition-all duration-300 ease-out",
                     isActive
                       ? "grid-rows-[1fr] opacity-100 mt-4 lg:mt-0"
                       : "grid-rows-[0fr] opacity-0 pointer-events-none"
@@ -252,13 +231,16 @@ export function Calculo() {
                         e.stopPropagation();
                         setZoomImage(step.image);
                       }}
-                      className="group/img isolate relative inline-flex w-fit max-w-full max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[420px] cursor-zoom-in rounded-xl"
-                      style={{ aspectRatio: `${step.w} / ${step.h}` }}
+                      onMouseEnter={() => setHoveredStep(step.n)}
+                      onMouseLeave={() => setHoveredStep((prev) => (prev === step.n ? null : prev))}
+                      className="group/img isolate relative inline-flex w-fit max-w-full max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[420px] cursor-zoom-in"
+                      style={{ aspectRatio: `${step.w} / ${step.h}`, padding: 8 }}
                     >
                       {!loadedSteps.has(step.n) && (
                         <div
                           aria-hidden
-                          className="absolute inset-0 z-0 animate-pulse rounded-xl bg-black/[0.05]"
+                          className="absolute inset-2 z-0 animate-pulse bg-black/[0.05]"
+                          style={{ borderRadius: 12 }}
                         />
                       )}
                       <Image
@@ -270,17 +252,13 @@ export function Calculo() {
                         quality={90}
                         priority={idx === 0}
                         onLoad={() => markLoaded(step.n)}
-                        className="relative z-10 max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[415px] w-auto max-w-full object-contain rounded-xl shadow-md transition-transform duration-300 group-hover/img:scale-[1.015]"
-                        style={{ aspectRatio: `${step.w} / ${step.h}` }}
+                        className="relative z-10 max-h-full max-w-full object-contain shadow-md transition-transform duration-300"
+                        style={{
+                          aspectRatio: `${step.w} / ${step.h}`,
+                          borderRadius: 12,
+                          transform: hoveredStep === step.n ? "scale(1.015)" : "scale(1)",
+                        }}
                       />
-
-                      {/* Badge sutil de Zoom no canto exato da imagem */}
-                      <span className="absolute bottom-2.5 right-2.5 rounded-md bg-ink/70 backdrop-blur-sm px-2 py-1 text-[11px] font-medium text-white opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none flex items-center gap-1 shadow-sm">
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                        </svg>
-                        Ampliar
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -299,7 +277,8 @@ export function Calculo() {
           <button
             type="button"
             onClick={() => setZoomImage(null)}
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 rounded-full bg-white/15 hover:bg-white/30 text-white w-10 h-10 flex items-center justify-center transition-colors text-lg font-bold"
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition-colors font-bold"
+            style={{ borderRadius: "50%", width: 44, height: 44, fontSize: 20 }}
             aria-label="Fechar ampliação"
           >
             ✕
@@ -307,7 +286,8 @@ export function Calculo() {
 
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-h-[90vh] max-w-[95vw] flex items-center justify-center p-2 rounded-2xl bg-white shadow-2xl overflow-hidden"
+            className="relative max-h-[90vh] max-w-[95vw] flex items-center justify-center p-2 bg-white shadow-2xl overflow-hidden"
+            style={{ borderRadius: 16 }}
           >
             <Image
               src={zoomImage}
@@ -315,7 +295,8 @@ export function Calculo() {
               width={2278}
               height={1100}
               quality={90}
-              className="max-h-[85vh] max-w-[92vw] w-auto h-auto object-contain rounded-xl"
+              className="max-h-[85vh] max-w-[92vw] w-auto h-auto object-contain"
+              style={{ borderRadius: 10 }}
               priority
             />
           </div>

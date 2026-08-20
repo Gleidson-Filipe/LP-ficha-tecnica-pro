@@ -9,6 +9,7 @@ import { WhipInUp, CountUpStat } from "@/components/ui/whip-in-up";
 import { Highlighter } from "@/components/magicui/highlighter";
 import { useCtaFx, CtaGlow, CtaShine, CtaEcho } from "@/components/ui/cta-fx";
 import { navigateToId } from "@/lib/smooth-scroll";
+import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
 
 gsap.registerPlugin(useGSAP);
 
@@ -38,16 +39,44 @@ export function Hero() {
         return;
       }
 
+      const el = root.current?.querySelector<HTMLElement>(".hero-fade");
+      if (!el) return;
+
       // Estado inicial (opacity:0 + offset) já nasce no JSX via style inline —
       // evita o "flash" de aparecer pronto e só depois pular pra escondido.
-      gsap.to(".hero-fade", {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        rotation: 0,
-        duration: 1.1,
-        ease: "back.out(1.6)",
-      });
+      // Disparado por IntersectionObserver (não incondicional no mount):
+      // sem isso, um reload com o Hero fora da tela (usuário já rolado pra
+      // outra seção) tocava a animação inteira ali mesmo, invisível — ao
+      // voltar pro Hero depois (ex.: clique na logo), o botão já chegava
+      // pronto, sem "recarregar" a entrada. Mesmo padrão do WhipInUp/Reveal.
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          if (isNavJumping()) {
+            deferDuringNavJump(el, () => {
+              io.unobserve(el);
+              io.observe(el);
+            });
+            return;
+          }
+          gsap.to(el, {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            duration: 1.1,
+            ease: "back.out(1.6)",
+          });
+          io.disconnect();
+        },
+        { rootMargin: "0px" },
+      );
+      io.observe(el);
+
+      return () => {
+        cancelDeferred(el);
+        io.disconnect();
+      };
     },
     { scope: root }
   );
@@ -108,6 +137,7 @@ export function Hero() {
               padding={2}
               delay={700}
               iterations={4}
+              isView
             >
               <WhipInUp text="cada ítem" className="inline" eager />
             </Highlighter>{" "}

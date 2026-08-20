@@ -1,7 +1,7 @@
 "use client";
 
 import { problema as p, CHECKOUT } from "@/lib/content";
-import { Section, Label } from "@/components/ui/kit";
+import { Section, Label, AccentDash } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { SpinDot } from "@/components/ui/spin-dot";
@@ -142,9 +142,9 @@ export function Problema() {
       <div className="t-ink bg-ink rule-t pad py-16 md:py-24 flex flex-col justify-center">
         <div className="mx-auto max-w-[46rem] text-center">
           <p className="flex items-center justify-center gap-3 text-label uppercase text-accent">
-            <span aria-hidden className="inline-block h-[2px] w-7 bg-accent" />
+            <AccentDash />
             <WhipInUp text={r.label} />
-            <span aria-hidden className="inline-block h-[2px] w-7 bg-accent" />
+            <AccentDash />
           </p>
           <h2 className="mx-auto mt-4 font-display text-h2 text-balance">
             <WhipInUp text={r.titlePre} />
