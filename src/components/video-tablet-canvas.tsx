@@ -16,10 +16,8 @@ const CAMERA_MARGIN = 0.020;
  */
 export function VideoTabletCanvas({
   host,
-  onReady,
 }: {
   host: RefObject<HTMLDivElement | null>;
-  onReady?: () => void;
 }) {
   useEffect(() => {
     const el = host.current;
@@ -86,15 +84,6 @@ export function VideoTabletCanvas({
     };
     render();
 
-    // O modelo tem uma margem de câmera (~2%, ver CAMERA_MARGIN) pra não
-    // cortar os botões físicos — então ele nunca cobre 100% do canvas, e o
-    // chassi CSS de fallback (permanente atrás, em video-tablet.tsx) sempre
-    // aparece nessa margem com uma cor que não bate nem com o bezel nem com
-    // o fundo da página. `onReady` avisa o shell pra esconder o fallback
-    // assim que o primeiro frame no tamanho CERTO for pintado (não o
-    // primeiro render(), que ainda usa o tamanho padrão do WebGLRenderer),
-    // liberando a sombra (que já existe pra isso) pra fazer essa transição.
-    let avisouPronto = false;
     const ro = new ResizeObserver(() => {
       const { clientWidth: w, clientHeight: h } = el;
       if (!w || !h) return;
@@ -102,10 +91,6 @@ export function VideoTabletCanvas({
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       render();
-      if (!avisouPronto) {
-        avisouPronto = true;
-        onReady?.();
-      }
     });
     ro.observe(el);
 

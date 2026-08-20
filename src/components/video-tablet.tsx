@@ -45,7 +45,6 @@ export function VideoTablet({ children }: { children: ReactNode }) {
   const shadowRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
   const [precisaCanvas, setPrecisaCanvas] = useState(false);
-  const [canvasPronto, setCanvasPronto] = useState(false);
 
   // Border-radius circular concêntrico em pixels — só matemática de
   // IPAD_SPECS, sem depender do three.js estar carregado.
@@ -106,12 +105,12 @@ export function VideoTablet({ children }: { children: ReactNode }) {
   return (
     <div
       ref={containerRef}
-      className="isolate relative mx-auto w-full max-w-[1040px] select-none"
+      className="@container isolate relative mx-auto w-full max-w-[1040px] select-none"
       style={{
         aspectRatio: CONTAINER_ASPECT,
       }}
     >
-      {/* Sombra de estúdio fotográfico hiper-realista alinhada ao corpo 3D do iPad */}
+      {/* Sombra de estúdio fotográfico hiper-realista alinhada ao corpo do iPad */}
       <div
         ref={shadowRef}
         aria-hidden="true"
@@ -121,33 +120,35 @@ export function VideoTablet({ children }: { children: ReactNode }) {
           bottom: `${SIDE_MARGIN.toFixed(3)}%`,
           left: `${SIDE_MARGIN.toFixed(3)}%`,
           right: `${SIDE_MARGIN.toFixed(3)}%`,
+          borderRadius: "calc(3.863cqw)",
           boxShadow:
             "-30px 45px 95px -12px rgba(0, 0, 0, 0.48), -16px 24px 48px -8px rgba(0, 0, 0, 0.32), -6px 10px 20px -4px rgba(0, 0, 0, 0.20)",
         }}
       />
 
-      {/* Host do canvas three.js — o chassi CSS abaixo cobre até o WebGL montar */}
+      {/* Chassi CSS do iPad (renderiza com acabamento realista e cantos arredondados desde o frame 0) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute z-[1] overflow-hidden"
+        style={{
+          top: `${SIDE_MARGIN.toFixed(3)}%`,
+          bottom: `${SIDE_MARGIN.toFixed(3)}%`,
+          left: `${SIDE_MARGIN.toFixed(3)}%`,
+          right: `${SIDE_MARGIN.toFixed(3)}%`,
+          borderRadius: "calc(3.863cqw)",
+          background: "linear-gradient(145deg, #1d1f24 0%, #101114 45%, #15171b 100%)",
+          boxShadow:
+            "inset 0 1px 1.5px rgba(255, 255, 255, 0.24), inset 0 -1.5px 2px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.09)",
+        }}
+      />
+
+      {/* Host do canvas three.js */}
       <div
         ref={canvasHostRef}
-        className="absolute inset-0 pointer-events-none z-[1]"
+        className="absolute inset-0 pointer-events-none z-[2]"
         style={{ background: "transparent" }}
       >
-        {/* Rede de segurança só até o primeiro frame no tamanho certo ser
-            pintado — depois disso o modelo 3D (com a margem de câmera dos
-            botões) nunca cobre 100% do canvas, e essa cor fixa ficaria
-            permanentemente visível como um anel que não bate nem com o
-            bezel nem com o fundo da página. Uma vez pronto, some e deixa a
-            sombra (já pensada pra essa transição) mostrar o fundo real. */}
-        {!canvasPronto && (
-          <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{ borderRadius: "inherit", background: "#3a3d42" }}
-          />
-        )}
-        {precisaCanvas && (
-          <TabletCanvas host={canvasHostRef} onReady={() => setCanvasPronto(true)} />
-        )}
+        {precisaCanvas && <TabletCanvas host={canvasHostRef} />}
       </div>
 
       {/* Screen Video Layer (Display 16:9 perfeitamente enquadrado dentro do bezel) */}
@@ -156,6 +157,7 @@ export function VideoTablet({ children }: { children: ReactNode }) {
         className="absolute overflow-hidden z-[10] bg-black"
         style={{
           ...TABLET_SCREEN_INSET,
+          borderRadius: "calc(1.078cqw)",
         }}
       >
         {children}
