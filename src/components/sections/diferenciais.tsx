@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { diferenciais as d } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
+import { ComparisonIcon } from "@/components/ui/comparison-icon";
 import { cn } from "@/lib/utils";
 import { isNavJumping, deferDuringNavJump, cancelDeferred } from "@/lib/nav-jump";
 
@@ -62,6 +63,68 @@ function DiferencialIcon({ icone }: { icone: string }) {
   }
 }
 
+/**
+ * Ícone da frente do card, revelado com o mesmo padrão de entrada em scroll
+ * usado no resto do site (WhipInUp/Reveal): o estado inicial escondido é
+ * escrito direto no JSX (`opacity:0` no style, abaixo) — nunca só via
+ * `gsap.set` dentro do effect, que roda depois do primeiro paint e deixa uma
+ * janela onde o ícone pisca visível antes de sumir e reanimar.
+ */
+function AnimatedDiferencialIcon({ icone }: { icone: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(el, { clearProps: "transform,opacity" });
+        return;
+      }
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          if (isNavJumping()) {
+            deferDuringNavJump(el, () => {
+              io.unobserve(el);
+              io.observe(el);
+            });
+            return;
+          }
+          gsap.to(el, {
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            duration: 0.6,
+            ease: "back.out(1.8)",
+          });
+          io.disconnect();
+        },
+        { rootMargin: "0px 0px -8% 0px" },
+      );
+      io.observe(el);
+
+      return () => {
+        cancelDeferred(el);
+        io.disconnect();
+      };
+    },
+    { scope: ref },
+  );
+
+  return (
+    <span
+      ref={ref}
+      className="inline-block"
+      style={{ opacity: 0, transform: "scale(0.6) rotate(-8deg)" }}
+    >
+      <DiferencialIcon icone={icone} />
+    </span>
+  );
+}
+
 /* ── Card individual ─────────────────────────────────────────────────── */
 /**
  * Recebe:
@@ -75,12 +138,14 @@ function DiferencialCard({
   cardRef,
   onFlip,
   roundedClasses,
+  opened,
 }: {
   c: (typeof d.cards)[0];
   idx: number;
   cardRef: (el: HTMLDivElement | null) => void;
   onFlip: () => void;
   roundedClasses: string;
+  opened: boolean;
 }) {
 
   return (
@@ -114,7 +179,7 @@ function DiferencialCard({
         >
           <div>
             <div className="flex items-center justify-between mb-6">
-              <DiferencialIcon icone={c.icone} />
+              <AnimatedDiferencialIcon icone={c.icone} />
               <span className="text-on-paper/20" title="Clique para ver mais">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
@@ -151,20 +216,11 @@ function DiferencialCard({
           </div>
           <div className="mt-auto space-y-3 pt-6 border-t border-white/10">
             <div className="flex items-center gap-2.5 text-sm text-on-ink-soft">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"
-                stroke="#ff0000" strokeWidth="24" strokeLinecap="round" strokeLinejoin="round"
-                className="w-4 h-4 shrink-0">
-                <line x1="200" y1="56" x2="56" y2="200" />
-                <line x1="200" y1="200" x2="56" y2="56" />
-              </svg>
+              <ComparisonIcon tipo="falha" active={opened} className="w-6 h-6" />
               <span className="leading-tight">{c.concorrente}</span>
             </div>
             <div className="flex items-center gap-2.5 text-[0.9375rem] font-bold text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"
-                stroke="currentColor" strokeWidth="24" strokeLinecap="round" strokeLinejoin="round"
-                className="w-4 h-4 text-emerald-400 shrink-0">
-                <polyline points="216 72 104 184 48 128" />
-              </svg>
+              <ComparisonIcon tipo="sucesso" active={opened} className="w-6 h-6" />
               <span className="leading-tight">{c.destaque}</span>
             </div>
           </div>
@@ -189,6 +245,11 @@ export function Diferenciais() {
   const flippedStatesRef = useRef<boolean[]>(d.cards.map(() => false));
   // Timer de auto-desvire
   const flipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Índices já abertos ao menos uma vez — único estado React aqui, só pra
+  // disparar o carregamento sob demanda dos lotties do verso (nunca antes
+  // do usuário realmente virar o card). O flip em si continua 100%
+  // imperativo via refs/GSAP, sem re-render a cada clique.
+  const [openedIdx, setOpenedIdx] = useState<Set<number>>(() => new Set());
 
   /* ── Loop de peek sequencial — só roda enquanto a seção está na tela ── */
   useGSAP(
@@ -295,11 +356,21 @@ export function Diferenciais() {
     if (!inner) return;
 
     flippedStatesRef.current[idx] = !flippedStatesRef.current[idx];
+    const abrindo = flippedStatesRef.current[idx];
     gsap.killTweensOf(inner);
     gsap.to(inner, {
-      rotateY: flippedStatesRef.current[idx] ? 180 : 0,
+      rotateY: abrindo ? 180 : 0,
       duration: 0.55,
       ease: "power2.inOut",
+      // Só marca o card como "aberto" (disparando o carregamento/play do
+      // Lottie) depois que o giro 3D termina — se disparasse no clique, a
+      // animação de desenho do ícone rodava com o verso ainda de perfil
+      // (quase invisível) e terminava antes do card ficar de frente.
+      onComplete: () => {
+        if (abrindo) {
+          setOpenedIdx((prev) => (prev.has(idx) ? prev : new Set(prev).add(idx)));
+        }
+      },
     });
 
     // Reinicia o timer de auto-desvire a cada interação
@@ -347,6 +418,7 @@ export function Diferenciais() {
                 }}
                 onFlip={() => handleCardFlip(idx)}
                 roundedClasses={roundedClasses}
+                opened={openedIdx.has(idx)}
               />
             );
           })}
