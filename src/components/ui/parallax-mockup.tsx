@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import fundoImg from "../../../public/images/solucao/fundo.webp";
@@ -15,38 +15,18 @@ gsap.registerPlugin(useGSAP);
  * As 3 camadas compartilham o mesmo canvas 6600×5000, garantindo
  * proporção, enquadramento e alinhamento 100% fiéis ao design original.
  *
- * O parallax reage ao mouse (não ao scroll): cada camada se desloca e
- * dá um leve zoom extra conforme o cursor se move sobre o mockup, com
- * intensidade crescente do fundo para o notebook (profundidade 2.5D).
- * Ao tirar o mouse, tudo volta ao zoom de repouso (não a escala 1) —
- * o notebook já nasce mais próximo/grande, puxando o quadro pra ele.
- *
- * Clique alterna um zoom grande (tipo o visualizador de imagem do Chrome):
- * escala as 3 camadas juntas a partir do centro (transform-origin nunca
- * muda — trocar a origem dinamicamente causava um "congela e depois
- * pula" no fim da animação, expondo um recorte do fundo por trás) e usa
- * x/y (translate) pra deslocar o conteúdo de forma que o ponto clicado
- * fique parado sob o cursor, simulando o zoom nesse ponto sem nenhuma
- * das armadilhas de mexer em transform-origin no meio da animação.
- * O parallax por hover é pausado enquanto ampliado e volta a funcionar
- * normalmente assim que clica de novo pra sair (retorno simétrico:
- * x/y voltam a 0, escala volta à base — o mesmo estado de repouso do
- * hover, então não há salto nem readaptação ao reativar o hover).
+ * O parallax reage suavemente aos movimentos do mouse. As 3 imagens
+ * são apresentadas sincronizadas assim que todas concluem o carregamento
+ * e a decodificação assíncrona.
  */
-const CLICK_ZOOM_SCALE = 3.2;
-
 export function ParallaxMockup() {
   const root = useRef<HTMLDivElement>(null);
-  const zoomed = useRef(false);
-  // Skeleton cobrindo o mockup inteiro (z-index acima das 3 camadas, do
-  // badge de zoom, de tudo) até as 3 imagens terminarem de carregar. Nasce
-  // já visível no primeiro render (nenhum useEffect/atraso) — é o próprio
-  // valor inicial do state, então não existe frame em que a imagem crua
-  // apareça antes do skeleton.
   const [loaded, setLoaded] = useState({ fundo: false, sofa: false, notebook: false });
   const allLoaded = loaded.fundo && loaded.sofa && loaded.notebook;
-  const markLoaded = (layer: keyof typeof loaded) =>
+
+  const markLoaded = useCallback((layer: keyof typeof loaded) => {
     setLoaded((prev) => (prev[layer] ? prev : { ...prev, [layer]: true }));
+  }, []);
 
   useGSAP(
     () => {
@@ -60,6 +40,7 @@ export function ParallaxMockup() {
       ] as const;
 
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduced) return;
 
       const setters = layers.map(({ sel, move, base, zoom }) => {
         const target = el.querySelector<HTMLElement>(sel);
@@ -76,49 +57,7 @@ export function ParallaxMockup() {
         };
       });
 
-      const onClick = (e: MouseEvent) => {
-        zoomed.current = !zoomed.current;
-        el.classList.toggle("cursor-zoom-out", zoomed.current);
-        el.classList.toggle("cursor-zoom-in", !zoomed.current);
-
-        if (zoomed.current) {
-          // Escala a partir do centro (origin nunca muda) e usa x/y pra
-          // deslocar o conteúdo de forma que o ponto clicado fique parado
-          // sob o cursor — mesmo efeito visual de "zoom nesse ponto", sem
-          // depender de transform-origin dinâmico.
-          const rect = el.getBoundingClientRect();
-          const dx = (e.clientX - rect.left) / rect.width - 0.5;
-          const dy = (e.clientY - rect.top) / rect.height - 0.5;
-          const tx = -(CLICK_ZOOM_SCALE - 1) * dx * rect.width;
-          const ty = -(CLICK_ZOOM_SCALE - 1) * dy * rect.height;
-
-          setters.forEach((s) => {
-            s.x(tx);
-            s.y(ty);
-            s.scaleX(CLICK_ZOOM_SCALE);
-            s.scaleY(CLICK_ZOOM_SCALE);
-          });
-        } else {
-          // Retorno simétrico ao mesmo repouso do hover-parallax (x/y a 0,
-          // escala na base) — nenhum estado intermediário pra "congelar".
-          setters.forEach((s) => {
-            s.x(0);
-            s.y(0);
-            s.scaleX(s.base);
-            s.scaleY(s.base);
-          });
-        }
-      };
-
-      el.addEventListener("click", onClick);
-
-      if (reduced) {
-        return () => el.removeEventListener("click", onClick);
-      }
-
       const onMove = (e: MouseEvent) => {
-        if (zoomed.current) return;
-
         const rect = el.getBoundingClientRect();
         const px = (e.clientX - rect.left) / rect.width - 0.5;
         const py = (e.clientY - rect.top) / rect.height - 0.5;
@@ -132,14 +71,6 @@ export function ParallaxMockup() {
       };
 
       const onLeave = () => {
-        // Segurança: se o mouse sai da imagem enquanto está ampliada,
-        // volta ao normal em vez de ficar travada no zoom.
-        if (zoomed.current) {
-          zoomed.current = false;
-          el.classList.remove("cursor-zoom-out");
-          el.classList.add("cursor-zoom-in");
-        }
-
         setters.forEach((s) => {
           s.x(0);
           s.y(0);
@@ -152,7 +83,6 @@ export function ParallaxMockup() {
       el.addEventListener("mouseleave", onLeave);
 
       return () => {
-        el.removeEventListener("click", onClick);
         el.removeEventListener("mousemove", onMove);
         el.removeEventListener("mouseleave", onLeave);
       };
@@ -161,49 +91,86 @@ export function ParallaxMockup() {
   );
 
   return (
-    <div ref={root} className="isolate relative h-full w-full cursor-zoom-in overflow-hidden bg-[#9eb88d]">
-      {/* Camada 1: Fundo */}
-      <div className="parallax-fundo absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
-        <Image
-          src={fundoImg}
-          alt=""
-          aria-hidden
-          quality={82}
-          sizes="(min-width: 1024px) 86vw, 136vw"
-          onLoad={() => markLoaded("fundo")}
-          className="h-full w-full object-cover object-center"
-        />
+    <div ref={root} className="isolate relative h-full w-full overflow-hidden bg-[#9eb88d]">
+      {/* Container das 3 Camadas: revelado de forma síncrona apenas com as 3 camadas prontas */}
+      <div
+        className="absolute inset-0 transition-opacity duration-500 ease-out"
+        style={{ opacity: allLoaded ? 1 : 0 }}
+      >
+        {/* Camada 1: Fundo */}
+        <div className="parallax-fundo absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
+          <Image
+            src={fundoImg}
+            alt=""
+            aria-hidden
+            quality={90}
+            sizes="(min-width: 1024px) 85vw, 136vw"
+            loading="lazy"
+            decoding="async"
+            onLoad={(e) => {
+              const img = e.currentTarget;
+              if (img && "decode" in img) {
+                img.decode().catch(() => {}).finally(() => markLoaded("fundo"));
+              } else {
+                markLoaded("fundo");
+              }
+            }}
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+
+        {/* Camada 2: Sofá */}
+        <div className="parallax-sofa pointer-events-none absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
+          <Image
+            src={sofaImg}
+            alt=""
+            aria-hidden
+            quality={90}
+            sizes="(min-width: 1024px) 85vw, 136vw"
+            loading="lazy"
+            decoding="async"
+            onLoad={(e) => {
+              const img = e.currentTarget;
+              if (img && "decode" in img) {
+                img.decode().catch(() => {}).finally(() => markLoaded("sofa"));
+              } else {
+                markLoaded("sofa");
+              }
+            }}
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+
+        {/* Camada 3: Notebook */}
+        <div className="parallax-notebook pointer-events-none absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
+          <Image
+            src={notebookImg}
+            alt="Notebook mostrando a tela de gestão do cardápio da Ficha Técnica Pro, com custo, preço e lucro de cada produto"
+            quality={95}
+            sizes="(min-width: 1024px) 95vw, 136vw"
+            loading="lazy"
+            decoding="async"
+            onLoad={(e) => {
+              const img = e.currentTarget;
+              if (img && "decode" in img) {
+                img.decode().catch(() => {}).finally(() => markLoaded("notebook"));
+              } else {
+                markLoaded("notebook");
+              }
+            }}
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
       </div>
 
-      {/* Camada 2: Sofá */}
-      <div className="parallax-sofa pointer-events-none absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
-        <Image
-          src={sofaImg}
-          alt=""
-          aria-hidden
-          quality={82}
-          sizes="(min-width: 1024px) 86vw, 136vw"
-          onLoad={() => markLoaded("sofa")}
-          className="h-full w-full object-cover object-center"
-        />
-      </div>
-
-      {/* Camada 3: Notebook */}
-      <div className="parallax-notebook pointer-events-none absolute -left-[18%] -top-[18%] h-[136%] w-[136%]">
-        <Image
-          src={notebookImg}
-          alt="Notebook mostrando a tela de gestão do cardápio da Ficha Técnica Pro, com custo, preço e lucro de cada produto"
-          quality={85}
-          sizes="(min-width: 1024px) 172vw, 272vw"
-          onLoad={() => markLoaded("notebook")}
-          className="h-full w-full object-cover object-center"
-        />
-      </div>
-
-      {/* Skeleton: por cima de TUDO (camadas + badge de zoom), some só
-          quando as 3 imagens terminarem de carregar. */}
+      {/* Placeholder Sólido Elegante: cor #9eb88d exata sem vazamento de camadas */}
       {!allLoaded && (
-        <div aria-hidden className="absolute inset-0 z-20 animate-pulse bg-black/25" />
+        <div
+          aria-hidden
+          className="absolute inset-0 z-20 flex items-center justify-center bg-[#9eb88d] transition-opacity duration-300"
+        >
+          <div className="h-full w-full animate-pulse bg-black/[0.04]" />
+        </div>
       )}
     </div>
   );

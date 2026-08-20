@@ -208,25 +208,40 @@ export function RateioFocus({
         style={paragraphStyle(index)}
       >
         {segments.map((seg, i) => {
+          const hasLeading = seg.text.startsWith(" ");
+          const hasTrailing = seg.text.endsWith(" ");
+          const cleanText = seg.text.trim();
+
+          if (!cleanText) {
+            return " ";
+          }
+
           if (!seg.mark) {
             return (
               <span key={i}>
-                <WhipInUp text={seg.text} />
+                {hasLeading && " "}
+                <WhipInUp text={cleanText} />
+                {hasTrailing && " "}
               </span>
             );
           }
+
           const action = EMPHASIS_ACTIONS[markIndex % EMPHASIS_ACTIONS.length];
           const delay = markIndex * 140; // 0ms, 140ms, 280ms
           markIndex += 1;
 
           return (
-            <span key={i} className="relative inline-block whitespace-nowrap">
-              <WhipInUp text={seg.text} />
-              {action === "underline" ? (
-                <HandUnderline show={active === index} delay={delay} />
-              ) : (
-                <HandCircle show={active === index} delay={delay} />
-              )}
+            <span key={i}>
+              {hasLeading && " "}
+              <span className="relative inline-block whitespace-nowrap">
+                <WhipInUp text={cleanText} />
+                {action === "underline" ? (
+                  <HandUnderline show={active === index} delay={delay} />
+                ) : (
+                  <HandCircle show={active === index} delay={delay} />
+                )}
+              </span>
+              {hasTrailing && " "}
             </span>
           );
         })}

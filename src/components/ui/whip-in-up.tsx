@@ -239,7 +239,7 @@ export function WhipInUp({
     { scope: root },
   );
 
-  const words = text.split(" ");
+  const words = text.trim().split(/\s+/).filter(Boolean);
 
   return (
     // font-kerning:none nos dois estados (letras separadas e texto puro) —

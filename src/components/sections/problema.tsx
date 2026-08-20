@@ -147,9 +147,7 @@ export function Problema() {
             <AccentDash />
           </p>
           <h2 className="mx-auto mt-4 font-display text-h2 text-balance">
-            <WhipInUp text={r.titlePre} />
-            <WhipInUp text={`"${r.titleMark}"`} />
-            <WhipInUp text={r.titlePost} />
+            <WhipInUp text={`${r.titlePre}"${r.titleMark}"${r.titlePost}`} />
           </h2>
         </div>
 

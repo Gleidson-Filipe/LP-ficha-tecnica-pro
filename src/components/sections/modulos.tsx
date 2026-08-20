@@ -1,12 +1,27 @@
 "use client";
 
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { createPortal } from "react-dom";
 import { useRef, useState, useEffect, useSyncExternalStore } from "react";
 import { modulos } from "@/lib/content";
 import { Section, Label } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { cn } from "@/lib/utils";
+import cardapioImg from "../../../public/images/modulos/gestor_lucro_cardapio.webp";
+import despesasImg from "../../../public/images/modulos/controle_despesas.webp";
+import maodeobraImg from "../../../public/images/modulos/custo_maodeobra.webp";
+import combosImg from "../../../public/images/modulos/calc_combos.webp";
+import precificarImg from "../../../public/images/modulos/modulo_precificar.webp";
+import equilibrioImg from "../../../public/images/modulos/pontodeequilibrio.webp";
+
+const MODULO_IMAGES: Record<string, StaticImageData> = {
+  Cardápio: cardapioImg,
+  Despesas: despesasImg,
+  "Mão de obra": maodeobraImg,
+  Combos: combosImg,
+  Precificar: precificarImg,
+  Equilíbrio: equilibrioImg,
+};
 
 /**
  * Modulos – Carousel de módulos integrado com lightbox zoom.
@@ -24,16 +39,9 @@ const emptySubscribe = () => () => {};
 
 export function Modulos() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const [zoomImage, setZoomImage] = useState<string | null>(null);
+  const [zoomImage, setZoomImage] = useState<StaticImageData | string | null>(null);
   const [isInView, setIsInView] = useState(false);
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
-  // Só pra mostrar um skeleton sutil enquanto a imagem do slide ativo ainda
-  // não carregou — nenhuma das 6 imagens é trocada por import estático
-  // (o path em string é a própria chave usada pelo lightbox), então o
-  // "flash de layer" aqui se resolve por fora, sem tocar em content.ts.
-  const [loadedTabs, setLoadedTabs] = useState<Set<string>>(new Set());
-  const markLoaded = (tab: string) =>
-    setLoadedTabs((prev) => (prev.has(tab) ? prev : new Set(prev).add(tab)));
   const containerRef = useRef<HTMLDivElement>(null);
   const isInteracting = useRef(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -64,12 +72,19 @@ export function Modulos() {
 
   const activeZoomItem = items.find((it) => it.image === zoomImage) || activeItem;
   const ratio = activeZoomItem.w / activeZoomItem.h;
+  const isCardapio = activeZoomItem.tab === "Cardápio";
+  const isEquilibrio = activeZoomItem.tab === "Equilíbrio";
+  const isPrecificar = activeZoomItem.tab === "Precificar";
   const maxW =
-    activeZoomItem.tab === "Equilíbrio"
-      ? 1020
-      : activeZoomItem.tab === "Precificar"
-      ? 820
-      : 1280;
+    isCardapio
+      ? 1600
+      : isEquilibrio
+      ? 980
+      : isPrecificar
+      ? 880
+      : 1480;
+  const maxH = isCardapio ? "86.5vh" : isEquilibrio ? "74vh" : "84vh";
+  const maxVw = isCardapio ? "95.5vw" : isEquilibrio ? "88vw" : "94vw";
 
   useEffect(() => {
     activeTabRef.current = activeItem.tab;
@@ -216,12 +231,13 @@ export function Modulos() {
             {/* ── Coluna Direita ── */}
             <div
               className="group/img isolate relative w-full h-[360px] sm:h-[440px] md:h-[500px] lg:h-[540px] xl:h-[580px] overflow-hidden rounded-xl cursor-zoom-in"
-              onClick={() => setZoomImage(activeItem.image)}
+              onClick={() => setZoomImage(MODULO_IMAGES[activeItem.tab] || activeItem.image)}
               title="Clique para ampliar a imagem"
             >
               {items.map((item, idx) => {
                 const isActive = idx === activeIdx;
                 const isEquilibrio = item.tab === "Equilíbrio";
+                const staticSrc = MODULO_IMAGES[item.tab] || item.image;
                 return (
                   <div
                     key={item.tab}
@@ -234,15 +250,13 @@ export function Modulos() {
                     )}
                   >
                     <Image
-                      src={item.image}
+                      src={staticSrc}
                       alt={`Módulo ${item.tab} — ${item.titulo}`}
-                      width={item.w}
-                      height={item.h}
-                      sizes="(max-width: 1024px) 100vw, 65vw"
-                      quality={90}
-                      onLoad={() => markLoaded(item.tab)}
+                      sizes="(max-width: 1024px) 100vw, 70vw"
+                      quality={100}
+                      priority={idx === 0}
                       className={cn(
-                        "relative z-10 max-h-[92%] max-w-[94%] w-auto h-auto object-contain drop-shadow-2xl rounded-xl",
+                        "relative z-10 max-h-[94%] max-w-[96%] w-auto h-auto object-contain drop-shadow-2xl rounded-xl",
                         "transition-transform duration-300 ease-out origin-center",
                         isEquilibrio
                           ? "scale-[1.18] group-hover/img:scale-[1.22]"
@@ -261,15 +275,6 @@ export function Modulos() {
                 </svg>
                 Ampliar
               </span>
-
-              {/* Skeleton: por cima de TUDO (imagens + badge), some só quando
-                  a imagem do módulo ativo termina de carregar. */}
-              {!loadedTabs.has(activeItem.tab) && (
-                <div
-                  aria-hidden
-                  className="absolute inset-0 z-20 animate-pulse rounded-xl bg-white/20"
-                />
-              )}
             </div>
 
           </div>
@@ -326,7 +331,7 @@ export function Modulos() {
               position: "relative",
               background: "#fff",
               borderRadius: 16,
-              padding: 8,
+              padding: 6,
               boxShadow: "0 25px 60px rgba(0,0,0,0.6)",
               display: "inline-flex",
               alignItems: "center",
@@ -336,11 +341,9 @@ export function Modulos() {
             <Image
               src={zoomImage}
               alt={`Módulo ${activeZoomItem.tab} ampliado`}
-              width={activeZoomItem.w}
-              height={activeZoomItem.h}
-              quality={90}
+              quality={100}
               style={{
-                width: `min(92vw, ${maxW}px, calc(82vh * ${ratio.toFixed(4)}))`,
+                width: `min(${maxVw}, ${maxW}px, calc(${maxH} * ${ratio.toFixed(4)}))`,
                 height: "auto",
                 aspectRatio: `${activeZoomItem.w} / ${activeZoomItem.h}`,
                 objectFit: "contain",

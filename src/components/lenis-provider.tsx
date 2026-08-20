@@ -17,6 +17,16 @@ export function LenisProvider() {
     const lenis = new Lenis();
     setLenisInstance(lenis);
 
+    // Sincroniza imediatamente o Lenis com a posição salva/atual
+    if (typeof window !== "undefined") {
+      const key = "ftp:scrollY:" + location.pathname;
+      const saved = sessionStorage.getItem(key);
+      const y = saved !== null ? parseInt(saved, 10) : window.scrollY;
+      if (isFinite(y) && y > 0) {
+        lenis.scrollTo(y, { immediate: true });
+      }
+    }
+
     lenis.on("scroll", () => {
       if (isNavJumping()) return;
       ScrollTrigger.update();

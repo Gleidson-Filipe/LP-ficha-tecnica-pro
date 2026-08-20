@@ -88,6 +88,24 @@ export default function RootLayout({
         <LenisProvider />
         <ScrollRestore />
         {children}
+        {/*
+          Restauração instantânea de scroll executada imediatamente após os elementos
+          do DOM existirem na árvore, ANTES do primeiro paint do navegador.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                if (location.hash) return;
+                var saved = sessionStorage.getItem('ftp:scrollY:' + location.pathname);
+                var y = saved === null ? NaN : parseInt(saved, 10);
+                if (isFinite(y) && y > 0) {
+                  window.scrollTo(0, y);
+                }
+              })();
+            `,
+          }}
+        />
       </body>
     </html>
   );

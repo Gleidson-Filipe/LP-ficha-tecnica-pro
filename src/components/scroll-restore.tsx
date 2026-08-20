@@ -133,6 +133,9 @@ export function ScrollRestore() {
       sessionStorage.setItem(key, String(window.scrollY));
     };
 
+    // Corrige instantaneamente no mount sem esperar load/fontes
+    correctReloadRestore();
+
     if (document.readyState === "complete") {
       onLoad();
     } else {

@@ -180,7 +180,7 @@ export function Video({
                 fill
                 sizes="(max-width: 1024px) 100vw, 1100px"
                 className="object-cover"
-                priority
+                loading="lazy"
               />
               <span className="absolute inset-0 bg-black/20" />
               <span className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-3.5 bg-accent px-7 py-5 text-white">

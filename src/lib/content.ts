@@ -269,8 +269,8 @@ export const modulos = {
       titulo: "Gestão do cardápio",
       texto: "Custos, CMV, margem e lucro de todos os produtos em uma única tela.",
       image: "/images/modulos/gestor_lucro_cardapio.webp",
-      w: 2278,
-      h: 1100,
+      w: 2496,
+      h: 1167,
     },
     {
       tab: "Despesas",
