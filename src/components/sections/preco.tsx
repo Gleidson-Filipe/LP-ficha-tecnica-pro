@@ -108,13 +108,20 @@ export function Preco() {
           
           {/* Card Wrapper com profundidade 3D */}
           <div className="relative h-full">
-            {/* Camada de Profundidade 3D Offset (muda para rosa ao passar o mouse apenas sobre o botão) */}
-            <div
-              aria-hidden
-              className={`absolute inset-0 translate-x-3 translate-y-3 sm:translate-x-3.5 sm:translate-y-3.5 transition-colors duration-300 pointer-events-none ${
-                btnHovered ? "bg-accent" : "bg-[#f5f4ea]"
-              }`}
-            />
+            {/* Camada de Profundidade 3D Offset (muda para rosa ao passar o mouse apenas sobre o botão).
+                Duas camadas empilhadas (branco fixo embaixo, gradiente animado em cima) porque não dá
+                pra fazer `transition` interpolar de um `background-image` (gradiente) pra uma cor sólida
+                — o navegador troca sem meio-termo. Uma `transition-opacity` no overlay resolve: some
+                suavemente revelando o branco de baixo, em vez de trocar a cor de golpe. */}
+            <div className="absolute inset-0 translate-x-3 translate-y-3 sm:translate-x-3.5 sm:translate-y-3.5 pointer-events-none overflow-hidden">
+              <div aria-hidden className="absolute inset-0 bg-[#f5f4ea]" />
+              <div
+                aria-hidden
+                className={`absolute inset-0 cta-btn-fluid transition-opacity duration-300 ${
+                  btnHovered ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            </div>
 
             <div className="relative bg-ink-panel rule-box h-full flex flex-col justify-between overflow-hidden">
               {/* Corpo Principal da Oferta */}
