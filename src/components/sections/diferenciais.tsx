@@ -152,13 +152,13 @@ function DiferencialCard({
     /* Wrapper → perspectiva (câmera 3D) */
     <div
       className="w-full cursor-pointer select-none"
-      style={{ perspective: "1000px" }}
+      style={{ perspective: "62.5rem" }}
       onClick={onFlip}
     >
       {/* Inner → plataforma que gira com as duas faces */}
       <div
         ref={cardRef}
-        className="relative w-full h-[440px] sm:h-[470px] lg:h-[500px]"
+        className="relative w-full h-[27.5rem] sm:h-[29.375rem] lg:h-[31.25rem]"
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* ── FRENTE ── */}
@@ -382,19 +382,21 @@ export function Diferenciais() {
   }, [unflipAll]);
 
   return (
-    <Section ref={sectionRef} id="diferenciais" tone="ink" className="py-16 md:py-24">
+    <Section ref={sectionRef} id="diferenciais" tone="ink" className="py-16 md:py-24 w-full">
       {/* ── Cabeçalho ── */}
       <div className="pad mb-12 md:mb-16">
-        <h2 className="max-w-[26ch] font-display text-h2 text-balance">
-          <WhipInUp text={d.titlePre} />
-          <WhipInUp text={d.titleMark} />
-          <WhipInUp text={d.titlePost} />
-        </h2>
+        <div className="max-w-[min(100%,120rem)] mx-auto">
+          <h2 className="max-w-[26ch] font-display text-h2 text-balance">
+            <WhipInUp text={d.titlePre} />
+            <WhipInUp text={d.titleMark} />
+            <WhipInUp text={d.titlePost} />
+          </h2>
+        </div>
       </div>
 
       {/* ── Grid dos 4 Cards ── */}
       <div className="pad">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-transparent">
+        <div className="max-w-[min(100%,120rem)] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-transparent">
           {d.cards.map((c, idx) => {
             const roundedClasses = cn(
               // Mobile (1 col)

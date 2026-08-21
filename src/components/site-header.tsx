@@ -223,24 +223,20 @@ export function SiteHeader() {
       className="fixed inset-x-0 top-0 z-50 bg-[#09090a]"
       style={{ borderBottom: "1px solid #212124" }}
     >
-      {/* ── Linha principal (72px de altura no desktop - nav mais fina) ──
-          mx-auto + mesmo teto do Hero (1920/2400px): acima de 1920px de
-          viewport, a nav (fixed inset-x-0, sempre full-bleed) ganha a
-          MESMA margem lateral do frame do Hero logo abaixo, em vez de ficar
-          esticada borda a borda enquanto o conteúdo do Hero já respira. */}
-      <div className="mx-auto flex h-[56px] w-full max-w-[1920px] items-stretch sm:h-[64px] lg:h-[72px] min-[1921px]:max-w-[2400px]">
+      {/* ── Linha principal (4.5rem de altura no desktop) ── */}
+      <div className="mx-auto flex h-[3.5rem] w-full max-w-[120rem] items-stretch sm:h-[4rem] lg:h-[4.5rem]">
 
-        {/* ── Container Logo + Slogan (w:408px no desktop, removendo o espaço excessivo à direita) ── */}
+        {/* ── Container Logo + Slogan (w:25.5rem no desktop) ── */}
         <Link
           href="/"
           onClick={handleLogoClick}
           aria-label="Ficha Técnica Pro"
-          className="relative flex shrink-0 items-stretch pl-5 pr-6 sm:pl-8 xl:w-[408px] xl:px-0 cursor-pointer"
+          className="relative flex shrink-0 items-stretch pl-5 pr-6 sm:pl-8 xl:w-[25.5rem] xl:px-0 cursor-pointer"
         >
           {/* Responsivo (mobile/tablet) */}
           <div
             className="site-logo flex flex-col justify-center gap-0 xl:hidden"
-            style={{ transform: "translateY(-160px)", opacity: 0 }}
+            style={{ transform: "translateY(-10rem)", opacity: 0 }}
           >
             <Image
               src="/images/logo-ftp.webp"
@@ -248,36 +244,36 @@ export function SiteHeader() {
               width={944}
               height={100}
               priority
-              sizes="176px"
-              className="block h-auto w-[140px] sm:w-[176px]"
+              sizes="11rem"
+              className="block h-auto w-[8.75rem] sm:w-[11rem]"
             />
           </div>
 
-          {/* Desktop (lg/xl): Logo perfeitamente rente à largura do Slogan (277px) */}
+          {/* Desktop (lg/xl): Logo perfeitamente rente à largura do Slogan (17.3125rem) */}
           <div className="hidden xl:block xl:w-full xl:h-full xl:relative">
             <div
-              className="site-logo absolute left-[64px] top-[12px] w-[277px] h-[29.34px]"
+              className="site-logo absolute left-[4rem] top-[0.75rem] w-[17.3125rem] h-[1.83375rem]"
               style={{
                 backgroundImage: "url('/images/logo-ftp.webp')",
                 backgroundPosition: "left center",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "contain",
-                transform: "translateY(-160px)",
+                transform: "translateY(-10rem)",
                 opacity: 0,
               }}
             />
             <div
-              className="absolute left-[64px] -ml-[1px] top-[42px] w-[277px]"
+              className="absolute left-[4rem] -ml-[1px] top-[2.625rem] w-[17.3125rem]"
               style={{ lineHeight: "normal" }}
             >
-              <FitWidth width={277} className="font-body text-[16px] font-semibold text-[#f5f4ea]">
+              <FitWidth width={277} className="font-body text-[1rem] font-semibold text-[#f5f4ea]">
                 <WhipInUp text={SLOGAN} eager />
               </FitWidth>
             </div>
           </div>
         </Link>
 
-        {/* ── Nav desktop: 4 botões principais com texto ALINHADO À ESQUERDA (pl-8) ── */}
+        {/* ── Nav desktop: 4 botões principais com texto ALINHADO À ESQUERDA ── */}
         <nav aria-label="Seções" className="hidden flex-1 items-stretch xl:flex">
           {NAV.map((item) => (
             <a
@@ -286,12 +282,12 @@ export function SiteHeader() {
               onClick={(e) => handleNavClick(e, item.id)}
               aria-current={ativo === item.id ? "true" : undefined}
               className={cn(
-                "font-body relative flex flex-1 items-center justify-start pl-8 text-left transition-colors duration-150 whitespace-nowrap",
+                "font-body relative flex flex-1 items-center justify-start pl-[clamp(1.25rem,2vw,2rem)] text-left transition-colors duration-150 whitespace-nowrap",
                 ativo === item.id ? "text-[#f5f4f2]" : "text-[#A3A3A3] hover:text-[#dbdbdb]",
               )}
               style={{
                 borderLeft: "1px solid #212124",
-                fontSize: "15px",
+                fontSize: "0.9375rem",
                 fontWeight: 500,
               }}
             >
@@ -301,7 +297,7 @@ export function SiteHeader() {
                 <span
                   aria-hidden
                   className="absolute inset-x-0 bottom-0 bg-[#ff4785]"
-                  style={{ height: "3px" }}
+                  style={{ height: "0.1875rem" }}
                 />
               )}
             </a>
@@ -329,26 +325,22 @@ export function SiteHeader() {
           </span>
         </button>
 
-        {/* ── CTA: Largura de 304px no desktop, bg fluido animado, texto 19px bold ──
-            min-[1921px]:mr-[64px]: mesmo respiro de 64px que a logo já tem à
-            esquerda (dentro do teto de 2400px do frame) — sem isso o CTA
-            encostava direto na borda do frame enquanto a logo tinha respiro,
-            dando 72,5px de um lado e 136,5px do outro. */}
+        {/* ── CTA: Largura de 19rem no desktop, bg fluido animado ── */}
         <a
           ref={ctaFx}
           href={CHECKOUT}
           onClick={handleCtaClick}
-          className="group relative flex shrink-0 items-center justify-center overflow-hidden cta-btn-fluid px-6 text-white transition-all duration-150 xl:w-[304px] xl:px-0 min-[1921px]:mr-[64px]"
+          className="group relative flex shrink-0 items-center justify-center overflow-hidden cta-btn-fluid px-6 text-white transition-all duration-150 xl:w-[19rem] xl:px-0"
           style={{ borderLeft: "1px solid #212124" }}
         >
           <CtaGlow />
           <CtaShine />
-          <span className="font-body xl:hidden font-bold text-[15px] text-white">
+          <span className="font-body xl:hidden font-bold text-[0.9375rem] text-white">
             <CtaEcho>
               <WhipInUp text="Comprar" eager />
             </CtaEcho>
           </span>
-          <span className="font-body hidden xl:inline font-bold text-[19px] whitespace-nowrap text-white">
+          <span className="font-body hidden xl:inline font-bold text-[1.1875rem] whitespace-nowrap text-white">
             <CtaEcho>
               <WhipInUp text={CTA.header.l2} eager />
             </CtaEcho>

@@ -150,14 +150,14 @@ export function Modulos() {
       <Section
         id="modulos"
         tone="ink"
-        className="rule-t relative overflow-hidden flex flex-col justify-center min-h-[620px] lg:min-h-[660px] py-8 lg:py-10"
+        className="rule-t relative overflow-hidden flex flex-col justify-center min-h-[38.75rem] lg:min-h-[41.25rem] py-8 lg:py-10 w-full"
         ref={containerRef}
       >
         <div className="pad w-full">
-          <div className="grid gap-8 lg:grid-cols-[360px_1fr] xl:grid-cols-[400px_1fr] items-start lg:gap-10 xl:gap-14">
+          <div className="max-w-[min(100%,120rem)] mx-auto grid gap-8 lg:grid-cols-[22.5rem_1fr] xl:grid-cols-[25rem_1fr] items-start lg:gap-10 xl:gap-14">
 
             {/* ── Coluna Esquerda ── */}
-            <div className="flex flex-col justify-between py-1 min-h-[440px] lg:min-h-[560px]">
+            <div className="flex flex-col justify-between py-1 min-h-[27.5rem] lg:min-h-[35rem]">
               <div>
                 <h2 className="max-w-[15ch] font-display text-h2 leading-tight">
                   <WhipInUp text={modulos.title} />
@@ -229,7 +229,7 @@ export function Modulos() {
 
             {/* ── Coluna Direita ── */}
             <div
-              className="group/img isolate relative w-full h-[360px] sm:h-[440px] md:h-[500px] lg:h-[540px] xl:h-[580px] overflow-hidden rounded-xl cursor-zoom-in"
+              className="group/img isolate relative w-full h-[22.5rem] sm:h-[27.5rem] md:h-[31.25rem] lg:h-[33.75rem] xl:h-[36.25rem] overflow-hidden rounded-xl cursor-zoom-in"
               onClick={() => setZoomImage(MODULO_IMAGES[activeItem.tab] || activeItem.image)}
               title="Clique para ampliar a imagem"
             >
@@ -251,7 +251,7 @@ export function Modulos() {
                     <Image
                       src={staticSrc}
                       alt={`Módulo ${item.tab} — ${item.titulo}`}
-                      sizes="(max-width: 1024px) 100vw, 70vw"
+                      sizes="(max-width: 64rem) 100vw, 70vw"
                       quality={100}
                       priority={idx === 0}
                       className={cn(
@@ -261,7 +261,7 @@ export function Modulos() {
                           ? "scale-[1.18] group-hover/img:scale-[1.22]"
                           : "scale-100 group-hover/img:scale-[1.03]"
                       )}
-                      style={{ borderRadius: 12 }}
+                      style={{ borderRadius: "0.75rem" }}
                     />
                   </div>
                 );

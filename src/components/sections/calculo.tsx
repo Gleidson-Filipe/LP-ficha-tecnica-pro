@@ -122,16 +122,18 @@ export function Calculo() {
       ref={sectionRef}
       id="calculo"
       tone="paper"
-      className="rule-t relative overflow-hidden py-14 md:py-20 lg:py-24"
+      className="rule-t relative overflow-hidden py-14 md:py-20 lg:py-24 w-full"
     >
       {/* ── Cabeçalho Centralizado ── */}
       <div className="pad mb-12 md:mb-16 text-center flex flex-col items-center">
-        <h2 className="max-w-[28ch] font-display text-h2 text-balance text-center">
-          <WhipInUp text={c.title} />
-        </h2>
-        <p className="mt-4 max-w-[64ch] text-lead soft text-center">
-          <WhipInUp text={c.lead} />
-        </p>
+        <div className="max-w-[min(100%,120rem)] mx-auto w-full flex flex-col items-center">
+          <h2 className="max-w-[28ch] font-display text-h2 text-balance text-center">
+            <WhipInUp text={c.title} />
+          </h2>
+          <p className="mt-4 max-w-[64ch] text-lead soft text-center">
+            <WhipInUp text={c.lead} />
+          </p>
+        </div>
       </div>
 
       {/* ── Faixas Horizontais Largura Total: Abertura por Clique ── */}
@@ -153,73 +155,74 @@ export function Calculo() {
                   : "bg-transparent hover:bg-paper-panel/25 py-4 sm:py-5 lg:py-5.5"
               )}
             >
-              <div className="pad relative grid gap-6 lg:grid-cols-[1fr_1.4fr] xl:grid-cols-[0.9fr_1.5fr] lg:items-start">
-                {/* Coluna da Esquerda: Apenas o Título quando fechado, e Textos quando aberto */}
-                <div className="flex flex-col justify-start pt-0.5 lg:pt-1 pr-14 lg:pr-10">
-                  <h3
-                    className="font-display text-xl sm:text-2xl lg:text-[1.85rem] font-bold tracking-tight text-on-paper"
-                  >
-                    <WhipInUp text={step.titulo} />
-                  </h3>
+              <div className="pad relative">
+                <div className="max-w-[min(100%,120rem)] mx-auto relative grid gap-6 lg:grid-cols-[1fr_1.4fr] xl:grid-cols-[0.9fr_1.5fr] lg:items-start">
+                  {/* Coluna da Esquerda: Apenas o Título quando fechado, e Textos quando aberto */}
+                  <div className="flex flex-col justify-start pt-0.5 lg:pt-1 pr-14 lg:pr-10">
+                    <h3
+                      className="font-display text-xl sm:text-2xl lg:text-[1.85rem] font-bold tracking-tight text-on-paper"
+                    >
+                      <WhipInUp text={step.titulo} />
+                    </h3>
 
-                  {/* Textos explicativos e checkmarks visíveis EXCLUSIVAMENTE quando o retângulo estiver ABERTO */}
-                  {isActive && (
-                    <div className="mt-3 animate-in fade-in duration-300">
-                      <p className="text-[0.9375rem] md:text-body text-on-paper-soft leading-relaxed max-w-[44ch]">
-                        {seenSteps.has(step.n) ? step.texto : <WhipInUp text={step.texto} />}
-                      </p>
+                    {/* Textos explicativos e checkmarks visíveis EXCLUSIVAMENTE quando o retângulo estiver ABERTO */}
+                    {isActive && (
+                      <div className="mt-3 animate-in fade-in duration-300">
+                        <p className="text-[0.9375rem] md:text-body text-on-paper-soft leading-relaxed max-w-[44ch]">
+                          {seenSteps.has(step.n) ? step.texto : <WhipInUp text={step.texto} />}
+                        </p>
 
-                      {/* Lista de Checkmarks para a etapa 06 */}
-                      {step.checks && (
-                        <ul className="mt-3.5 space-y-1.5 text-[0.875rem] font-medium text-on-paper">
-                          {step.checks.map((ck) => (
-                            <li key={ck} className="flex items-center gap-2">
-                              <span className="text-accent font-bold text-sm">✔</span>
-                              <span>
-                                {seenSteps.has(step.n) ? ck : <WhipInUp text={ck} />}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                        {/* Lista de Checkmarks para a etapa 06 */}
+                        {step.checks && (
+                          <ul className="mt-3.5 space-y-1.5 text-[0.875rem] font-medium text-on-paper">
+                            {step.checks.map((ck) => (
+                              <li key={ck} className="flex items-center gap-2">
+                                <span className="text-accent font-bold text-sm">✔</span>
+                                <span>
+                                  {seenSteps.has(step.n) ? ck : <WhipInUp text={ck} />}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Seta diagonal Phosphor (Thin) — visível apenas quando a etapa está fechada.
+                      Desmontada quando ativa para garantir que o SVG não permaneça no DOM sob a imagem,
+                      eliminando qualquer conflito de composição de camadas/GPU no hover do zoom. */}
+                  {!isActive && (
+                    <div
+                      className="absolute right-6 sm:right-10 md:right-14 lg:right-16 xl:right-20 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none transition-opacity duration-200"
+                      aria-hidden="true"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 256 256"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-on-paper/75 group-hover:text-accent group-hover:translate-x-1.5 group-hover:-translate-y-1.5 transition-all duration-300 shrink-0"
+                      >
+                        <line x1="64" y1="192" x2="192" y2="64" />
+                        <polyline points="88 64 192 64 192 168" />
+                      </svg>
                     </div>
                   )}
-                </div>
 
-                {/* Seta diagonal Phosphor (Thin) — visível apenas quando a etapa está fechada.
-                    Desmontada quando ativa para garantir que o SVG não permaneça no DOM sob a imagem,
-                    eliminando qualquer conflito de composição de camadas/GPU no hover do zoom. */}
-                {!isActive && (
+                  {/* Coluna da Direita: Accordion que expande ao clicar com imagem maior e clique para Zoom. */}
                   <div
-                    className="absolute right-6 sm:right-10 md:right-14 lg:right-16 xl:right-20 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none transition-opacity duration-200"
-                    aria-hidden="true"
+                    className={cn(
+                      "relative z-10 grid transition-all duration-300 ease-out",
+                      isActive
+                        ? "grid-rows-[1fr] opacity-100 mt-4 lg:mt-0"
+                        : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    )}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 256 256"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-on-paper/75 group-hover:text-accent group-hover:translate-x-1.5 group-hover:-translate-y-1.5 transition-all duration-300 shrink-0"
-                    >
-                      <line x1="64" y1="192" x2="192" y2="64" />
-                      <polyline points="88 64 192 64 192 168" />
-                    </svg>
-                  </div>
-                )}
-
-                {/* Coluna da Direita: Accordion que expande ao clicar com imagem maior e clique para Zoom. */}
-                <div
-                  className={cn(
-                    "relative z-10 grid transition-all duration-300 ease-out",
-                    isActive
-                      ? "grid-rows-[1fr] opacity-100 mt-4 lg:mt-0"
-                      : "grid-rows-[0fr] opacity-0 pointer-events-none"
-                  )}
-                >
-                  <div className="min-h-0 overflow-hidden flex items-center justify-center lg:justify-end">
+                    <div className="min-h-0 overflow-hidden flex items-center justify-center lg:justify-end">
                     <div
                       title="Clique para ampliar a planilha"
                       onClick={(e) => {
@@ -228,14 +231,14 @@ export function Calculo() {
                       }}
                       onMouseEnter={() => setHoveredStep(step.n)}
                       onMouseLeave={() => setHoveredStep((prev) => (prev === step.n ? null : prev))}
-                      className="group/img isolate relative inline-flex w-fit max-w-full max-h-[300px] sm:max-h-[340px] md:max-h-[380px] lg:max-h-[420px] cursor-zoom-in"
-                      style={{ aspectRatio: `${step.w} / ${step.h}`, padding: 8 }}
+                      className="group/img isolate relative inline-flex w-fit max-w-full max-h-[18.75rem] sm:max-h-[21.25rem] md:max-h-[23.75rem] lg:max-h-[26.25rem] cursor-zoom-in"
+                      style={{ aspectRatio: `${step.w} / ${step.h}`, padding: "0.5rem" }}
                     >
                       {!loadedSteps.has(step.n) && (
                         <div
                           aria-hidden
                           className="absolute inset-2 z-0 animate-pulse bg-black/[0.05]"
-                          style={{ borderRadius: 12 }}
+                          style={{ borderRadius: "0.75rem" }}
                         />
                       )}
                       <Image
@@ -243,14 +246,14 @@ export function Calculo() {
                         alt={`Etapa - ${step.titulo}`}
                         width={step.w}
                         height={step.h}
-                        sizes="(max-width: 1024px) 95vw, 50vw"
+                        sizes="(max-width: 64rem) 95vw, 50vw"
                         quality={90}
                         priority={idx === 0}
                         onLoad={() => markLoaded(step.n)}
                         className="relative z-10 max-h-full max-w-full object-contain shadow-md transition-transform duration-300"
                         style={{
                           aspectRatio: `${step.w} / ${step.h}`,
-                          borderRadius: 12,
+                          borderRadius: "0.75rem",
                           transform: hoveredStep === step.n ? "scale(1.015)" : "scale(1)",
                         }}
                       />
@@ -259,9 +262,10 @@ export function Calculo() {
                 </div>
               </div>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
+    </div>
 
       {/* ── Modal Lightbox de Zoom para Visualização em Alta Resolução ── */}
       {zoomImage && (
@@ -273,7 +277,7 @@ export function Calculo() {
             type="button"
             onClick={() => setZoomImage(null)}
             className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition-colors font-bold"
-            style={{ borderRadius: "50%", width: 44, height: 44, fontSize: 20 }}
+            style={{ borderRadius: "50%", width: "2.75rem", height: "2.75rem", fontSize: "1.25rem" }}
             aria-label="Fechar ampliação"
           >
             ✕
@@ -282,7 +286,7 @@ export function Calculo() {
           <div
             onClick={(e) => e.stopPropagation()}
             className="relative max-h-[90vh] max-w-[95vw] flex items-center justify-center p-2 bg-white shadow-2xl overflow-hidden"
-            style={{ borderRadius: 16 }}
+            style={{ borderRadius: "1rem" }}
           >
             <Image
               src={zoomImage}
@@ -291,7 +295,7 @@ export function Calculo() {
               height={1100}
               quality={90}
               className="max-h-[85vh] max-w-[92vw] w-auto h-auto object-contain"
-              style={{ borderRadius: 10 }}
+              style={{ borderRadius: "0.625rem" }}
               priority
             />
           </div>

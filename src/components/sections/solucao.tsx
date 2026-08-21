@@ -15,7 +15,7 @@ import { AnimatedCheck } from "@/components/ui/animated-check";
 export function Solucao() {
   return (
     <Section id="solucao" tone="paper" className="rule-t">
-      <div className="grid lg:h-[calc(100dvh-73px)] lg:grid-cols-[minmax(0,63%)_minmax(0,37%)]">
+      <div className="grid lg:h-[calc(100dvh-4.5625rem)] lg:grid-cols-[minmax(0,63%)_minmax(0,37%)] max-w-[min(100%,120rem)] mx-auto">
         {/* ── Mockup + faixa de números ── */}
         <div className="relative aspect-[1200/909] w-full lg:aspect-auto lg:h-full">
           <ParallaxMockup />

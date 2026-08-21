@@ -185,34 +185,22 @@ body {
    MEDIDAS
    ============================================================= */
 :root {
-  --pad: 1.25rem;
-  /* Altura do header fixo (56px + 1px de borda) — usada pelo scroll-margin das âncoras */
-  --header-h: 57px;
+  --pad: clamp(1.25rem, 3.33vw, 4rem);
+  /* Altura do header fixo (3.5rem + 1px de borda) — usada pelo scroll-margin das âncoras */
+  --header-h: 3.5625rem;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 40rem) {
   :root {
-    /* Header sm: 64px + 1px de borda */
-    --header-h: 65px;
+    /* Header sm: 4rem + 1px de borda */
+    --header-h: 4.0625rem;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 64rem) {
   :root {
-    --pad: 2.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  :root {
-    /* Header lg: 72px + 1px de borda */
-    --header-h: 73px;
-  }
-}
-
-@media (min-width: 1280px) {
-  :root {
-    --pad: 4rem;
+    /* Header lg: 4.5rem + 1px de borda */
+    --header-h: 4.5625rem;
   }
 }
 
@@ -451,7 +439,7 @@ body {
 @keyframes hero-mockup-in {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(clamp(1rem, 2vw, 1.875rem));
   }
   to {
     opacity: 1;
@@ -466,12 +454,7 @@ body {
 /*
   Textura de linhas finas atrás do mockup do Hero. Repetição em % +
   background-size (não px fixo) pra última linha sempre fechar exatamente
-  na borda do painel, qualquer que seja a largura dele — ver comentário em
-  hero.tsx. 49 repetições = densidade original (~20px) na largura padrão
-  do painel (971px, abaixo de 1921px de tela). Acima de 1920px o painel
-  fica bem mais largo (right-[64px] em vez de w-[971px] fixo) e manter 49
-  repetições nessa largura maior deixava o espaçamento visivelmente mais
-  aberto que o original — 70 repetições aqui aproxima a densidade de novo.
+  na borda do painel, qualquer que seja a largura dele.
 */
 .hero-panel-lines {
   background-image: repeating-linear-gradient(
@@ -481,30 +464,83 @@ body {
     rgba(255, 255, 255, 0.06) 95%,
     rgba(255, 255, 255, 0.06) 100%
   );
-  background-size: calc(100% / 49) 100%;
+  background-size: 1.25rem 100%;
 }
 
-@media (min-width: 1921px) {
+@media (min-width: 120.0625rem) {
   .hero-panel-lines {
-    background-size: calc(100% / 70) 100%;
+    background-size: 1.25rem 100%;
   }
-}
 
-/*
-  Mockup do Hero um pouco maior em telas wide (pedido explícito: topo do
-  notebook passando levemente da altura do título, mas sem exagerar). Em
-  `vw` (relativo à tela) dentro de um clamp, não px fixo — escala sozinho
-  em qualquer largura acima de 1920px. Tentei isso via classe arbitrária
-  do Tailwind (min-[1921px]:!w-[clamp(...)]) e o JIT não gerou a regra
-  (clamp com múltiplas vírgulas dentro de colchetes não foi reconhecido) —
-  por isso está aqui, como CSS puro. Altura em aspect-ratio (não h fixo)
-  pra manter a proporção 1370:698 automaticamente.
-*/
-@media (min-width: 1921px) {
-  .hero-mockup-wide {
-    width: clamp(1370px, 55vw, 1450px) !important;
-    height: auto !important;
-    aspect-ratio: 1370 / 698;
+  .wide-ambient-edge-left {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: clamp(16rem, 25vw, 36rem);
+    pointer-events: none;
+    z-index: 10;
+    background: radial-gradient(
+      ellipse at 0% 50%,
+      rgba(255, 71, 133, 0.06) 0%,
+      rgba(255, 71, 133, 0.015) 45%,
+      transparent 75%
+    );
+    filter: blur(clamp(2rem, 4vw, 5rem));
+  }
+
+  .wide-ambient-edge-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: clamp(16rem, 25vw, 36rem);
+    pointer-events: none;
+    z-index: 10;
+    background: radial-gradient(
+      ellipse at 100% 50%,
+      rgba(255, 71, 133, 0.06) 0%,
+      rgba(255, 71, 133, 0.015) 45%,
+      transparent 75%
+    );
+    filter: blur(clamp(2rem, 4vw, 5rem));
+  }
+
+  .wide-edge-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    background: linear-gradient(
+      90deg,
+      rgba(9, 9, 10, 0.7) 0%,
+      transparent clamp(4rem, 8vw, 12rem),
+      transparent calc(100% - clamp(4rem, 8vw, 12rem)),
+      rgba(9, 9, 10, 0.7) 100%
+    );
+  }
+
+  .hero-mockup-fade-wide {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      #000 87.5%,
+      rgba(0, 0, 0, 0.95) 90.5%,
+      rgba(0, 0, 0, 0.8) 93.5%,
+      rgba(0, 0, 0, 0.5) 96.5%,
+      rgba(0, 0, 0, 0.18) 98.5%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      #000 87.5%,
+      rgba(0, 0, 0, 0.95) 90.5%,
+      rgba(0, 0, 0, 0.8) 93.5%,
+      rgba(0, 0, 0, 0.5) 96.5%,
+      rgba(0, 0, 0, 0.18) 98.5%,
+      transparent 100%
+    );
   }
 }
 

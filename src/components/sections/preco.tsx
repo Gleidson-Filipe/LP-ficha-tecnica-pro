@@ -62,7 +62,7 @@ export function Preco() {
   return (
     <Section id="preco" tone="ink" className="py-12 md:py-16 lg:py-20 overflow-hidden">
       {/* ── Grid Principal: Linhas conectadas diretamente ao Card ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-0 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-0 items-start max-w-[min(100%,120rem)] mx-auto">
         
         {/* ▎COLUNA ESQUERDA: Linhas encostando no canto esquerdo da tela e no card */}
         <div className="lg:col-span-7 flex flex-col justify-between">

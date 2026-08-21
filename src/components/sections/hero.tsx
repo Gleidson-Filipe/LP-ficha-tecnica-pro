@@ -97,152 +97,158 @@ export function Hero() {
 
   return (
     <section id="topo" className="relative w-full bg-[#09090a] text-[#F5F4F2]">
-      {/* ── Frame (w:1920px h:847px com overflow-hidden) ── */}
-      <div
-        ref={root}
-        className="relative mx-auto w-full max-w-[1920px] min-[1921px]:max-w-[2400px] h-auto lg:h-[calc(100vh-113px)] lg:min-h-[760px] overflow-hidden bg-[#09090a]"
-      >
-        {/* ── Painel Cinza do Mockup (com cadeia de linhas finas de ~1px ao fundo) ──
-            Acima de 1920px o frame ganha um teto maior (2400px) em vez de só
-            centralizar com margens pretas mortas nas laterais — o painel
-            estica até a nova borda direita (right-[64px] no lugar de
-            w-[971px] fixo) e o mockup abaixo passa a se ancorar pela direita
-            com o MESMO respiro de 64px que o headline usa à esquerda (mesma
-            distância da borda da janela dos dois lados), em vez de ficar
-            preso numa posição fixa que ou clipava ou deixava vazio. */}
+      {/* ── Container Superior do Hero (Termina estritamente ANTES da barra de stats) ── */}
+      <div className="relative w-full overflow-hidden">
+        {/* ── Opção 2: Ambiência de Estúdio Difusa + Vinheta Lateral (Ativa estritamente acima de 1920px) ── */}
+        <div aria-hidden className="hidden min-[120.0625rem]:block wide-ambient-edge-left" />
+        <div aria-hidden className="hidden min-[120.0625rem]:block wide-ambient-edge-right" />
+        <div aria-hidden className="hidden min-[120.0625rem]:block wide-edge-vignette" />
+
+        {/* ── Opção 1: Grid Arquitetural de Linhas Contínuas na Asa Esquerda (Ativa estritamente acima de 1920px) ── */}
         <div
-          className="hidden lg:block absolute left-[949px] top-[72px] w-[971px] min-[1921px]:right-[64px] min-[1921px]:w-auto bottom-0 bg-[#0d0d0f] overflow-hidden"
+          aria-hidden
+          className="hidden min-[120.0625rem]:block absolute left-0 top-[4.5rem] bottom-0 pointer-events-none z-0 overflow-hidden"
           style={{
+            right: "calc(50% + 60rem)",
+            borderTop: "1px solid #212124",
+            backgroundImage: "repeating-linear-gradient(90deg, transparent 0, transparent 4.5rem, #212124 4.5rem, #212124 calc(4.5rem + 1px))",
+            opacity: 0.6,
+            maskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 40%, black 100%)",
+          }}
+        />
+
+        {/* ── Opção 1: Painel Cinza Contínuo com Linhas na Asa Direita (Ativa estritamente acima de 1920px) ── */}
+        <div
+          aria-hidden
+          className="hidden min-[120.0625rem]:block absolute right-0 top-[4.5rem] bottom-0 bg-[#0d0d0f] pointer-events-none z-0 overflow-hidden"
+          style={{
+            left: "calc(50% + 60rem - 60.6875rem)",
             borderTop: "1px solid #212124",
             borderLeft: "1px solid #212124",
           }}
         >
-          {/* Cadeia de linhas finas de 1px por trás da imagem — repetição em
-              % + background-size (não px fixo): a largura do painel não é
-              múltiplo exato de 20px, então um passo fixo em px deixava a
-              última linha cortada pela metade na borda. Com 49 repetições
-              fechando em exatamente 100% da largura, a última linha sempre
-              bate perfeitinha no limite, em qualquer largura do painel.
-              Acima de 1920px o painel fica bem mais largo (right-[64px] em
-              vez de w-[971px] fixo) e 49 repetições nessa largura maior
-              deixava o espaçamento visivelmente mais aberto que o original
-              (~20px) — a classe .hero-panel-lines sobe pra 70 repetições
-              só nesse breakpoint (ver globals.css) pra manter a densidade
-              parecida, sem mexer no padrão já aprovado abaixo de 1921px. */}
           <div
-            aria-hidden
             className="hero-panel-lines absolute inset-0 pointer-events-none"
+            style={{
+              maskImage: "linear-gradient(to right, black 0%, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)",
+            }}
           />
         </div>
 
-        {/* ── Divisórias Verticais Encostando na base do Header (top: 88px) ── */}
-        <div className="hidden lg:block absolute inset-0 pointer-events-none z-10">
-          <div className="absolute left-[63px] top-[72px] w-[1px] h-[calc(100vh-185px)] min-h-[688px] bg-[#212124]" />
-          <div className="absolute left-[408px] top-[72px] w-[1px] h-[calc(100vh-185px)] min-h-[688px] bg-[#212124]" />
-          <div className="absolute left-[818px] top-[72px] w-[1px] h-[calc(100vh-185px)] min-h-[688px] bg-[#212124]" />
-        </div>
-
-        {/* ── Conteúdo Textual (Headline + Sub + CTA) ── */}
-        <div className="relative z-20 px-6 pt-[108px] pb-12 lg:px-0 lg:pt-0 lg:pb-0">
-          {/* Headline exata de teste1.html (left:64px top:203px w:755px) */}
-          <h1 className="font-display font-bold tracking-[-0.6px] text-left text-[#F5F4F2] text-[2.5rem] leading-[1.1] lg:absolute lg:left-[64px] lg:top-[136px] lg:w-[755px] lg:text-[90px] lg:leading-[99px]">
-            <WhipInUp text="Descubra o custo real e o lucro de" className="inline" eager />{" "}
-            <Highlighter
-              action="underline"
-              color="#FF4785"
-              strokeWidth={1.5}
-              padding={2}
-              delay={700}
-              iterations={4}
-              isView
-            >
-              <WhipInUp text="cada ítem" className="inline" eager />
-            </Highlighter>{" "}
-            <WhipInUp text="do seu cardápio." className="inline" eager />
-          </h1>
-
-          {/* Subtítulo exato de teste1.html (left:64px top:614px w:742px) */}
-          <p className="font-body mt-6 text-[#ababab] text-lg font-normal lg:mt-0 lg:absolute lg:left-[64px] lg:top-[547px] lg:w-[742px] lg:text-[25px] lg:leading-[38px]">
-            <WhipInUp text="Tenha preços que geram lucro e não apenas faturamento." eager />
-          </p>
-
-          {/* Botão CTA exato de teste1.html (left:64px top:716px w:584px h:70px) */}
-          <a
-            ref={ctaFx}
-            href={CHECKOUT}
-            onClick={handleCtaClick}
-            className="hero-fade group relative font-body mt-8 inline-flex items-center justify-center gap-1.5 overflow-hidden cta-btn-fluid px-6 py-4 text-white lg:mt-0 lg:absolute lg:left-[64px] lg:top-[649px] lg:w-[584px] lg:h-[70px] lg:px-0 lg:py-0 lg:justify-center"
-            style={{ opacity: 0, transform: "translate(22px, 26px) rotate(6deg)" }}
+        {/* ── Frame Central de 1920px (100% Intacto e Idêntico ao Aprovado) ── */}
+        <div
+          ref={root}
+          className="relative mx-auto w-full max-w-[120rem] h-auto lg:h-[calc(100vh-7.0625rem)] lg:min-h-[47.5rem] overflow-visible bg-transparent z-10"
+        >
+          {/* ── Painel Cinza do Mockup no Centro ── */}
+          <div
+            className="hidden lg:block absolute left-[59.3125rem] top-[4.5rem] w-[60.6875rem] bottom-0 bg-[#0d0d0f] overflow-hidden"
+            style={{
+              borderTop: "1px solid #212124",
+              borderLeft: "1px solid #212124",
+            }}
           >
-            <CtaGlow />
-            <CtaShine />
-            <CtaEcho className="items-center whitespace-nowrap text-white">
-              <span className="font-bold text-[18px] sm:text-[20px] lg:text-[22px] whitespace-nowrap text-white">
-                <WhipInUp text="Quero saber meu custo real e precificar certo" eager />
-              </span>
-            </CtaEcho>
-          </a>
-        </div>
+            <div
+              aria-hidden
+              className="hero-panel-lines absolute inset-0 pointer-events-none"
+            />
+          </div>
 
-        {/* ── Imagem do Mockup (Encostando na borda inferior) ── */}
-        {/* min-[1921px]: cresce um pouco em tela wide (pedido: topo do
-            notebook passando levemente da altura do título), mas em `vw`
-            (relativo à tela) dentro de um clamp, não px fixo — escala
-            sozinho em qualquer largura acima de 1920px, sem depender de um
-            número mágico calibrado só pra uma resolução. Altura em
-            aspect-ratio (não h fixo) pra manter a proporção 1370:698
-            automaticamente, então só o width precisa ser controlado. Teto
-            do clamp reduzido (1370→1420, era 1495) porque tava quase
-            encostando na nav. Continua bottom-anchored (bottom-0): crescer
-            a altura empurra o topo pra cima, não o fundo pra baixo. */}
-        <div className="hero-mockup hero-mockup-wide relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[691px] min-[1921px]:!left-auto min-[1921px]:!right-[64px] lg:bottom-0 lg:top-auto lg:w-[1370px] lg:h-[698px] pointer-events-none flex items-end">
-          <Image
-            src="/images/mockup-hero.webp"
-            alt="Planilha Ficha Técnica Pro"
-            width={5423}
-            height={2808}
-            priority
-            quality={90}
-            sizes="(min-width: 1024px) 1450px, 100vw"
-            className="w-full h-auto object-contain object-bottom block lg:w-[1370px] lg:h-[698px] min-[1921px]:!w-full min-[1921px]:!h-full min-[1921px]:object-right-bottom"
-          />
+          {/* ── Divisórias Verticais Encostando na base do Header (top: 4.5rem) ── */}
+          <div className="hidden lg:block absolute inset-0 pointer-events-none z-10">
+            <div className="absolute left-[3.9375rem] top-[4.5rem] w-[1px] h-[calc(100vh-11.5625rem)] min-h-[43rem] bg-[#212124]" />
+            <div className="absolute left-[25.5rem] top-[4.5rem] w-[1px] h-[calc(100vh-11.5625rem)] min-h-[43rem] bg-[#212124]" />
+            <div className="absolute left-[51.125rem] top-[4.5rem] w-[1px] h-[calc(100vh-11.5625rem)] min-h-[43rem] bg-[#212124]" />
+          </div>
+
+          {/* ── Conteúdo Textual (Headline + Sub + CTA) ── */}
+          <div className="relative z-20 px-6 pt-[6.75rem] pb-12 lg:px-0 lg:pt-0 lg:pb-0">
+            {/* Headline exata em unidades relativas (left: 4rem, top: 8.5rem, w: 47.1875rem) */}
+            <h1 className="font-display font-bold tracking-[-0.0375rem] text-left text-[#F5F4F2] text-[2.5rem] leading-[1.1] lg:absolute lg:left-[4rem] lg:top-[8.5rem] lg:w-[47.1875rem] lg:text-[5.625rem] lg:leading-[6.1875rem]">
+              <WhipInUp text="Descubra o custo real e o lucro de" className="inline" eager />{" "}
+              <Highlighter
+                action="underline"
+                color="#FF4785"
+                strokeWidth={1.5}
+                padding={2}
+                delay={700}
+                iterations={4}
+                isView
+              >
+                <WhipInUp text="cada ítem" className="inline" eager />
+              </Highlighter>{" "}
+              <WhipInUp text="do seu cardápio." className="inline" eager />
+            </h1>
+
+            {/* Subtítulo exato em unidades relativas (left: 4rem, top: 34.1875rem, w: 46.375rem) */}
+            <p className="font-body mt-6 text-[#ababab] text-lg font-normal lg:mt-0 lg:absolute lg:left-[4rem] lg:top-[34.1875rem] lg:w-[46.375rem] lg:text-[1.5625rem] lg:leading-[2.375rem]">
+              <WhipInUp text="Tenha preços que geram lucro e não apenas faturamento." eager />
+            </p>
+
+            {/* Botão CTA exato em unidades relativas (left: 4rem, top: 40.5625rem, w: 36.5rem, h: 4.375rem) */}
+            <a
+              ref={ctaFx}
+              href={CHECKOUT}
+              onClick={handleCtaClick}
+              className="hero-fade group relative font-body mt-8 inline-flex items-center justify-center gap-1.5 overflow-hidden cta-btn-fluid px-6 py-4 text-white lg:mt-0 lg:absolute lg:left-[4rem] lg:top-[40.5625rem] lg:w-[36.5rem] lg:h-[4.375rem] lg:px-0 lg:py-0 lg:justify-center"
+              style={{ opacity: 0, transform: "translate(1.375rem, 1.625rem) rotate(6deg)" }}
+            >
+              <CtaGlow />
+              <CtaShine />
+              <CtaEcho className="items-center whitespace-nowrap text-white">
+                <span className="font-bold text-[1.125rem] sm:text-[1.25rem] lg:text-[1.375rem] whitespace-nowrap text-white">
+                  <WhipInUp text="Quero saber meu custo real e precificar certo" eager />
+                </span>
+              </CtaEcho>
+            </a>
+          </div>
+
+          {/* ── Imagem do Mockup (Posição 100% FIXA em left: 43.1875rem, bottom: 0, com fading na borda direita em widescreen) ── */}
+          <div className="hero-mockup hero-mockup-fade-wide relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[43.1875rem] lg:bottom-0 lg:top-auto lg:w-[85.625rem] lg:h-[43.625rem] pointer-events-none flex items-end">
+            <Image
+              src="/images/mockup-hero.webp"
+              alt="Planilha Ficha Técnica Pro"
+              width={5423}
+              height={2808}
+              priority
+              quality={90}
+              sizes="(min-width: 64rem) 85.625rem, 100vw"
+              className="w-full h-auto object-contain object-bottom block lg:w-[85.625rem] lg:h-[43.625rem]"
+            />
+          </div>
         </div>
       </div>
 
-      {/* ── Faixa de Reforços / Stats na Base ──
-          A borda superior é full-bleed (w-full, sem max-w) — precisa
-          encostar nas duas bordas da tela mesmo acima de 1920px, diferente
-          do conteúdo em si (números/texto), que continua dentro do mesmo
-          teto de largura do resto do Hero. */}
-      <div className="relative z-20 w-full border-t border-[#212124]">
-        <div className="font-body w-full max-w-[1920px] min-[1921px]:max-w-[2400px] mx-auto grid grid-cols-1 md:grid-cols-3 text-[#F5F4F2]">
-        <div className="border-b border-[#212124] md:border-b-0 md:border-r border-[#212124] px-6 py-8 lg:pl-[64px] lg:py-6">
-          <p className="inline-flex items-baseline text-[28px] font-bold leading-none lg:text-[32px]">
-            <CountUpStat prefix="+" to={25} className="mr-[0.22em]" />
-            <WhipInUp text="mil" />
-          </p>
-          <p className="mt-2 text-[#ababab] text-[16px]">
-            <WhipInUp text="Negócios atendidos" />
-          </p>
-        </div>
+      {/* ── Faixa de Reforços / Stats na Base (100% Limpa e Independente) ── */}
+      <div className="relative z-30 w-full border-t border-[#212124] bg-[#09090a]">
+        <div className="font-body w-full max-w-[120rem] mx-auto grid grid-cols-1 md:grid-cols-3 text-[#F5F4F2]">
+          <div className="border-b border-[#212124] md:border-b-0 md:border-r border-[#212124] px-6 py-8 lg:pl-[4rem] lg:py-6">
+            <p className="inline-flex items-baseline text-[1.75rem] font-bold leading-none lg:text-[2rem]">
+              <CountUpStat prefix="+" to={25} className="mr-[0.22em]" />
+              <WhipInUp text="mil" />
+            </p>
+            <p className="mt-2 text-[#ababab] text-[1rem]">
+              <WhipInUp text="Negócios atendidos" />
+            </p>
+          </div>
 
-        <div className="border-b border-[#212124] md:border-b-0 md:border-r border-[#212124] px-6 py-8 lg:px-10 lg:py-6">
-          <p className="text-[28px] font-bold leading-none lg:text-[32px]">
-            <WhipInUp text="Pagamento único" />
-          </p>
-          <p className="mt-2 text-[#ababab] text-[16px]">
-            <WhipInUp text="Sem mensalidade" />
-          </p>
-        </div>
+          <div className="border-b border-[#212124] md:border-b-0 md:border-r border-[#212124] px-6 py-8 lg:px-10 lg:py-6">
+            <p className="text-[1.75rem] font-bold leading-none lg:text-[2rem]">
+              <WhipInUp text="Pagamento único" />
+            </p>
+            <p className="mt-2 text-[#ababab] text-[1rem]">
+              <WhipInUp text="Sem mensalidade" />
+            </p>
+          </div>
 
-        <div className="px-6 py-8 lg:px-10 lg:py-6">
-          <p className="text-[28px] font-bold leading-none lg:text-[32px]">
-            <WhipInUp text="Acesso vitalício" />
-          </p>
-          <p className="mt-2 text-[#ababab] text-[16px]">
-            <WhipInUp text="Atualizações incluídas" />
-          </p>
-        </div>
+          <div className="px-6 py-8 lg:px-10 lg:py-6">
+            <p className="text-[1.75rem] font-bold leading-none lg:text-[2rem]">
+              <WhipInUp text="Acesso vitalício" />
+            </p>
+            <p className="mt-2 text-[#ababab] text-[1rem]">
+              <WhipInUp text="Atualizações incluídas" />
+            </p>
+          </div>
         </div>
       </div>
     </section>
