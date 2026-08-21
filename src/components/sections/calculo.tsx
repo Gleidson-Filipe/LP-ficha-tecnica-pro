@@ -194,7 +194,7 @@ export function Calculo() {
                       eliminando qualquer conflito de composição de camadas/GPU no hover do zoom. */}
                   {!isActive && (
                     <div
-                      className="absolute right-6 sm:right-10 md:right-14 lg:right-16 xl:right-20 min-[120.0625rem]:right-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none transition-opacity duration-200"
+                      className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none transition-opacity duration-200"
                       aria-hidden="true"
                     >
                       <svg

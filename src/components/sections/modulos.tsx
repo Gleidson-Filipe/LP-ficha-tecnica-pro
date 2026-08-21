@@ -150,14 +150,14 @@ export function Modulos() {
       <Section
         id="modulos"
         tone="ink"
-        className="rule-t relative overflow-hidden flex flex-col justify-center min-h-[38.75rem] lg:min-h-[41.25rem] py-8 lg:py-10 w-full"
+        className="rule-t relative overflow-hidden flex flex-col justify-center min-h-[38.75rem] lg:min-h-[40rem] py-8 lg:py-10 w-full"
         ref={containerRef}
       >
         <div className="pad w-full min-[120.0625rem]:px-0">
-          <div className="max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0 grid gap-8 lg:grid-cols-[22.5rem_1fr] xl:grid-cols-[25rem_1fr] items-start lg:gap-10 xl:gap-14">
+          <div className="w-full grid gap-8 lg:grid-cols-[22.5rem_1fr] xl:grid-cols-[25rem_1fr] items-start lg:gap-10 xl:gap-14 min-[120.0625rem]:max-w-[120rem] min-[120.0625rem]:mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0">
 
             {/* ── Coluna Esquerda ── */}
-            <div className="flex flex-col justify-between py-1 min-h-[27.5rem] lg:min-h-[35rem]">
+            <div className="flex flex-col justify-between py-1 min-h-[27.5rem] lg:min-h-[33rem]">
               <div>
                 <h2 className="max-w-[15ch] font-display text-h2 leading-tight">
                   <WhipInUp text={modulos.title} />
@@ -228,52 +228,49 @@ export function Modulos() {
             </div>
 
             {/* ── Coluna Direita ── */}
-            <div
-              className="group/img isolate relative w-full h-[22.5rem] sm:h-[27.5rem] md:h-[31.25rem] lg:h-[33.75rem] xl:h-[36.25rem] overflow-hidden rounded-xl cursor-zoom-in"
-              onClick={() => setZoomImage(MODULO_IMAGES[activeItem.tab] || activeItem.image)}
-              title="Clique para ampliar a imagem"
-            >
+            <div className="relative w-full h-[22.5rem] sm:h-[27.5rem] md:h-[30rem] lg:h-[32.5rem] xl:h-[34rem] flex items-center justify-center pointer-events-none">
               {items.map((item, idx) => {
                 const isActive = idx === activeIdx;
-                const isEquilibrio = item.tab === "Equilíbrio";
                 const staticSrc = MODULO_IMAGES[item.tab] || item.image;
                 return (
                   <div
                     key={item.tab}
                     className={cn(
-                      "absolute inset-0 flex items-center justify-center",
+                      "absolute inset-0 flex items-center justify-center p-2 sm:p-3 pointer-events-none",
                       "transition-opacity duration-350 ease-in-out",
                       isActive
-                        ? "opacity-100 pointer-events-auto"
-                        : "opacity-0 pointer-events-none"
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   >
-                    <Image
-                      src={staticSrc}
-                      alt={`Módulo ${item.tab} — ${item.titulo}`}
-                      sizes="(max-width: 64rem) 100vw, 70vw"
-                      quality={100}
-                      priority={idx === 0}
-                      className={cn(
-                        "relative z-10 max-h-[94%] max-w-[96%] w-auto h-auto object-contain drop-shadow-2xl rounded-xl",
-                        "transition-transform duration-300 ease-out origin-center",
-                        isEquilibrio
-                          ? "scale-[1.18] group-hover/img:scale-[1.22]"
-                          : "scale-100 group-hover/img:scale-[1.03]"
-                      )}
-                      style={{ borderRadius: "0.75rem" }}
-                    />
+                    {isActive && (
+                      <div
+                        onClick={() => setZoomImage(MODULO_IMAGES[activeItem.tab] || activeItem.image)}
+                        title="Clique para ampliar a imagem"
+                        className="group/img relative flex items-center justify-center h-full max-h-full max-w-full cursor-zoom-in pointer-events-auto select-none"
+                      >
+                        <Image
+                          src={staticSrc}
+                          alt={`Módulo ${item.tab} — ${item.titulo}`}
+                          sizes="(max-width: 64rem) 100vw, 65vw"
+                          quality={100}
+                          priority={idx === 0}
+                          className="relative z-10 max-h-full max-w-full w-auto h-auto object-contain drop-shadow-2xl rounded-xl transition-transform duration-300 ease-out origin-center group-hover/img:scale-[1.02]"
+                          style={{ borderRadius: "0.75rem" }}
+                        />
+
+                        {/* Badge Ampliar */}
+                        <span className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 z-20 rounded-md bg-ink/80 backdrop-blur-sm px-2.5 py-1.5 text-xs font-medium text-white opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5 shadow-lg border border-white/10">
+                          <svg className="w-3.5 h-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                          </svg>
+                          Ampliar
+                        </span>
+                      </div>
+                    )}
                   </div>
                 );
               })}
-
-              {/* Badge Ampliar */}
-              <span className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10 rounded-md bg-ink/75 backdrop-blur-sm px-2.5 py-1.5 text-xs font-medium text-white opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5 shadow-lg border border-white/10">
-                <svg className="w-3.5 h-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                </svg>
-                Ampliar
-              </span>
             </div>
 
           </div>

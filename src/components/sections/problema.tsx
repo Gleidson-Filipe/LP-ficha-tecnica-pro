@@ -54,7 +54,7 @@ export function Problema() {
         <div className="w-full min-[120.0625rem]:max-w-[120rem] min-[120.0625rem]:mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0">
           <Reveal
             stagger={0.08}
-            className="cols md:grid-cols-3 max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:border-x min-[120.0625rem]:border-[#212124]"
+            className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#212124] min-[120.0625rem]:border-x min-[120.0625rem]:border-[#212124] max-w-[min(100%,120rem)] mx-auto"
           >
             {p.gruposNegocio.map((g) => (
               <div key={g.grupo} className="p-8 lg:p-10">
