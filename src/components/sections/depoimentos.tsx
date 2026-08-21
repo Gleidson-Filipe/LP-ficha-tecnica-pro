@@ -11,8 +11,8 @@ export function Depoimentos() {
   return (
     <Section id="depoimentos" tone="paper" className="py-16 md:py-24 relative overflow-hidden w-full">
       {/* ── Cabeçalho com Título na Esquerda ── */}
-      <div className="pad mb-10 md:mb-14">
-        <div className="max-w-[min(100%,120rem)] mx-auto flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div className="pad mb-10 md:mb-14 min-[120.0625rem]:px-0">
+        <div className="max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="max-w-[22ch] font-display text-h2 text-balance text-left">
             <WhipInUp text={d.title} />
           </h2>
@@ -26,8 +26,8 @@ export function Depoimentos() {
       </div>
 
       {/* ── 3 Colunas Infinitas com Fade Vertical e 9 Imagens Únicas ── */}
-      <div className="pad">
-        <div className="max-w-[min(100%,120rem)] mx-auto">
+      <div className="pad min-[120.0625rem]:px-0">
+        <div className="max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 [mask-image:linear-gradient(to_bottom,transparent_0%,black_12%,black_88%,transparent_100%)] max-h-[40rem] md:max-h-[45rem] overflow-hidden">
             <TestimonialsColumn testimonials={col1} duration={26} />
             <TestimonialsColumn testimonials={col2} className="hidden sm:block" duration={32} />

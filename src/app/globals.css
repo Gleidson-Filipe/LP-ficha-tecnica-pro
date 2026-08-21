@@ -218,7 +218,7 @@ body {
 .t-ink {
   --fg: var(--color-on-ink);
   --fg-soft: var(--color-on-ink-soft);
-  --rule: rgb(245 244 234 / 0.13);
+  --rule: #212124;
   --panel: var(--color-ink-panel);
   --bg: var(--color-ink);
   background-color: var(--bg);

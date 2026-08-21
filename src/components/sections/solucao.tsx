@@ -15,7 +15,7 @@ import { AnimatedCheck } from "@/components/ui/animated-check";
 export function Solucao() {
   return (
     <Section id="solucao" tone="paper" className="rule-t">
-      <div className="grid lg:h-[calc(100dvh-4.5625rem)] lg:grid-cols-[minmax(0,63%)_minmax(0,37%)] max-w-[min(100%,120rem)] mx-auto">
+      <div className="grid lg:h-[calc(100dvh-4.5625rem)] lg:grid-cols-[minmax(0,63%)_minmax(0,37%)] max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0">
         {/* ── Mockup + faixa de números ── */}
         <div className="relative aspect-[1200/909] w-full lg:aspect-auto lg:h-full">
           <ParallaxMockup />
@@ -35,7 +35,7 @@ export function Solucao() {
         </div>
 
         {/* ── Copy ── */}
-        <div className="pad flex flex-col justify-center py-16 md:py-20 lg:py-10">
+        <div className="pad flex flex-col justify-center py-16 md:py-20 lg:py-10 min-[120.0625rem]:px-0 min-[120.0625rem]:pl-10">
           <h2 className="max-w-[16ch] font-display text-h2 text-balance">
             <WhipInUp text={s.title} />
           </h2>

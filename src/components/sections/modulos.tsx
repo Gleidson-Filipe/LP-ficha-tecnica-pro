@@ -153,8 +153,8 @@ export function Modulos() {
         className="rule-t relative overflow-hidden flex flex-col justify-center min-h-[38.75rem] lg:min-h-[41.25rem] py-8 lg:py-10 w-full"
         ref={containerRef}
       >
-        <div className="pad w-full">
-          <div className="max-w-[min(100%,120rem)] mx-auto grid gap-8 lg:grid-cols-[22.5rem_1fr] xl:grid-cols-[25rem_1fr] items-start lg:gap-10 xl:gap-14">
+        <div className="pad w-full min-[120.0625rem]:px-0">
+          <div className="max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0 grid gap-8 lg:grid-cols-[22.5rem_1fr] xl:grid-cols-[25rem_1fr] items-start lg:gap-10 xl:gap-14">
 
             {/* ── Coluna Esquerda ── */}
             <div className="flex flex-col justify-between py-1 min-h-[27.5rem] lg:min-h-[35rem]">

@@ -94,8 +94,8 @@ export function SiteFooter() {
       <div className="border-t border-white/10 w-full" />
 
       {/* ── Barra Inferior: Logo Image + Slogan Claro | GF Instagram Pill | Copyright ── */}
-      <div className="relative pad py-8">
-        <div className="max-w-[min(100%,120rem)] mx-auto flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-4 w-full">
+      <div className="relative pad py-8 min-[120.0625rem]:px-0">
+        <div className="max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-4 w-full">
           {/* Bloco Esquerda: Logo Image + Slogan com mesma largura + Pill GF */}
           <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 lg:gap-10">
             {/* Logo Imagem + Slogan Claro perfeitamente pareados */}

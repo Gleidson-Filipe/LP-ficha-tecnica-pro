@@ -384,8 +384,8 @@ export function Diferenciais() {
   return (
     <Section ref={sectionRef} id="diferenciais" tone="ink" className="py-16 md:py-24 w-full">
       {/* ── Cabeçalho ── */}
-      <div className="pad mb-12 md:mb-16">
-        <div className="max-w-[min(100%,120rem)] mx-auto">
+      <div className="pad mb-12 md:mb-16 min-[120.0625rem]:px-0">
+        <div className="max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0">
           <h2 className="max-w-[26ch] font-display text-h2 text-balance">
             <WhipInUp text={d.titlePre} />
             <WhipInUp text={d.titleMark} />
@@ -395,8 +395,8 @@ export function Diferenciais() {
       </div>
 
       {/* ── Grid dos 4 Cards ── */}
-      <div className="pad">
-        <div className="max-w-[min(100%,120rem)] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-transparent">
+      <div className="pad min-[120.0625rem]:px-0">
+        <div className="max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-transparent">
           {d.cards.map((c, idx) => {
             const roundedClasses = cn(
               // Mobile (1 col)

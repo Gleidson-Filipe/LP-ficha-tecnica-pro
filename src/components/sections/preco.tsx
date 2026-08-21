@@ -80,11 +80,11 @@ export function Preco() {
           </div>
 
           {/* Linhas de Tabela que tocam o canto esquerdo da tela e a borda do card */}
-          <div className="divide-y divide-white/10 border-t border-b border-white/10">
+          <div className="divide-y divide-white/10 border-t border-b border-white/10 min-[120.0625rem]:-ml-[calc((100vw-120rem)/2)]">
             {p.beneficios.map((b) => (
               <div
                 key={b.titulo}
-                className="pl-[var(--pad)] pr-6 lg:pr-8 py-5 sm:py-6 flex items-start gap-4 sm:gap-5 group hover:bg-white/[0.015] transition-colors"
+                className="pl-[var(--pad)] min-[120.0625rem]:pl-[calc((100vw-120rem)/2+4rem)] pr-6 lg:pr-8 py-5 sm:py-6 flex items-start gap-4 sm:gap-5 group hover:bg-white/[0.015] transition-colors"
               >
                 <Reveal className="mt-0.5" noFlash>
                   <BenefitIcon icone={b.icone} />
@@ -103,7 +103,7 @@ export function Preco() {
         </div>
 
         {/* ▎COLUNA DIREITA: Coluna com padding do grid da página */}
-        <div className="lg:col-span-5 pr-[var(--pad)] pl-4 sm:pl-[var(--pad)] lg:pl-0 pt-2 lg:pt-0">
+        <div className="lg:col-span-5 pr-[var(--pad)] pl-4 sm:pl-[var(--pad)] lg:pl-0 pt-2 lg:pt-0 min-[120.0625rem]:pr-3.5">
           
           {/* Card Wrapper com profundidade 3D */}
           <div className="relative h-full">

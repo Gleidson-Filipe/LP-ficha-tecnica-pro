@@ -155,8 +155,8 @@ export function Calculo() {
                   : "bg-transparent hover:bg-paper-panel/25 py-4 sm:py-5 lg:py-5.5"
               )}
             >
-              <div className="pad relative">
-                <div className="max-w-[min(100%,120rem)] mx-auto relative grid gap-6 lg:grid-cols-[1fr_1.4fr] xl:grid-cols-[0.9fr_1.5fr] lg:items-start">
+              <div className="pad relative min-[120.0625rem]:px-0">
+                <div className="max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0 relative grid gap-6 lg:grid-cols-[1fr_1.4fr] xl:grid-cols-[0.9fr_1.5fr] lg:items-start">
                   {/* Coluna da Esquerda: Apenas o Título quando fechado, e Textos quando aberto */}
                   <div className="flex flex-col justify-start pt-0.5 lg:pt-1 pr-14 lg:pr-10">
                     <h3
@@ -194,7 +194,7 @@ export function Calculo() {
                       eliminando qualquer conflito de composição de camadas/GPU no hover do zoom. */}
                   {!isActive && (
                     <div
-                      className="absolute right-6 sm:right-10 md:right-14 lg:right-16 xl:right-20 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none transition-opacity duration-200"
+                      className="absolute right-6 sm:right-10 md:right-14 lg:right-16 xl:right-20 min-[120.0625rem]:right-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none transition-opacity duration-200"
                       aria-hidden="true"
                     >
                       <svg
