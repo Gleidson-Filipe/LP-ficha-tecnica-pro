@@ -228,7 +228,11 @@ export function Modulos() {
             </div>
 
             {/* ── Coluna Direita ── */}
-            <div className="relative w-full h-[22.5rem] sm:h-[27.5rem] md:h-[31.25rem] lg:h-[34.5rem] xl:h-[37.5rem] min-[120.0625rem]:h-[42rem] flex items-center justify-center">
+            <div
+              className="modulos-img-frame group/img relative w-full flex items-center justify-center overflow-hidden rounded-xl cursor-zoom-in"
+              onClick={() => setZoomImage(MODULO_IMAGES[activeItem.tab] || activeItem.image)}
+              title="Clique para ampliar a imagem"
+            >
               {items.map((item, idx) => {
                 const isActive = idx === activeIdx;
                 const staticSrc = MODULO_IMAGES[item.tab] || item.image;
@@ -236,38 +240,37 @@ export function Modulos() {
                   <div
                     key={item.tab}
                     className={cn(
-                      "absolute inset-0 flex items-center justify-center p-2 sm:p-3 transition-opacity duration-350 ease-in-out",
+                      "absolute inset-0 flex items-center justify-center p-3 sm:p-4 transition-opacity duration-350 ease-in-out",
                       isActive
                         ? "opacity-100 pointer-events-auto z-10"
                         : "opacity-0 pointer-events-none z-0"
                     )}
                   >
-                    <div
-                      onClick={() => setZoomImage(MODULO_IMAGES[item.tab] || item.image)}
-                      title="Clique para ampliar a imagem"
-                      className="group/img relative flex items-center justify-center w-full h-full cursor-zoom-in select-none"
-                    >
-                      <Image
-                        src={staticSrc}
-                        alt={`Módulo ${item.tab} — ${item.titulo}`}
-                        sizes="(max-width: 64rem) 100vw, 1200px"
-                        quality={100}
-                        loading="eager"
-                        className="relative z-10 max-h-full max-w-full w-auto h-auto object-contain drop-shadow-2xl rounded-xl transition-transform duration-300 ease-out origin-center group-hover/img:scale-[1.02]"
-                        style={{ borderRadius: "0.75rem" }}
-                      />
-
-                      {/* Badge Ampliar */}
-                      <span className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 z-20 rounded-md bg-ink/80 backdrop-blur-sm px-2.5 py-1.5 text-xs font-medium text-white opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5 shadow-lg border border-white/10">
-                        <svg className="w-3.5 h-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                        </svg>
-                        Ampliar
-                      </span>
-                    </div>
+                    <Image
+                      src={staticSrc}
+                      alt={`Módulo ${item.tab} — ${item.titulo}`}
+                      width={item.w}
+                      height={item.h}
+                      sizes="(max-width: 1024px) 100vw, 65vw"
+                      quality={100}
+                      className={cn(
+                        "max-h-full max-w-full w-auto h-auto object-contain drop-shadow-2xl rounded-xl",
+                        "transition-transform duration-300 ease-out origin-center",
+                        "scale-100 group-hover/img:scale-[1.03]"
+                      )}
+                      style={{ borderRadius: 12 }}
+                    />
                   </div>
                 );
               })}
+
+              {/* Badge Ampliar */}
+              <span className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10 rounded-md bg-ink/75 backdrop-blur-sm px-2.5 py-1.5 text-xs font-medium text-white opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5 shadow-lg border border-white/10">
+                <svg className="w-3.5 h-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                </svg>
+                Ampliar
+              </span>
             </div>
 
           </div>
