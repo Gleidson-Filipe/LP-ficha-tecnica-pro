@@ -1,5 +1,5 @@
 import { depoimentos as d } from "@/lib/content";
-import { Section, Label } from "@/components/ui/kit";
+import { Section } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { TestimonialsColumn } from "@/components/ui/testimonials-columns-1";
 
@@ -12,8 +12,7 @@ export function Depoimentos() {
     <Section id="depoimentos" tone="paper" className="py-16 md:py-24 relative overflow-hidden">
       {/* ── Cabeçalho com Título na Esquerda ── */}
       <div className="pad mb-10 md:mb-14">
-        <Label>{d.label}</Label>
-        <div className="mt-6 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="max-w-[22ch] font-display text-h2 text-balance text-left">
             <WhipInUp text={d.title} />
           </h2>

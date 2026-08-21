@@ -464,6 +464,51 @@ body {
 }
 
 /*
+  Textura de linhas finas atrás do mockup do Hero. Repetição em % +
+  background-size (não px fixo) pra última linha sempre fechar exatamente
+  na borda do painel, qualquer que seja a largura dele — ver comentário em
+  hero.tsx. 49 repetições = densidade original (~20px) na largura padrão
+  do painel (971px, abaixo de 1921px de tela). Acima de 1920px o painel
+  fica bem mais largo (right-[64px] em vez de w-[971px] fixo) e manter 49
+  repetições nessa largura maior deixava o espaçamento visivelmente mais
+  aberto que o original — 70 repetições aqui aproxima a densidade de novo.
+*/
+.hero-panel-lines {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 95%,
+    rgba(255, 255, 255, 0.06) 95%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  background-size: calc(100% / 49) 100%;
+}
+
+@media (min-width: 1921px) {
+  .hero-panel-lines {
+    background-size: calc(100% / 70) 100%;
+  }
+}
+
+/*
+  Mockup do Hero um pouco maior em telas wide (pedido explícito: topo do
+  notebook passando levemente da altura do título, mas sem exagerar). Em
+  `vw` (relativo à tela) dentro de um clamp, não px fixo — escala sozinho
+  em qualquer largura acima de 1920px. Tentei isso via classe arbitrária
+  do Tailwind (min-[1921px]:!w-[clamp(...)]) e o JIT não gerou a regra
+  (clamp com múltiplas vírgulas dentro de colchetes não foi reconhecido) —
+  por isso está aqui, como CSS puro. Altura em aspect-ratio (não h fixo)
+  pra manter a proporção 1370:698 automaticamente.
+*/
+@media (min-width: 1921px) {
+  .hero-mockup-wide {
+    width: clamp(1370px, 55vw, 1450px) !important;
+    height: auto !important;
+    aspect-ratio: 1370 / 698;
+  }
+}
+
+/*
   WhipInUp: o deslocamento vertical da letra é resolvido aqui via
   calc(--wiu-p * 1%), não por yPercent do GSAP. yPercent obriga o GSAP a
   medir a altura de CADA letra (getBoundingClientRect/offsetHeight) pra

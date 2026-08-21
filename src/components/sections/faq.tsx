@@ -221,7 +221,7 @@ function FaqRow({
         <div className="pad max-w-4xl mx-auto w-full py-5 sm:py-6 flex items-center justify-between gap-4">
           <span
             ref={titleRef}
-            className="font-display text-[1rem] sm:text-[1.125rem] md:text-[1.1875rem] font-bold leading-snug text-ink transition-colors duration-200 group-hover:text-accent"
+            className="font-display text-[1rem] sm:text-[1.125rem] md:text-[1.1875rem] font-bold leading-snug text-ink transition-colors duration-200"
           >
             <WhipInUp text={item.q} />
           </span>

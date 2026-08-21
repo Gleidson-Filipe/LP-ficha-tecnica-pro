@@ -100,21 +100,38 @@ export function Hero() {
       {/* ── Frame (w:1920px h:847px com overflow-hidden) ── */}
       <div
         ref={root}
-        className="relative mx-auto w-full max-w-[1920px] h-auto lg:h-[calc(100vh-113px)] lg:min-h-[760px] overflow-hidden bg-[#09090a]"
+        className="relative mx-auto w-full max-w-[1920px] min-[1921px]:max-w-[2400px] h-auto lg:h-[calc(100vh-113px)] lg:min-h-[760px] overflow-hidden bg-[#09090a]"
       >
-        {/* ── Painel Cinza do Mockup (com cadeia de linhas finas de ~1px ao fundo) ── */}
+        {/* ── Painel Cinza do Mockup (com cadeia de linhas finas de ~1px ao fundo) ──
+            Acima de 1920px o frame ganha um teto maior (2400px) em vez de só
+            centralizar com margens pretas mortas nas laterais — o painel
+            estica até a nova borda direita (right-[64px] no lugar de
+            w-[971px] fixo) e o mockup abaixo passa a se ancorar pela direita
+            com o MESMO respiro de 64px que o headline usa à esquerda (mesma
+            distância da borda da janela dos dois lados), em vez de ficar
+            preso numa posição fixa que ou clipava ou deixava vazio. */}
         <div
-          className="hidden lg:block absolute left-[949px] top-[72px] w-[971px] bottom-0 bg-[#0d0d0f] overflow-hidden"
-          style={{ border: "1px solid #212124", borderBottom: "none" }}
+          className="hidden lg:block absolute left-[949px] top-[72px] w-[971px] min-[1921px]:right-[64px] min-[1921px]:w-auto bottom-0 bg-[#0d0d0f] overflow-hidden"
+          style={{
+            borderTop: "1px solid #212124",
+            borderLeft: "1px solid #212124",
+          }}
         >
-          {/* Cadeia de linhas finas de 1px por trás da imagem */}
+          {/* Cadeia de linhas finas de 1px por trás da imagem — repetição em
+              % + background-size (não px fixo): a largura do painel não é
+              múltiplo exato de 20px, então um passo fixo em px deixava a
+              última linha cortada pela metade na borda. Com 49 repetições
+              fechando em exatamente 100% da largura, a última linha sempre
+              bate perfeitinha no limite, em qualquer largura do painel.
+              Acima de 1920px o painel fica bem mais largo (right-[64px] em
+              vez de w-[971px] fixo) e 49 repetições nessa largura maior
+              deixava o espaçamento visivelmente mais aberto que o original
+              (~20px) — a classe .hero-panel-lines sobe pra 70 repetições
+              só nesse breakpoint (ver globals.css) pra manter a densidade
+              parecida, sem mexer no padrão já aprovado abaixo de 1921px. */}
           <div
             aria-hidden
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(90deg, transparent 0px, transparent 19px, rgba(255, 255, 255, 0.06) 19px, rgba(255, 255, 255, 0.06) 20px)",
-            }}
+            className="hero-panel-lines absolute inset-0 pointer-events-none"
           />
         </div>
 
@@ -129,7 +146,7 @@ export function Hero() {
         <div className="relative z-20 px-6 pt-[108px] pb-12 lg:px-0 lg:pt-0 lg:pb-0">
           {/* Headline exata de teste1.html (left:64px top:203px w:755px) */}
           <h1 className="font-display font-bold tracking-[-0.6px] text-left text-[#F5F4F2] text-[2.5rem] leading-[1.1] lg:absolute lg:left-[64px] lg:top-[136px] lg:w-[755px] lg:text-[90px] lg:leading-[99px]">
-            <WhipInUp text="Descubra o custo real e o lucro de " className="inline" eager />
+            <WhipInUp text="Descubra o custo real e o lucro de" className="inline" eager />{" "}
             <Highlighter
               action="underline"
               color="#FF4785"
@@ -168,7 +185,17 @@ export function Hero() {
         </div>
 
         {/* ── Imagem do Mockup (Encostando na borda inferior) ── */}
-        <div className="hero-mockup relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[691px] lg:bottom-0 lg:top-auto lg:w-[1370px] lg:h-[698px] pointer-events-none flex items-end">
+        {/* min-[1921px]: cresce um pouco em tela wide (pedido: topo do
+            notebook passando levemente da altura do título), mas em `vw`
+            (relativo à tela) dentro de um clamp, não px fixo — escala
+            sozinho em qualquer largura acima de 1920px, sem depender de um
+            número mágico calibrado só pra uma resolução. Altura em
+            aspect-ratio (não h fixo) pra manter a proporção 1370:698
+            automaticamente, então só o width precisa ser controlado. Teto
+            do clamp reduzido (1370→1420, era 1495) porque tava quase
+            encostando na nav. Continua bottom-anchored (bottom-0): crescer
+            a altura empurra o topo pra cima, não o fundo pra baixo. */}
+        <div className="hero-mockup hero-mockup-wide relative z-20 mt-8 px-4 lg:mt-0 lg:px-0 lg:absolute lg:left-[691px] min-[1921px]:!left-auto min-[1921px]:!right-[64px] lg:bottom-0 lg:top-auto lg:w-[1370px] lg:h-[698px] pointer-events-none flex items-end">
           <Image
             src="/images/mockup-hero.webp"
             alt="Planilha Ficha Técnica Pro"
@@ -176,14 +203,19 @@ export function Hero() {
             height={2808}
             priority
             quality={90}
-            sizes="(min-width: 1024px) 1370px, 100vw"
-            className="w-full h-auto object-contain object-bottom block lg:w-[1370px] lg:h-[698px]"
+            sizes="(min-width: 1024px) 1450px, 100vw"
+            className="w-full h-auto object-contain object-bottom block lg:w-[1370px] lg:h-[698px] min-[1921px]:!w-full min-[1921px]:!h-full min-[1921px]:object-right-bottom"
           />
         </div>
       </div>
 
-      {/* ── Faixa de Reforços / Stats na Base ── */}
-      <div className="font-body relative z-20 w-full max-w-[1920px] mx-auto border-t border-[#212124] grid grid-cols-1 md:grid-cols-3 text-[#F5F4F2]">
+      {/* ── Faixa de Reforços / Stats na Base ──
+          A borda superior é full-bleed (w-full, sem max-w) — precisa
+          encostar nas duas bordas da tela mesmo acima de 1920px, diferente
+          do conteúdo em si (números/texto), que continua dentro do mesmo
+          teto de largura do resto do Hero. */}
+      <div className="relative z-20 w-full border-t border-[#212124]">
+        <div className="font-body w-full max-w-[1920px] min-[1921px]:max-w-[2400px] mx-auto grid grid-cols-1 md:grid-cols-3 text-[#F5F4F2]">
         <div className="border-b border-[#212124] md:border-b-0 md:border-r border-[#212124] px-6 py-8 lg:pl-[64px] lg:py-6">
           <p className="inline-flex items-baseline text-[28px] font-bold leading-none lg:text-[32px]">
             <CountUpStat prefix="+" to={25} className="mr-[0.22em]" />
@@ -210,6 +242,7 @@ export function Hero() {
           <p className="mt-2 text-[#ababab] text-[16px]">
             <WhipInUp text="Atualizações incluídas" />
           </p>
+        </div>
         </div>
       </div>
     </section>

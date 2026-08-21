@@ -4,7 +4,7 @@ import Image, { type StaticImageData } from "next/image";
 import { createPortal } from "react-dom";
 import { useRef, useState, useEffect, useSyncExternalStore } from "react";
 import { modulos } from "@/lib/content";
-import { Section, Label } from "@/components/ui/kit";
+import { Section } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { cn } from "@/lib/utils";
 import cardapioImg from "../../../public/images/modulos/gestor_lucro_cardapio.webp";
@@ -159,8 +159,7 @@ export function Modulos() {
             {/* ── Coluna Esquerda ── */}
             <div className="flex flex-col justify-between py-1 min-h-[440px] lg:min-h-[560px]">
               <div>
-                <Label>{modulos.label}</Label>
-                <h2 className="mt-2.5 max-w-[15ch] font-display text-h2 leading-tight">
+                <h2 className="max-w-[15ch] font-display text-h2 leading-tight">
                   <WhipInUp text={modulos.title} />
                 </h2>
               </div>

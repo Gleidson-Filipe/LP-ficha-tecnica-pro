@@ -247,10 +247,21 @@ export function WhipInUp({
     // separadas nunca têm kerning entre si), e a diferença de largura entre
     // pares de letras kerned mudaria a largura da palavra entre os dois
     // estados, deslocando o texto no instante da quebra/reversão.
+    //
+    // opacity:0 só faz sentido no modo lazy (esconde o "flash" de texto
+    // puro antes do splitWord recortar as letras). No modo eager as letras
+    // já nascem quebradas e posicionadas via --wiu-p:200 dentro do
+    // .wiu-word com overflow:hidden — ou seja, já nascem visualmente
+    // escondidas pelo próprio clipping, sem precisar de opacity:0. Manter
+    // opacity:0 aqui prendia headline/subtítulo/CTA do Hero (tudo eager)
+    // invisíveis até a hidratação da página INTEIRA terminar e o useGSAP
+    // rodar — medido: sob CPU 4× + rede throttled, isso podia levar 4s+,
+    // bem depois do mockup (CSS puro) já ter animado e assentado. Root
+    // cause do bug "só a imagem aparece, o resto do Hero não carrega".
     <span
       ref={root}
       className={className}
-      style={{ fontKerning: "none", opacity: 0 }}
+      style={{ fontKerning: "none", opacity: eager ? 1 : 0 }}
     >
       {words.map((word, wi) => (
         <span key={wi}>

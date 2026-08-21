@@ -1,7 +1,7 @@
 "use client";
 
 import { problema as p, CHECKOUT } from "@/lib/content";
-import { Section, Label, AccentDash } from "@/components/ui/kit";
+import { Section } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { SpinDot } from "@/components/ui/spin-dot";
@@ -40,8 +40,7 @@ export function Problema() {
     <Section id="problema" tone="ink" className="rule-t">
       {/* ─── A. PARA QUEM É ─────────────────────────────────────── */}
       <div className="pad py-16 md:py-20">
-        <Label>{p.label}</Label>
-        <h2 className="mt-7 max-w-[20ch] font-display text-h2 text-balance">
+        <h2 className="max-w-[20ch] font-display text-h2 text-balance">
           <WhipInUp text={p.title} />
         </h2>
         <p className="mt-6 max-w-[46ch] text-lead soft">
@@ -98,8 +97,7 @@ export function Problema() {
 
       {/* ─── B. O PROBLEMA (FUNDO CLARO COM 4 COLUNAS) ─── */}
       <div className="t-paper bg-paper rule-t pad py-16 md:py-20">
-        <Label>{p.problemaLabel}</Label>
-        <h2 className="mt-7 max-w-[20ch] font-display text-h2 text-balance">
+        <h2 className="max-w-[20ch] font-display text-h2 text-balance">
           <WhipInUp text="O faturamento engana." /><br />
           <WhipInUp text="A falta de controle de custos quebra." />
         </h2>
@@ -141,12 +139,7 @@ export function Problema() {
       {/* ─── C. A FALSA MARGEM (FUNDO ESCURO COM FOCO INTERATIVO) ─── */}
       <div className="t-ink bg-ink rule-t pad py-16 md:py-24 flex flex-col justify-center">
         <div className="mx-auto max-w-[46rem] text-center">
-          <p className="flex items-center justify-center gap-3 text-label uppercase text-accent">
-            <AccentDash />
-            <WhipInUp text={r.label} />
-            <AccentDash />
-          </p>
-          <h2 className="mx-auto mt-4 font-display text-h2 text-balance">
+          <h2 className="mx-auto font-display text-h2 text-balance">
             <WhipInUp text={`${r.titlePre}"${r.titleMark}"${r.titlePost}`} />
           </h2>
         </div>

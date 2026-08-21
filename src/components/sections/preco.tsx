@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { preco as p, CHECKOUT } from "@/lib/content";
-import { Section, Label } from "@/components/ui/kit";
+import { Section } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { Reveal } from "@/components/ui/reveal";
 import { AnimatedCheck } from "@/components/ui/animated-check";
@@ -69,8 +69,7 @@ export function Preco() {
           
           {/* Cabeçalho alinhado ao padding padrão */}
           <div className="pl-[var(--pad)] pr-6 lg:pr-8 mb-8 md:mb-10">
-            <Label>{p.label}</Label>
-            <h2 className="mt-4 font-display text-[1.85rem] sm:text-[2.25rem] lg:text-[2.1rem] xl:text-[2.55rem] 2xl:text-[2.85rem] font-bold leading-[1.08] tracking-tight">
+            <h2 className="font-display text-[1.85rem] sm:text-[2.25rem] lg:text-[2.1rem] xl:text-[2.55rem] 2xl:text-[2.85rem] font-bold leading-[1.08] tracking-tight">
               <span className="block sm:whitespace-nowrap">
                 <WhipInUp text="Assuma o controle da precificação" />
               </span>

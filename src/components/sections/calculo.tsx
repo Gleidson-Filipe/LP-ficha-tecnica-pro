@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { calculo as c } from "@/lib/content";
-import { Section, AccentDash } from "@/components/ui/kit";
+import { Section } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { cn } from "@/lib/utils";
 
@@ -126,12 +126,7 @@ export function Calculo() {
     >
       {/* ── Cabeçalho Centralizado ── */}
       <div className="pad mb-12 md:mb-16 text-center flex flex-col items-center">
-        <p className="flex items-center gap-3 text-label uppercase text-accent justify-center">
-          <AccentDash />
-          <WhipInUp text={c.label} />
-          <AccentDash />
-        </p>
-        <h2 className="mt-4 max-w-[28ch] font-display text-h2 text-balance text-center">
+        <h2 className="max-w-[28ch] font-display text-h2 text-balance text-center">
           <WhipInUp text={c.title} />
         </h2>
         <p className="mt-4 max-w-[64ch] text-lead soft text-center">

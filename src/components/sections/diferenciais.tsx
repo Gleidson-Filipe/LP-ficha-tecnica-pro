@@ -4,7 +4,7 @@ import { useRef, useCallback, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { diferenciais as d } from "@/lib/content";
-import { Section, Label } from "@/components/ui/kit";
+import { Section } from "@/components/ui/kit";
 import { WhipInUp } from "@/components/ui/whip-in-up";
 import { ComparisonIcon } from "@/components/ui/comparison-icon";
 import { cn } from "@/lib/utils";
@@ -385,8 +385,7 @@ export function Diferenciais() {
     <Section ref={sectionRef} id="diferenciais" tone="ink" className="py-16 md:py-24">
       {/* ── Cabeçalho ── */}
       <div className="pad mb-12 md:mb-16">
-        <Label>{d.label}</Label>
-        <h2 className="mt-6 max-w-[26ch] font-display text-h2 text-balance">
+        <h2 className="max-w-[26ch] font-display text-h2 text-balance">
           <WhipInUp text={d.titlePre} />
           <WhipInUp text={d.titleMark} />
           <WhipInUp text={d.titlePost} />

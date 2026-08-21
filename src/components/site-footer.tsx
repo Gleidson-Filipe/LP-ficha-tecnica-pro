@@ -103,7 +103,7 @@ export function SiteFooter() {
             className="flex flex-col items-center sm:items-start w-[210px] cursor-pointer"
           >
             <Image
-              src="/images/logo-ftp.png"
+              src="/images/logo-ftp.webp"
               alt="Ficha Técnica Pro"
               width={944}
               height={100}
@@ -125,7 +125,7 @@ export function SiteFooter() {
             aria-label="Siga Gestão Financeira Digital no Instagram"
           >
             <Image
-              src="/images/logo-gfd.png"
+              src="/images/logo-gfd.webp"
               alt={rodape.empresa}
               width={3036}
               height={1718}

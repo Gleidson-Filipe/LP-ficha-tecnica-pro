@@ -1,5 +1,5 @@
 import { solucao as s } from "@/lib/content";
-import { Section, Label, Buy } from "@/components/ui/kit";
+import { Section, Buy } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp, CountUpWhip } from "@/components/ui/whip-in-up";
 import { ParallaxMockup } from "@/components/ui/parallax-mockup";
@@ -36,8 +36,7 @@ export function Solucao() {
 
         {/* ── Copy ── */}
         <div className="pad flex flex-col justify-center py-16 md:py-20 lg:py-10">
-          <Label>{s.label}</Label>
-          <h2 className="mt-5 max-w-[16ch] font-display text-h2 text-balance lg:mt-4">
+          <h2 className="max-w-[16ch] font-display text-h2 text-balance">
             <WhipInUp text={s.title} />
           </h2>
 

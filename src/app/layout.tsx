@@ -85,9 +85,19 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
-        <LenisProvider />
         <ScrollRestore />
         {children}
+        {/*
+          LenisProvider depois de {children}: os efeitos de hidratação
+          disparam na ordem dos irmãos na árvore, e o `new Lenis()` (mede a
+          altura de rolagem da página inteira, força reflow síncrono — visto
+          no trace de performance: ~136ms de reflow forçado numa função
+          `init`) tava rodando ANTES do useGSAP do Hero, atrasando a entrada
+          do CTA/headline nesse mesmo tanto sempre que a hidratação já
+          estava sob carga. ScrollRestore já lida com Lenis ainda não
+          existir (cai pra `window.scrollTo` — ver scroll-restore.tsx).
+        */}
+        <LenisProvider />
         {/*
           Restauração instantânea de scroll executada imediatamente após os elementos
           do DOM existirem na árvore, ANTES do primeiro paint do navegador.

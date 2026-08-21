@@ -223,8 +223,12 @@ export function SiteHeader() {
       className="fixed inset-x-0 top-0 z-50 bg-[#09090a]"
       style={{ borderBottom: "1px solid #212124" }}
     >
-      {/* ── Linha principal (72px de altura no desktop - nav mais fina) ── */}
-      <div className="flex h-[56px] items-stretch sm:h-[64px] lg:h-[72px]">
+      {/* ── Linha principal (72px de altura no desktop - nav mais fina) ──
+          mx-auto + mesmo teto do Hero (1920/2400px): acima de 1920px de
+          viewport, a nav (fixed inset-x-0, sempre full-bleed) ganha a
+          MESMA margem lateral do frame do Hero logo abaixo, em vez de ficar
+          esticada borda a borda enquanto o conteúdo do Hero já respira. */}
+      <div className="mx-auto flex h-[56px] w-full max-w-[1920px] items-stretch sm:h-[64px] lg:h-[72px] min-[1921px]:max-w-[2400px]">
 
         {/* ── Container Logo + Slogan (w:408px no desktop, removendo o espaço excessivo à direita) ── */}
         <Link
@@ -239,7 +243,7 @@ export function SiteHeader() {
             style={{ transform: "translateY(-160px)", opacity: 0 }}
           >
             <Image
-              src="/images/logo-ftp.png"
+              src="/images/logo-ftp.webp"
               alt="Ficha Técnica Pro"
               width={944}
               height={100}
@@ -254,7 +258,7 @@ export function SiteHeader() {
             <div
               className="site-logo absolute left-[64px] top-[12px] w-[277px] h-[29.34px]"
               style={{
-                backgroundImage: "url('/images/logo-ftp.png')",
+                backgroundImage: "url('/images/logo-ftp.webp')",
                 backgroundPosition: "left center",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "contain",
@@ -325,12 +329,16 @@ export function SiteHeader() {
           </span>
         </button>
 
-        {/* ── CTA: Largura de 304px no desktop, bg fluido animado, texto 19px bold ── */}
+        {/* ── CTA: Largura de 304px no desktop, bg fluido animado, texto 19px bold ──
+            min-[1921px]:mr-[64px]: mesmo respiro de 64px que a logo já tem à
+            esquerda (dentro do teto de 2400px do frame) — sem isso o CTA
+            encostava direto na borda do frame enquanto a logo tinha respiro,
+            dando 72,5px de um lado e 136,5px do outro. */}
         <a
           ref={ctaFx}
           href={CHECKOUT}
           onClick={handleCtaClick}
-          className="group relative flex shrink-0 items-center justify-center overflow-hidden cta-btn-fluid px-6 text-white transition-all duration-150 xl:w-[304px] xl:px-0"
+          className="group relative flex shrink-0 items-center justify-center overflow-hidden cta-btn-fluid px-6 text-white transition-all duration-150 xl:w-[304px] xl:px-0 min-[1921px]:mr-[64px]"
           style={{ borderLeft: "1px solid #212124" }}
         >
           <CtaGlow />
