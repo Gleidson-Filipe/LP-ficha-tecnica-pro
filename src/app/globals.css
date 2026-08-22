@@ -571,3 +571,20 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/*
+  Altura do frame de imagem dos módulos (modulos.tsx) em clamp fluido, não
+  em degraus fixos por breakpoint — escala continuamente com a largura da
+  tela em vez de pular de valor em valor. Como classe CSS pura (não
+  utility arbitrária do Tailwind): clamp() com vírgula dentro de colchetes
+  já falhou silenciosamente no JIT antes (ver .hero-mockup-wide).
+*/
+.modulos-img-frame {
+  height: clamp(22.5rem, 30vw + 8rem, 38.75rem);
+  /* Promove pra própria camada de composição (GPU) — mitigação documentada
+     pra bug do Chrome/Windows onde a janela some/trava com tamanho errado
+     ao mover entre monitores de resolução diferente (a camada composta
+     fica "presa" no monitor anterior e não é re-rasterizada sozinha). */
+  transform: translateZ(0);
+  will-change: transform;
+}
