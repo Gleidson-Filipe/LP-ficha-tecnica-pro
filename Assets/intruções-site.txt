@@ -4,7 +4,7 @@ Esse arquivo visa te dar uma breve instrução no design geral do site
 
 2. a hierarquia do site é de extrema importancia, palavras maiores comunicam importancia maior, palavras menores comunicam importancia menor
 
-3. o site de contar uma história, não literalmente mas no sentido de guiar o usuario a compra, se vc cria um visual que é bonito mas não serve ao proposito daquela seção, vc já errou
+3. o site precisa contar uma história, não literalmente mas no sentido de guiar o usuario a compra, se vc cria um visual que é bonito mas não serve ao proposito daquela seção, vc já errou
 
 4. pesquisa de mercado e referencias é com vc, mas como uma base, o produto é uma planilha, e o que uma planilha possui? Muitas linhas, retangulos, white spaces etc, só ai da pra fazer um site tematico
 

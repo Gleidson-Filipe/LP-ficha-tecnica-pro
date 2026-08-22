@@ -2,7 +2,7 @@ import { solucao as s } from "@/lib/content";
 import { Section, Buy } from "@/components/ui/kit";
 import { Reveal } from "@/components/ui/reveal";
 import { WhipInUp, CountUpWhip } from "@/components/ui/whip-in-up";
-import { ParallaxMockup } from "@/components/ui/parallax-mockup";
+import { SolucaoMockup } from "@/components/ui/solucao-mockup";
 import { ChecklistReveal } from "@/components/ui/checklist-reveal";
 import { AnimatedCheck } from "@/components/ui/animated-check";
 
@@ -18,7 +18,7 @@ export function Solucao() {
       <div className="grid lg:h-[calc(100dvh-4.5625rem)] lg:grid-cols-[minmax(0,63%)_minmax(0,37%)] max-w-[min(100%,120rem)] mx-auto min-[120.0625rem]:pl-[4rem] min-[120.0625rem]:pr-0">
         {/* ── Mockup + faixa de números ── */}
         <div className="relative aspect-[1200/909] w-full lg:aspect-auto lg:h-full">
-          <ParallaxMockup />
+          <SolucaoMockup />
 
           <div className="t-ink bg-ink relative grid grid-cols-2 sm:grid-cols-4 lg:absolute lg:inset-x-0 lg:bottom-0">
             {s.stats.map((st) => (
