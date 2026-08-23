@@ -1,0 +1,4349 @@
+{
+  "version": "2.17",
+  "children": [
+    {
+      "type": "rectangle",
+      "id": "OU0lL",
+      "x": 2721,
+      "y": 3666,
+      "fill": "#d1d1d1",
+      "width": 1440,
+      "height": 3635
+    },
+    {
+      "type": "rectangle",
+      "id": "t0bBu",
+      "x": 2721,
+      "y": 9437,
+      "fill": "#09090a",
+      "width": 1440,
+      "height": 697
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": [
+        0,
+        0,
+        25,
+        25
+      ],
+      "id": "QxGSx",
+      "x": 2721,
+      "y": 2733,
+      "fill": "#09090a",
+      "width": 1438,
+      "height": 966
+    },
+    {
+      "type": "rectangle",
+      "id": "BxbMR",
+      "x": 2721,
+      "y": 7301,
+      "fill": "#09090a",
+      "width": 1440,
+      "height": 1393
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": [
+        0,
+        0,
+        25,
+        25
+      ],
+      "id": "kT53n",
+      "x": 2721,
+      "y": 8694,
+      "fill": "#d1d1d1",
+      "width": 1440,
+      "height": 794
+    },
+    {
+      "type": "text",
+      "id": "PJQTn",
+      "x": 2787,
+      "y": 2821,
+      "fill": "#ff4785",
+      "content": "Cálculo Automático. Zero Complicação.",
+      "textAlign": "center",
+      "fontFamily": "Sprat",
+      "fontSize": 34,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "Q7MYL",
+      "x": 2787,
+      "y": 3829,
+      "fill": "#ff4785",
+      "content": "Quem Usa, Confirma",
+      "textAlign": "center",
+      "fontFamily": "Sprat",
+      "fontSize": 34,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "B2X6L",
+      "x": 2800,
+      "y": 7479,
+      "fill": "#ff4785",
+      "content": "O Próximo Passo",
+      "textAlign": "center",
+      "fontFamily": "Sprat",
+      "fontSize": 34,
+      "fontWeight": "500"
+    },
+    {
+      "type": "text",
+      "id": "okJha",
+      "x": 3158,
+      "y": 9715,
+      "fill": "#d1d1d1",
+      "textGrowth": "fixed-width-height",
+      "width": 583,
+      "height": 93,
+      "content": "Continuar precificando sem informações completas é o caminho mais rápido para ver seu faturamento crescer e seu caixa esvaziar. Pare de perder dinheiro na mesa.",
+      "textAlign": "center",
+      "fontFamily": "Manrope",
+      "fontSize": 20,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "rectangle",
+      "id": "LxoNm",
+      "x": 4070,
+      "y": 7736,
+      "rotation": -90,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 1277
+    },
+    {
+      "type": "rectangle",
+      "id": "rFMF4",
+      "x": 3439,
+      "y": 7923,
+      "rotation": -90,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 646
+    },
+    {
+      "type": "rectangle",
+      "id": "PpCCW",
+      "x": 3439,
+      "y": 8160,
+      "rotation": -90,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 646
+    },
+    {
+      "type": "rectangle",
+      "id": "dCjqW",
+      "x": 3439,
+      "y": 8286,
+      "rotation": -90,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 646
+    },
+    {
+      "type": "rectangle",
+      "id": "g7Nn2Q",
+      "x": 4162,
+      "y": 8887,
+      "rotation": -90,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 994
+    },
+    {
+      "type": "rectangle",
+      "id": "OrZQ3",
+      "x": 4159,
+      "y": 9991,
+      "rotation": -90,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 1438
+    },
+    {
+      "type": "rectangle",
+      "id": "ft7kk",
+      "x": 3828,
+      "y": 9006,
+      "rotation": -90,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 756
+    },
+    {
+      "type": "rectangle",
+      "id": "S4HeWj",
+      "x": 3828,
+      "y": 9079,
+      "rotation": -90,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 756
+    },
+    {
+      "type": "rectangle",
+      "id": "HQYLk",
+      "x": 3828,
+      "y": 9153,
+      "rotation": -90,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 756
+    },
+    {
+      "type": "rectangle",
+      "id": "pBMYj",
+      "x": 3828,
+      "y": 9226,
+      "rotation": -90,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 756
+    },
+    {
+      "type": "rectangle",
+      "id": "Cbz2f",
+      "x": 3828,
+      "y": 9303,
+      "rotation": -90,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 756
+    },
+    {
+      "type": "rectangle",
+      "id": "nE1ki",
+      "x": 3439,
+      "y": 8041,
+      "rotation": -90,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 646
+    },
+    {
+      "type": "rectangle",
+      "id": "wTtvb",
+      "x": 3440,
+      "y": 7820,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 816
+    },
+    {
+      "type": "rectangle",
+      "id": "qqePK",
+      "x": 2961,
+      "y": 9488,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 503
+    },
+    {
+      "type": "rectangle",
+      "id": "znnIj",
+      "x": 3201,
+      "y": 9991,
+      "flipX": true,
+      "flipY": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 503
+    },
+    {
+      "type": "rectangle",
+      "id": "SvKF1",
+      "x": 3441,
+      "y": 9989.81924882629,
+      "flipX": true,
+      "flipY": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 502
+    },
+    {
+      "type": "rectangle",
+      "id": "NebK4",
+      "x": 3680,
+      "y": 9989.81924882629,
+      "flipX": true,
+      "flipY": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 502
+    },
+    {
+      "type": "rectangle",
+      "id": "bqU6Q",
+      "x": 3920,
+      "y": 9989.81924882629,
+      "flipX": true,
+      "flipY": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 502
+    },
+    {
+      "type": "rectangle",
+      "id": "Q169f",
+      "x": 2834,
+      "y": 7820,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 524
+    },
+    {
+      "type": "rectangle",
+      "id": "gv54A",
+      "x": 4159,
+      "y": 4043,
+      "rotation": -90,
+      "flipX": true,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 1369
+    },
+    {
+      "type": "rectangle",
+      "id": "y51Qq",
+      "x": 3548,
+      "y": 3031,
+      "rotation": -90,
+      "fill": "#302f2fff",
+      "width": 1,
+      "height": 827
+    },
+    {
+      "type": "text",
+      "id": "H7cmCB",
+      "x": 2787,
+      "y": 2887,
+      "fill": "#d1d1d1",
+      "textGrowth": "fixed-width-height",
+      "width": 782,
+      "height": 152,
+      "content": "Por que a Ficha Técnica Pro não é ''só mais uma planilha''?",
+      "fontFamily": "Manrope",
+      "fontSize": 56,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "ofoz2",
+      "x": 2793,
+      "y": 7549,
+      "fill": "#d1d1d1",
+      "textGrowth": "fixed-width-height",
+      "width": 888,
+      "height": 143,
+      "content": "Assuma o controle da precificação do seu negócio agora.",
+      "fontFamily": "Manrope",
+      "fontSize": 56,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "XyT0N",
+      "x": 3188,
+      "y": 9536,
+      "fill": "#d1d1d1",
+      "textGrowth": "fixed-width-height",
+      "width": 523,
+      "height": 143,
+      "content": "O custo invisível de não ter controle.",
+      "textAlign": "center",
+      "fontFamily": "Manrope",
+      "fontSize": 56,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "pglVe",
+      "x": 3162.5,
+      "y": 8811,
+      "fill": "#09090a",
+      "textGrowth": "fixed-width-height",
+      "width": 553,
+      "height": 86,
+      "content": "Ainda tem dúvidas?",
+      "textAlign": "center",
+      "fontFamily": "Manrope",
+      "fontSize": 56,
+      "fontWeight": "700"
+    },
+    {
+      "type": "text",
+      "id": "DlUWI",
+      "x": 2787,
+      "y": 3891,
+      "fill": "#09090a",
+      "textGrowth": "fixed-width-height",
+      "width": 782,
+      "height": 146,
+      "content": "Relatos de quem decidiu ter controle de verdade.",
+      "fontFamily": "Manrope",
+      "fontSize": 56,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "rectangle",
+      "id": "YCl9L",
+      "x": 2790,
+      "y": 4044,
+      "rotation": 90,
+      "fill": "#ff4785",
+      "width": 2,
+      "height": 526
+    },
+    {
+      "type": "rectangle",
+      "id": "E9KzBx",
+      "x": 2940,
+      "y": 3033,
+      "rotation": 90,
+      "fill": "#ff4785",
+      "width": 2,
+      "height": 608
+    },
+    {
+      "type": "rectangle",
+      "id": "QKtV6",
+      "x": 3454,
+      "y": 8887,
+      "rotation": 90,
+      "flipX": true,
+      "fill": "#ff4785",
+      "width": 2,
+      "height": 249
+    },
+    {
+      "type": "text",
+      "id": "g1N7yg",
+      "x": 2853,
+      "y": 7820,
+      "name": "Title",
+      "fill": "$color-text-primary",
+      "content": "Pare de ter medo de reajustar",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "P4pA2u",
+      "x": 2853,
+      "y": 7944,
+      "name": "Title",
+      "fill": "$color-text-primary",
+      "content": "Identifique os vilões do cardápio",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "TTYfT",
+      "x": 2853,
+      "y": 8067,
+      "name": "Title",
+      "fill": "$color-text-primary",
+      "content": "Reduza o Desperdício",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "ZJRyb",
+      "x": 2853,
+      "y": 8187,
+      "name": "Title",
+      "fill": "$color-text-primary",
+      "content": "Ganhe tempo para ser dono",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "zCmp0",
+      "x": 3077,
+      "y": 8956,
+      "name": "Title",
+      "fill": "#09090aff",
+      "content": "Serve para qualquer restaurante?",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "nNzfk",
+      "x": 3077,
+      "y": 9033,
+      "name": "Title",
+      "fill": "#09090aff",
+      "content": "Preciso entender de Excel ou planilhas?",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "a1OZr",
+      "x": 3077,
+      "y": 9102,
+      "name": "Title",
+      "fill": "#09090aff",
+      "content": "Ela calcula os custos operacionais?",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "m1Yk3",
+      "x": 3077,
+      "y": 9177,
+      "name": "Title",
+      "fill": "#09090aff",
+      "content": "Como recebo o acesso?",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "iMHqo",
+      "x": 3077,
+      "y": 9252,
+      "name": "Title",
+      "fill": "#09090aff",
+      "content": "Posso atualizar os preços dos insumos facilmente?",
+      "fontFamily": "Archivo",
+      "fontSize": 24,
+      "fontWeight": "600"
+    },
+    {
+      "type": "text",
+      "id": "k1LRl",
+      "x": 2853,
+      "y": 7854,
+      "name": "Desc",
+      "fill": "$color-text-secondary",
+      "textGrowth": "fixed-width",
+      "width": "fill_container(550)",
+      "content": "Tenha segurança total para formar preços (Markup) e saiba exatamente quanto cobrar sem afugentar clientes.",
+      "lineHeight": 1.5,
+      "fontFamily": "Manrope",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "X2oF3U",
+      "x": 2853,
+      "y": 7978,
+      "name": "Desc",
+      "fill": "$color-text-secondary",
+      "textGrowth": "fixed-width",
+      "width": "fill_container(550)",
+      "content": "Descubra em segundos quais pratos estão sugando sua margem de contribuição e ajuste o cardápio.",
+      "lineHeight": 1.5,
+      "fontFamily": "Manrope",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "TrrZp",
+      "x": 2853,
+      "y": 8101,
+      "name": "Desc",
+      "fill": "$color-text-secondary",
+      "textGrowth": "fixed-width",
+      "width": "fill_container(550)",
+      "content": "Controle rigorosamente o fator de correção e pare de jogar insumos caros no lixo.",
+      "lineHeight": 1.5,
+      "fontFamily": "Manrope",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "pnI3u",
+      "x": 2853,
+      "y": 8221,
+      "name": "Desc",
+      "fill": "$color-text-secondary",
+      "textGrowth": "fixed-width",
+      "width": "fill_container(550)",
+      "content": "Automações prontas. Você só insere os dados, a Ficha Técnica Pro calcula CMV, preços e lucros sozinha.",
+      "lineHeight": 1.5,
+      "fontFamily": "Manrope",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "NqRXP",
+      "x": 3690,
+      "y": 10048,
+      "name": "Desc",
+      "fill": "$color-text-secondary",
+      "textGrowth": "fixed-width",
+      "width": "fill_container(391)",
+      "content": "© 2026 In-app Digital Ltda. Todos os direitos reservados.",
+      "lineHeight": 1.5,
+      "fontFamily": "Manrope",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "frame",
+      "id": "a1jKGq",
+      "x": 2752,
+      "y": 1739,
+      "name": "Diferencial Final2",
+      "clip": true,
+      "width": 1200,
+      "height": 600,
+      "fill": "#D1D1D1",
+      "cornerRadius": "$radius-md",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "O1AbCq",
+          "x": 800,
+          "y": -60,
+          "name": "BG04",
+          "fill": "#00000014",
+          "content": "04",
+          "fontFamily": "Archivo",
+          "fontSize": 260,
+          "fontWeight": "800",
+          "letterSpacing": -15
+        },
+        {
+          "type": "text",
+          "id": "xJYZ1",
+          "x": 64,
+          "y": 64,
+          "name": "Title",
+          "fill": "$color-text-on-light",
+          "textGrowth": "fixed-width",
+          "width": 600,
+          "content": "O que sua planilha nunca calculou",
+          "lineHeight": 1.1,
+          "fontFamily": "Manrope",
+          "fontSize": 32,
+          "fontWeight": "700",
+          "letterSpacing": -0.4
+        },
+        {
+          "type": "frame",
+          "id": "X6k3sy",
+          "x": 64,
+          "y": 200,
+          "name": "Block",
+          "clip": true,
+          "width": 1072,
+          "height": 340,
+          "fill": "$color-bg",
+          "cornerRadius": "$radius-md",
+          "children": [
+            {
+              "type": "frame",
+              "id": "L3KjQ",
+              "name": "Col",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#0d0b0cff",
+              "layout": "vertical",
+              "gap": "$space-md",
+              "padding": "$space-lg",
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "d2lHz",
+                  "name": "Question",
+                  "fill": "$color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Isola custos de gás e energia por prato?",
+                  "fontFamily": "Manrope",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "PTqdq",
+                  "name": "Bottom Row",
+                  "layout": "vertical",
+                  "gap": "$space-sm",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "sM3Ly",
+                      "name": "Nao Row",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "GWE5d",
+                          "name": "X",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "x-bold",
+                          "library": "phosphor",
+                          "fill": "#ff0008ff"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qvkf5",
+                          "name": "Nao",
+                          "fill": "$color-text-tertiary",
+                          "content": "Planilha comum",
+                          "fontFamily": "Manrope",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "LwUzt",
+                      "name": "Sim Row",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "Q2Q5YN",
+                          "name": "Check",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "check-bold",
+                          "library": "phosphor",
+                          "fill": "#04ff00ff"
+                        },
+                        {
+                          "type": "text",
+                          "id": "rAS50",
+                          "name": "Sim",
+                          "fill": "$color-accent",
+                          "content": "Ficha Técnica Pro",
+                          "fontFamily": "Manrope",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "w0vuku",
+              "name": "Col",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#09090a",
+              "stroke": "$color-border",
+              "strokeWidth": {
+                "left": 1
+              },
+              "layout": "vertical",
+              "gap": "$space-md",
+              "padding": "$space-lg",
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CwL4x",
+                  "name": "Question",
+                  "fill": "$color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Calcula Mão de Obra baseada no tempo de preparo?",
+                  "fontFamily": "Manrope",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "vAJJN",
+                  "name": "Bottom Row",
+                  "layout": "vertical",
+                  "gap": "$space-sm",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "WcwcH",
+                      "name": "Nao Row",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "zXZrO",
+                          "name": "X",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "x",
+                          "library": "lucide",
+                          "fill": "#E5484D"
+                        },
+                        {
+                          "type": "text",
+                          "id": "guudq",
+                          "name": "Nao",
+                          "fill": "$color-text-tertiary",
+                          "content": "Planilha comum",
+                          "fontFamily": "Manrope",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "p2usk",
+                      "name": "Sim Row",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "RLLMy",
+                          "name": "Check",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "check",
+                          "library": "lucide",
+                          "fill": "$color-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "v7Iv5",
+                          "name": "Sim",
+                          "fill": "$color-accent",
+                          "content": "Ficha Técnica Pro",
+                          "fontFamily": "Manrope",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "QM6tc",
+              "name": "Col",
+              "width": "fill_container",
+              "height": "fill_container",
+              "stroke": "$color-border",
+              "strokeWidth": {
+                "left": 1
+              },
+              "layout": "vertical",
+              "gap": "$space-md",
+              "padding": "$space-lg",
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "v5LdR",
+                  "name": "Question",
+                  "fill": "$color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Sugere preço de venda baseado no Markup e CMV?",
+                  "fontFamily": "Manrope",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "lnCyv",
+                  "name": "Bottom Row",
+                  "layout": "vertical",
+                  "gap": "$space-sm",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "D8ZQJC",
+                      "name": "Nao Row",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "Xyj7y",
+                          "name": "X",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "x",
+                          "library": "lucide",
+                          "fill": "#E5484D"
+                        },
+                        {
+                          "type": "text",
+                          "id": "DBZ20",
+                          "name": "Nao",
+                          "fill": "$color-text-tertiary",
+                          "content": "Planilha comum",
+                          "fontFamily": "Manrope",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "RFKML",
+                      "name": "Sim Row",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "zWSQ8",
+                          "name": "Check",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "check",
+                          "library": "lucide",
+                          "fill": "$color-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Hq8XU",
+                          "name": "Sim",
+                          "fill": "$color-accent",
+                          "content": "Ficha Técnica Pro",
+                          "fontFamily": "Manrope",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wwZ6T",
+              "name": "Col",
+              "width": "fill_container",
+              "height": "fill_container",
+              "stroke": "$color-border",
+              "strokeWidth": {
+                "left": 1
+              },
+              "layout": "vertical",
+              "gap": "$space-md",
+              "padding": "$space-lg",
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vTPuA",
+                  "name": "Question",
+                  "fill": "$color-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "É feita exclusivamente para Gastronomia?",
+                  "fontFamily": "Manrope",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "Q31Ko",
+                  "name": "Bottom Row",
+                  "layout": "vertical",
+                  "gap": "$space-sm",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "jLmG1",
+                      "name": "Nao Row",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "HNcJh",
+                          "name": "X",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "x",
+                          "library": "lucide",
+                          "fill": "#E5484D"
+                        },
+                        {
+                          "type": "text",
+                          "id": "MUM6r",
+                          "name": "Nao",
+                          "fill": "$color-text-tertiary",
+                          "content": "Planilha comum",
+                          "fontFamily": "Manrope",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "e7BjN",
+                      "name": "Sim Row",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "hwc1J",
+                          "name": "Check",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "check",
+                          "library": "lucide",
+                          "fill": "$color-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "jcL1j",
+                          "name": "Sim",
+                          "fill": "$color-accent",
+                          "content": "Ficha Técnica Pro",
+                          "fontFamily": "Manrope",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "s4Fnjv",
+      "x": 2793,
+      "y": 3110,
+      "fill": "#d1d1d1",
+      "width": 1293,
+      "height": 426
+    },
+    {
+      "type": "frame",
+      "id": "y0cpo",
+      "x": 2793,
+      "y": 3122,
+      "name": "Col",
+      "width": "fill_container(280)",
+      "height": "fill_container(381)",
+      "layout": "vertical",
+      "gap": "$space-md",
+      "padding": "$space-lg",
+      "justifyContent": "end"
+    },
+    {
+      "type": "frame",
+      "id": "XqxjV",
+      "x": 3117,
+      "y": 3122,
+      "name": "Col",
+      "width": "fill_container(235)",
+      "height": "fill_container(381)",
+      "layout": "vertical",
+      "gap": "$space-md",
+      "padding": "$space-lg",
+      "justifyContent": "end"
+    },
+    {
+      "type": "frame",
+      "id": "FWtba",
+      "x": 3381,
+      "y": 3122,
+      "name": "Col",
+      "width": "fill_container(276)",
+      "height": "fill_container(381)",
+      "layout": "vertical",
+      "gap": "$space-md",
+      "padding": "$space-lg",
+      "justifyContent": "end"
+    },
+    {
+      "type": "frame",
+      "id": "ZErCe",
+      "x": 3697,
+      "y": 3122,
+      "name": "Col",
+      "width": "fill_container(334)",
+      "height": "fill_container(388)",
+      "layout": "vertical",
+      "gap": "$space-md",
+      "padding": "$space-lg",
+      "justifyContent": "end",
+      "children": [
+        {
+          "type": "text",
+          "id": "wbpyf",
+          "name": "Num",
+          "fill": "$color-accent",
+          "content": "04",
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 22,
+          "fontWeight": "700"
+        },
+        {
+          "type": "icon",
+          "id": "AJdds",
+          "name": "Icon",
+          "width": 28,
+          "height": 28,
+          "icon": "package",
+          "library": "lucide",
+          "fill": "$color-accent"
+        },
+        {
+          "type": "text",
+          "id": "mvjVh",
+          "name": "Title",
+          "fill": "#09090aff",
+          "textGrowth": "fixed-width",
+          "width": 266,
+          "content": "Embalagens, Impostos e Delivery",
+          "fontFamily": "Manrope",
+          "fontSize": 24,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "H51ow",
+          "name": "Desc",
+          "fill": "#09090aff",
+          "textGrowth": "fixed-width",
+          "width": 282,
+          "content": "Precifique corretamente para o salão e para o iFood. Calcule taxas, impostos e custos extras automaticamente.",
+          "fontFamily": "Manrope",
+          "fontSize": 15,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "M5zoJM",
+      "x": 2841,
+      "y": 3205,
+      "name": "Num",
+      "fill": "$color-accent",
+      "content": "01",
+      "fontFamily": "IBM Plex Mono",
+      "fontSize": 22,
+      "fontWeight": "700"
+    },
+    {
+      "type": "icon",
+      "id": "mpv5Q",
+      "x": 2841,
+      "y": 3258,
+      "name": "Icon",
+      "width": 28,
+      "height": 28,
+      "icon": "calculator",
+      "library": "phosphor",
+      "fill": "$color-accent"
+    },
+    {
+      "type": "text",
+      "id": "F2vNT7",
+      "x": 2841,
+      "y": 3310,
+      "name": "Title",
+      "fill": "#09090aff",
+      "content": "Ingredientes e fator \nde correção",
+      "fontFamily": "Manrope",
+      "fontSize": 24,
+      "fontWeight": "700"
+    },
+    {
+      "type": "text",
+      "id": "S4BFD",
+      "x": 2841,
+      "y": 3400,
+      "name": "Desc",
+      "fill": "#09090aff",
+      "textGrowth": "fixed-width",
+      "width": 229,
+      "content": "Calcule o custo exato considerando as perdas normais do preparo (cascas, ossos, cozimento).",
+      "fontFamily": "Manrope",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "Ns2sV",
+      "x": 3165,
+      "y": 3205,
+      "name": "Num",
+      "fill": "$color-accent",
+      "content": "02",
+      "fontFamily": "IBM Plex Mono",
+      "fontSize": 22,
+      "fontWeight": "700"
+    },
+    {
+      "type": "icon",
+      "id": "G1LoEL",
+      "x": 3165,
+      "y": 3258,
+      "name": "Icon",
+      "width": 28,
+      "height": 28,
+      "icon": "zap",
+      "library": "lucide",
+      "fill": "$color-accent"
+    },
+    {
+      "type": "text",
+      "id": "ytFsM",
+      "x": 3165,
+      "y": 3310,
+      "name": "Title",
+      "fill": "#09090aff",
+      "content": "Energia Elétrica \ne Gás Isolados",
+      "fontFamily": "Manrope",
+      "fontSize": 24,
+      "fontWeight": "700"
+    },
+    {
+      "type": "text",
+      "id": "OQABE",
+      "x": 3165,
+      "y": 3400,
+      "name": "Desc",
+      "fill": "#09090aff",
+      "textGrowth": "fixed-width",
+      "width": 182,
+      "content": "Descubra o custo exato de cocção ou refrigeração de cada item, sem rateios irreais.",
+      "fontFamily": "Manrope",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "text",
+      "id": "fWZau",
+      "x": 3429,
+      "y": 3205,
+      "name": "Num",
+      "fill": "$color-accent",
+      "content": "03",
+      "fontFamily": "IBM Plex Mono",
+      "fontSize": 22,
+      "fontWeight": "700"
+    },
+    {
+      "type": "icon",
+      "id": "b7yn6",
+      "x": 3429,
+      "y": 3258,
+      "name": "Icon",
+      "width": 28,
+      "height": 28,
+      "icon": "clock-3",
+      "library": "lucide",
+      "fill": "$color-accent"
+    },
+    {
+      "type": "text",
+      "id": "ZeIoF",
+      "x": 3429,
+      "y": 3310,
+      "name": "Title",
+      "fill": "#09090aff",
+      "content": "Mão de Obra e \nTempo de Produção",
+      "fontFamily": "Manrope",
+      "fontSize": 24,
+      "fontWeight": "700"
+    },
+    {
+      "type": "text",
+      "id": "Wv4LX",
+      "x": 3429,
+      "y": 3400,
+      "name": "Desc",
+      "fill": "#09090aff",
+      "textGrowth": "fixed-width",
+      "width": 228,
+      "content": "Saiba quanto custa a hora do seu funcionário dedicada especificamente àquela receita.",
+      "fontFamily": "Manrope",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "x1B2X",
+      "x": 2787,
+      "y": 4629,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%201.jpg",
+        "mode": "fill"
+      },
+      "width": 698,
+      "height": 246
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "Sqi57",
+      "x": 3568,
+      "y": 4629,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%202.jpg",
+        "mode": "fill"
+      },
+      "width": 502,
+      "height": 363
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "SU91k",
+      "x": 3419,
+      "y": 4157,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%203.jpg",
+        "mode": "fill"
+      },
+      "width": 651,
+      "height": 426
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "G8g1mV",
+      "x": 2893,
+      "y": 5752,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%204.jpg",
+        "mode": "fill"
+      },
+      "width": 1080,
+      "height": 766
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "Eas94",
+      "x": 2793,
+      "y": 6613,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%205.jpg",
+        "mode": "fill"
+      },
+      "width": 632,
+      "height": 520
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "O0y4fX",
+      "x": 2787,
+      "y": 4202,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%206.jpg",
+        "mode": "fill"
+      },
+      "width": 523,
+      "height": 376
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "gXtQz",
+      "x": 2787,
+      "y": 4942,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%207.jpg",
+        "mode": "fill"
+      },
+      "width": 602,
+      "height": 649
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "tIeGy",
+      "x": 3483,
+      "y": 5070,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%208.jpg",
+        "mode": "fill"
+      },
+      "width": 587,
+      "height": 620
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 12,
+      "id": "OtLsg",
+      "x": 3458.854586129754,
+      "y": 6613,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Depoimento%209.jpg",
+        "mode": "fill"
+      },
+      "width": 611,
+      "height": 553
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 24,
+      "id": "ATkHr",
+      "x": 3522,
+      "y": 7820,
+      "name": "White Payment Card BG",
+      "fill": "#FFFFFF",
+      "width": 520,
+      "height": 680,
+      "stroke": "#E5E7EB",
+      "strokeWidth": 1
+    },
+    {
+      "type": "text",
+      "id": "xgXR0",
+      "x": 3562,
+      "y": 7875,
+      "name": "Price Currency",
+      "fill": "#0A0A0B",
+      "content": "R$",
+      "fontFamily": "IBM Plex Mono",
+      "fontSize": 24,
+      "fontWeight": "bold"
+    },
+    {
+      "type": "text",
+      "id": "XTWvN",
+      "x": 3602,
+      "y": 7860,
+      "name": "Price Value",
+      "fill": "#0A0A0B",
+      "content": "197",
+      "fontFamily": "IBM Plex Mono",
+      "fontSize": 54,
+      "fontWeight": "bold"
+    },
+    {
+      "type": "text",
+      "id": "yEcoI",
+      "x": 3727,
+      "y": 7890,
+      "name": "Price Sub",
+      "fill": "#FF4784",
+      "content": "/ pagamento único",
+      "fontFamily": "Manrope",
+      "fontSize": 14,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "icon",
+      "id": "kjTG4",
+      "x": 3562,
+      "y": 7947,
+      "name": "Check 1",
+      "width": 18,
+      "height": 18,
+      "icon": "check-circle",
+      "library": "phosphor",
+      "fill": "#FF4784"
+    },
+    {
+      "type": "text",
+      "id": "R98Z0n",
+      "x": 3590,
+      "y": 7945,
+      "name": "Inc Text 1",
+      "fill": "#0A0A0B",
+      "textGrowth": "fixed-width",
+      "width": 420,
+      "content": "Acesso vitalício à Ficha Técnica Pro (Google Sheets)",
+      "fontFamily": "Manrope",
+      "fontSize": 13,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "icon",
+      "id": "p8uXSS",
+      "x": 3562,
+      "y": 7987,
+      "name": "Check 2",
+      "width": 18,
+      "height": 18,
+      "icon": "check-circle",
+      "library": "phosphor",
+      "fill": "#FF4784"
+    },
+    {
+      "type": "text",
+      "id": "ILyVb",
+      "x": 3590,
+      "y": 7985,
+      "name": "Inc Text 2",
+      "fill": "#0A0A0B",
+      "textGrowth": "fixed-width",
+      "width": 420,
+      "content": "Atualização automática de CMV e Margem de Contribuição",
+      "fontFamily": "Manrope",
+      "fontSize": 13,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "icon",
+      "id": "XvHZc",
+      "x": 3562,
+      "y": 8027,
+      "name": "Check 3",
+      "width": 18,
+      "height": 18,
+      "icon": "check-circle",
+      "library": "phosphor",
+      "fill": "#FF4784"
+    },
+    {
+      "type": "text",
+      "id": "tDcD4",
+      "x": 3590,
+      "y": 8025,
+      "name": "Inc Text 3",
+      "fill": "#0A0A0B",
+      "textGrowth": "fixed-width",
+      "width": 420,
+      "content": "Cálculo automatizado de Gás, Energia e Mão de Obra",
+      "fontFamily": "Manrope",
+      "fontSize": 13,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "icon",
+      "id": "g73QID",
+      "x": 3562,
+      "y": 8067,
+      "name": "Check 4",
+      "width": 18,
+      "height": 18,
+      "icon": "check-circle",
+      "library": "phosphor",
+      "fill": "#FF4784"
+    },
+    {
+      "type": "text",
+      "id": "iLrrj",
+      "x": 3590,
+      "y": 8065,
+      "name": "Inc Text 4",
+      "fill": "#0A0A0B",
+      "textGrowth": "fixed-width",
+      "width": 420,
+      "content": "Suporte especializado e aulas práticas",
+      "fontFamily": "Manrope",
+      "fontSize": 13,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "frame",
+      "id": "ScCQ8",
+      "x": 3562,
+      "y": 8135,
+      "name": "Offer CTA Button",
+      "width": 440,
+      "height": 56,
+      "fill": "#FF4784",
+      "cornerRadius": 8,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "VMyhT",
+          "name": "CTA Text",
+          "fill": "#FFFFFF",
+          "content": "Quero precificar certo",
+          "fontFamily": "Manrope",
+          "fontSize": 16,
+          "fontWeight": "bold"
+        }
+      ]
+    },
+    {
+      "type": "rectangle",
+      "cornerRadius": 14,
+      "id": "DFoj0",
+      "x": 3562,
+      "y": 8220,
+      "name": "Guarantee Box",
+      "fill": "#F8F8F8",
+      "width": 440,
+      "height": 240,
+      "stroke": "#E5E7EB",
+      "strokeWidth": 1
+    },
+    {
+      "type": "icon",
+      "id": "rAQNA",
+      "x": 3587,
+      "y": 8245,
+      "name": "Guarantee Shield",
+      "width": 28,
+      "height": 28,
+      "icon": "shield-check",
+      "library": "phosphor",
+      "fill": "#FF4784"
+    },
+    {
+      "type": "text",
+      "id": "Bjb3A",
+      "x": 3627,
+      "y": 8245,
+      "name": "Guarantee Title",
+      "fill": "#0A0A0B",
+      "content": "Risco Zero. Garantia de 7 Dias.",
+      "fontFamily": "Manrope",
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    {
+      "type": "text",
+      "id": "FCv3P",
+      "x": 3587,
+      "y": 8290,
+      "name": "Guarantee Desc",
+      "fill": "#4B5563",
+      "textGrowth": "fixed-width",
+      "width": 390,
+      "content": "Se você achar que a ferramenta não vai ajudar seu restaurante a economizar dinheiro, devolvemos 100% do seu investimento. Sem burocracia.",
+      "fontFamily": "Manrope",
+      "fontSize": 13,
+      "fontWeight": "normal"
+    },
+    {
+      "type": "icon",
+      "id": "H2PI8q",
+      "x": 2804,
+      "y": 7854,
+      "name": "Row Icon 1",
+      "width": 22,
+      "height": 22,
+      "icon": "shield-check",
+      "library": "phosphor",
+      "fill": "#ff4784"
+    },
+    {
+      "type": "icon",
+      "id": "pZlOU",
+      "x": 2804,
+      "y": 7970,
+      "name": "Row Icon 2",
+      "width": 22,
+      "height": 22,
+      "icon": "magnifying-glass",
+      "library": "phosphor",
+      "fill": "#ff4784"
+    },
+    {
+      "type": "icon",
+      "id": "RmAM9",
+      "x": 2804,
+      "y": 8093,
+      "name": "Row Icon 3",
+      "width": 22,
+      "height": 22,
+      "icon": "trend-down",
+      "library": "phosphor",
+      "fill": "#ff4784"
+    },
+    {
+      "type": "icon",
+      "id": "rJeSa",
+      "x": 2804,
+      "y": 8213,
+      "name": "Row Icon 4",
+      "width": 22,
+      "height": 22,
+      "icon": "clock",
+      "library": "phosphor",
+      "fill": "#ff4784"
+    },
+    {
+      "type": "ellipse",
+      "id": "Pp8fm",
+      "x": 3789,
+      "y": 8952,
+      "name": "Circle 1",
+      "fill": "#0A0A0B",
+      "width": 34,
+      "height": 34
+    },
+    {
+      "type": "ellipse",
+      "id": "n2kLBx",
+      "x": 3789,
+      "y": 9025,
+      "name": "Circle 1",
+      "fill": "#0A0A0B",
+      "width": 34,
+      "height": 34
+    },
+    {
+      "type": "ellipse",
+      "id": "Z0Em3Q",
+      "x": 3789,
+      "y": 9098,
+      "name": "Circle 1",
+      "fill": "#0A0A0B",
+      "width": 34,
+      "height": 34
+    },
+    {
+      "type": "ellipse",
+      "id": "oREVn",
+      "x": 3789,
+      "y": 9169,
+      "name": "Circle 1",
+      "fill": "#0A0A0B",
+      "width": 34,
+      "height": 34
+    },
+    {
+      "type": "ellipse",
+      "id": "lKAW0",
+      "x": 3789,
+      "y": 9248,
+      "name": "Circle 1",
+      "fill": "#0A0A0B",
+      "width": 34,
+      "height": 34
+    },
+    {
+      "type": "icon",
+      "id": "Brsz6",
+      "x": 3797,
+      "y": 8960,
+      "name": "Icon 1",
+      "width": 18,
+      "height": 18,
+      "icon": "x",
+      "library": "phosphor",
+      "fill": "#FFFFFF"
+    },
+    {
+      "type": "icon",
+      "id": "tV6RO",
+      "x": 3797,
+      "y": 9033,
+      "name": "Icon 1",
+      "width": 18,
+      "height": 18,
+      "icon": "x",
+      "library": "phosphor",
+      "fill": "#FFFFFF"
+    },
+    {
+      "type": "icon",
+      "id": "iSAGy",
+      "x": 3797,
+      "y": 9106,
+      "name": "Icon 1",
+      "width": 18,
+      "height": 18,
+      "icon": "x",
+      "library": "phosphor",
+      "fill": "#FFFFFF"
+    },
+    {
+      "type": "icon",
+      "id": "dtdAO",
+      "x": 3797,
+      "y": 9177,
+      "name": "Icon 1",
+      "width": 18,
+      "height": 18,
+      "icon": "x",
+      "library": "phosphor",
+      "fill": "#FFFFFF"
+    },
+    {
+      "type": "icon",
+      "id": "lxlF2",
+      "x": 3797,
+      "y": 9256,
+      "name": "Icon 1",
+      "width": 18,
+      "height": 18,
+      "icon": "x",
+      "library": "phosphor",
+      "fill": "#FFFFFF"
+    },
+    {
+      "type": "frame",
+      "id": "XD429",
+      "x": 3225,
+      "y": 9832,
+      "name": "CTA Button",
+      "width": 450,
+      "height": 82,
+      "fill": "#FF4784",
+      "cornerRadius": 10,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "jJPOX",
+          "name": "Btn Text",
+          "fill": "#FFFFFF",
+          "textGrowth": "fixed-width-height",
+          "width": 213,
+          "height": 39,
+          "content": "Quero saber meu custo real e PRECIFICAR CERTO",
+          "textAlign": "center",
+          "fontFamily": "Manrope",
+          "fontSize": 15,
+          "fontWeight": "bold"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Vtfny",
+      "x": 2775,
+      "y": 10019,
+      "name": "FTPro Logo Frame",
+      "width": 288,
+      "height": 60,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/logo%20ficha%20tecnica%20pro.png",
+        "mode": "fit"
+      }
+    },
+    {
+      "type": "text",
+      "id": "scAK8",
+      "x": 2774,
+      "y": 10067.903999999999,
+      "fill": "#dbdbdbff",
+      "content": "Engenharia do lucro para gastronomia",
+      "fontFamily": "Manrope",
+      "fontSize": 16,
+      "fontWeight": "600"
+    },
+    {
+      "type": "frame",
+      "id": "uUqeI",
+      "x": 3163,
+      "y": 10029,
+      "name": "GF Link",
+      "width": 370,
+      "height": 61,
+      "cornerRadius": 37,
+      "stroke": "$color-border",
+      "strokeWidth": 1,
+      "gap": 8,
+      "padding": [
+        8,
+        12
+      ],
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "qANFv",
+          "name": "Logo GF",
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "logo-gestor-financeiro.png",
+            "mode": "fit"
+          },
+          "width": 122,
+          "height": 41
+        },
+        {
+          "type": "icon",
+          "id": "jBPDH",
+          "name": "IG Icon",
+          "width": 20,
+          "height": 20,
+          "icon": "instagram",
+          "library": "lucide",
+          "fill": "$color-accent"
+        },
+        {
+          "type": "text",
+          "id": "vd6ms",
+          "name": "IG Text",
+          "fill": "$color-text-secondary",
+          "content": "Siga no Instagram",
+          "fontFamily": "Manrope",
+          "fontSize": 15,
+          "fontWeight": "600"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "n2lfE",
+      "x": 2793,
+      "y": 68,
+      "name": "Frame 3",
+      "clip": true,
+      "width": 1920,
+      "height": 859,
+      "fill": "#09090a",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "d4rSv8",
+          "x": 0,
+          "y": 0,
+          "name": "Frame 4",
+          "clip": true,
+          "width": 1920,
+          "height": 100,
+          "fill": "#09090a",
+          "stroke": "#212124",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "strokeAlignment": "inner",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "mmrWU",
+              "x": 64,
+              "y": 54,
+              "fill": "#dbdbdbff",
+              "content": "Engenharia do lucro para gastronomia",
+              "fontFamily": "Manrope",
+              "fontSize": 16.8,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "LMI4f",
+              "x": 65,
+              "y": 22,
+              "name": "Mark",
+              "width": 302,
+              "height": 32,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "logo-ficha-tecnica-pro.png",
+                "mode": "fit"
+              },
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "bAgdD",
+              "x": 483,
+              "y": 42,
+              "name": "Como funciona",
+              "fill": "$color-text-secondary",
+              "content": "Como funciona",
+              "fontFamily": "Manrope",
+              "fontSize": 15,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "TrNpJ",
+              "x": 771,
+              "y": 42,
+              "name": "Recursos",
+              "fill": "$color-text-secondary",
+              "content": "Recursos",
+              "fontFamily": "Manrope",
+              "fontSize": 15,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "oAQL6",
+              "x": 1070,
+              "y": 42,
+              "name": "Preço",
+              "fill": "$color-text-secondary",
+              "content": "Preço",
+              "fontFamily": "Manrope",
+              "fontSize": 15,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "l3LjRW",
+              "x": 1378,
+              "y": 42,
+              "name": "FAQ",
+              "fill": "$color-text-secondary",
+              "content": "FAQ",
+              "fontFamily": "Manrope",
+              "fontSize": 15,
+              "fontWeight": "500"
+            },
+            {
+              "type": "rectangle",
+              "id": "VFBR5",
+              "x": 463,
+              "y": 2,
+              "width": 289,
+              "height": 100,
+              "stroke": "#212124",
+              "strokeWidth": {
+                "right": 1,
+                "left": 1
+              },
+              "strokeAlignment": "inner"
+            },
+            {
+              "type": "rectangle",
+              "id": "r42X2g",
+              "x": 751,
+              "y": 0,
+              "width": 289,
+              "height": 100,
+              "stroke": "#212124",
+              "strokeWidth": {
+                "right": 1,
+                "left": 1
+              },
+              "strokeAlignment": "inner"
+            },
+            {
+              "type": "rectangle",
+              "id": "iuGCX",
+              "x": 1039,
+              "y": 0,
+              "width": 289,
+              "height": 100,
+              "stroke": "#212124",
+              "strokeWidth": {
+                "right": 1,
+                "left": 1
+              },
+              "strokeAlignment": "inner"
+            },
+            {
+              "type": "rectangle",
+              "id": "Yw1gM",
+              "x": 1327,
+              "y": 0,
+              "width": 289,
+              "height": 100,
+              "stroke": "#212124",
+              "strokeWidth": {
+                "right": 1,
+                "left": 1
+              },
+              "strokeAlignment": "inner"
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "w24Iv6",
+          "x": 464,
+          "y": 100,
+          "name": "Underline",
+          "flipY": true,
+          "fill": "#ff4785",
+          "width": 287,
+          "height": 3
+        },
+        {
+          "type": "frame",
+          "id": "JDoUv",
+          "x": 1616,
+          "y": 0,
+          "name": "CTA Primary",
+          "width": 304,
+          "height": 100,
+          "fill": "$color-accent",
+          "gap": 3,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "C0b5Od",
+              "name": "Label",
+              "fill": "#FFFFFF",
+              "content": "Quero minha planilha",
+              "fontFamily": "Manrope",
+              "fontSize": 20,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "qh12p",
+          "x": 949,
+          "y": 99,
+          "fill": "#0d0d0f",
+          "width": 971,
+          "height": 854,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "iNeUf",
+          "x": 63,
+          "y": 100,
+          "name": "Divider V",
+          "fill": "#212124",
+          "width": 1,
+          "height": 759
+        },
+        {
+          "type": "rectangle",
+          "id": "zolHJ",
+          "x": 408,
+          "y": 99,
+          "name": "Divider V",
+          "fill": "#212124",
+          "width": 1,
+          "height": 760
+        },
+        {
+          "type": "rectangle",
+          "id": "Oi3GZ",
+          "x": 818,
+          "y": 100,
+          "name": "Divider V",
+          "fill": "#212124",
+          "width": 1,
+          "height": 792
+        },
+        {
+          "type": "text",
+          "id": "cYS35",
+          "x": 64,
+          "y": 215,
+          "name": "Headline",
+          "fill": "$color-text-primary",
+          "textGrowth": "fixed-width",
+          "width": 755,
+          "content": "Descubra o custo real e o lucro de cada ítem do seu cardápio.",
+          "lineHeight": 1.1,
+          "fontFamily": "$font-display",
+          "fontSize": 90,
+          "fontWeight": "700",
+          "letterSpacing": -0.6
+        },
+        {
+          "type": "text",
+          "id": "q21DZ",
+          "x": 64,
+          "y": 626,
+          "name": "Sub",
+          "fill": "#abababff",
+          "textGrowth": "fixed-width",
+          "width": 742.5550891920252,
+          "content": "Tenha preços que geram lucro e não apenas faturamento.",
+          "lineHeight": 1.5,
+          "fontFamily": "Manrope",
+          "fontSize": 25,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "dusvv",
+          "x": 64,
+          "y": 728,
+          "name": "CTA Primary",
+          "width": 584.2235047219308,
+          "height": 70,
+          "fill": "$color-accent",
+          "padding": [
+            0,
+            60
+          ],
+          "justifyContent": "space_around",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "w9cvi",
+              "name": "Label",
+              "fill": "#FFFFFF",
+              "content": "Quero saber meu custo real e ",
+              "lineHeight": 1.2,
+              "fontFamily": "Manrope",
+              "fontSize": 20,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "Q3C7Uh",
+              "name": "Label",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": 189,
+              "content": "precificar certo",
+              "lineHeight": 1.2,
+              "fontFamily": "Manrope",
+              "fontSize": 25,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "FgMdv",
+          "x": 949,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "djROz",
+          "x": 965,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "KW51q",
+          "x": 981,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "u6IP3e",
+          "x": 997,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "yXCHe",
+          "x": 1013,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "Xrs3d",
+          "x": 1029,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "GGdsO",
+          "x": 1029,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "F03HE",
+          "x": 1029,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "q84hiF",
+          "x": 1029,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "sGGFq",
+          "x": 1029,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "epFkj",
+          "x": 1045,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "yWReo",
+          "x": 1061,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "f7KA2",
+          "x": 1077,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "UDJ5a",
+          "x": 1093,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "gTWG7",
+          "x": 1109,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "zkaIn",
+          "x": 1125,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "d3qI8",
+          "x": 1141,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "e8dxxp",
+          "x": 1157,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "U0eqJ",
+          "x": 1173,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "AQAiO",
+          "x": 1189,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "LNtkX",
+          "x": 1205,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "zaYp9",
+          "x": 1221,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "Z3iDhO",
+          "x": 1237,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "z84l11",
+          "x": 1253,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "EzMfO",
+          "x": 1268,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "MiU3d",
+          "x": 1283,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "G6a1eH",
+          "x": 1298,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "LFJYM",
+          "x": 1314,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "Djysa",
+          "x": 1330,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "oMpTi",
+          "x": 1346,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "TNWO1",
+          "x": 1362,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "f2k84O",
+          "x": 1378,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "U7eye4",
+          "x": 1394,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "F8jpp",
+          "x": 1410,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "N1pjN",
+          "x": 1426,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "pdunZ",
+          "x": 1442,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "PmtPF",
+          "x": 1458,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "P2TEB",
+          "x": 1474,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "ZqG7C",
+          "x": 1490,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "AsIKy",
+          "x": 1506,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "tLtVz",
+          "x": 1522,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "MvrK6",
+          "x": 1538,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "KU4rK",
+          "x": 1554,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "WBTZX",
+          "x": 1570,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "o01MS4",
+          "x": 1586,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "C6rntc",
+          "x": 1602,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "D8aal",
+          "x": 1618,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "SRLD1",
+          "x": 1634,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "OBT1B",
+          "x": 1650,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "e2L8LM",
+          "x": 1666,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "tm7uQ",
+          "x": 1682,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "hDdoa",
+          "x": 1698,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "v5q0EE",
+          "x": 1714,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "L354Qk",
+          "x": 1730,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "CE3Zu",
+          "x": 1746,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "QyMKG",
+          "x": 1762,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "RVNEm",
+          "x": 1778,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "L28fF",
+          "x": 1794,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "dvrOl",
+          "x": 1810,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "E9wlj",
+          "x": 1826,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "t2mBv",
+          "x": 1842,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "AH1oS",
+          "x": 1858,
+          "y": 100,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "TXKIU",
+          "x": 1874,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "B1JWp",
+          "x": 1890,
+          "y": 99,
+          "width": 16,
+          "height": 760,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "path",
+          "id": "zezc1",
+          "x": 751,
+          "y": 191,
+          "name": "mockup",
+          "geometry": "",
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "temporario/LP%20Ficha%20Tecnica%20Pro%202026%20-%20IA/assets/Mockup-Hero2.png",
+            "mode": "fill"
+          },
+          "width": 1311,
+          "height": 674
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "C4J0Up",
+      "x": 2793,
+      "y": 927,
+      "name": "Frame 5",
+      "clip": true,
+      "width": 1920,
+      "height": 149,
+      "fill": "#09090a",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "SQJtt",
+          "x": 0,
+          "y": 0,
+          "name": "Frame 6",
+          "clip": true,
+          "width": 634,
+          "height": 149,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner",
+          "layout": "none"
+        },
+        {
+          "type": "frame",
+          "id": "jzuT0",
+          "x": 633,
+          "y": 0,
+          "name": "Frame 6",
+          "clip": true,
+          "width": 634,
+          "height": 149,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "sWkLq",
+              "x": 53,
+              "y": 44,
+              "name": "Headline",
+              "fill": "$color-text-primary",
+              "textGrowth": "fixed-width",
+              "width": 264,
+              "content": "Pagamento único",
+              "lineHeight": 1.1,
+              "fontFamily": "$font-display",
+              "fontSize": 32,
+              "fontWeight": "700",
+              "letterSpacing": -0.6
+            },
+            {
+              "type": "text",
+              "id": "Yjmpl",
+              "x": 53,
+              "y": 79,
+              "name": "Sub",
+              "fill": "#abababff",
+              "textGrowth": "fixed-width",
+              "width": 196,
+              "content": "Sem mensalidade",
+              "lineHeight": 1.5,
+              "fontFamily": "Manrope",
+              "fontSize": 17,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "iVjjT",
+          "x": 1266,
+          "y": 0,
+          "name": "Frame 6",
+          "clip": true,
+          "width": 654,
+          "height": 149,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "G3MT6n",
+              "x": 53,
+              "y": 44,
+              "name": "Headline",
+              "fill": "$color-text-primary",
+              "textGrowth": "fixed-width",
+              "width": 264,
+              "content": "Acesso vitalício",
+              "lineHeight": 1.1,
+              "fontFamily": "$font-display",
+              "fontSize": 32,
+              "fontWeight": "700",
+              "letterSpacing": -0.6
+            },
+            {
+              "type": "text",
+              "id": "JvBv8",
+              "x": 53,
+              "y": 79,
+              "name": "Sub",
+              "fill": "#abababff",
+              "textGrowth": "fixed-width",
+              "width": 196,
+              "content": "Atualizações incluidas",
+              "lineHeight": 1.5,
+              "fontFamily": "Manrope",
+              "fontSize": 17,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "T7RS8",
+          "x": 55,
+          "y": 44,
+          "name": "Headline",
+          "fill": "$color-text-primary",
+          "textGrowth": "fixed-width",
+          "width": 130,
+          "content": "+25 mil",
+          "lineHeight": 1.1,
+          "fontFamily": "$font-display",
+          "fontSize": 32,
+          "fontWeight": "700",
+          "letterSpacing": -0.6
+        },
+        {
+          "type": "text",
+          "id": "aSnVL",
+          "x": 57,
+          "y": 79,
+          "name": "Sub",
+          "fill": "#abababff",
+          "textGrowth": "fixed-width",
+          "width": 196,
+          "content": "Negócios atendidos",
+          "lineHeight": 1.5,
+          "fontFamily": "Manrope",
+          "fontSize": 17,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "uCJqT",
+      "x": 5683,
+      "y": 6699,
+      "name": "modulos",
+      "clip": true,
+      "width": 1920,
+      "height": 919,
+      "fill": "#09090a",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "q2FVmc",
+          "x": 0,
+          "y": 0,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "BKmc0",
+          "x": 0,
+          "y": 148,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "Ra1BK",
+          "x": 0,
+          "y": 741,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "eASMv",
+          "x": 712,
+          "y": 919,
+          "rotation": 180,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 918
+        },
+        {
+          "type": "rectangle",
+          "id": "YBkMH",
+          "x": 1719,
+          "y": 919,
+          "rotation": 180,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "q5aK0d",
+          "x": 713,
+          "y": 149,
+          "fill": "#CCCCCC",
+          "width": 1006,
+          "height": 592
+        },
+        {
+          "type": "rectangle",
+          "id": "ybu3j",
+          "x": 712,
+          "y": 741,
+          "width": 60,
+          "height": 54,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "PZA1o",
+          "x": 771,
+          "y": 741,
+          "width": 60,
+          "height": 54,
+          "stroke": "#212124",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "T1BCL",
+          "x": 772,
+          "y": 742,
+          "fill": "#ff4785",
+          "width": 58,
+          "height": 52
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "QVXIL",
+      "x": 5683,
+      "y": 10743,
+      "name": "preço",
+      "clip": true,
+      "width": 1920,
+      "height": 919,
+      "fill": "#09090a",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "VYIf4",
+          "x": 200,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "qyHrY",
+          "x": 1103,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "r5Omi5",
+          "x": 0,
+          "y": 365,
+          "rotation": 90,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1719
+        },
+        {
+          "type": "rectangle",
+          "id": "Kc8w1",
+          "x": 0,
+          "y": 489,
+          "rotation": 90,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1719
+        },
+        {
+          "type": "rectangle",
+          "id": "B3i2pb",
+          "x": 0,
+          "y": 614,
+          "rotation": 90,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1719
+        },
+        {
+          "type": "rectangle",
+          "id": "bItCd",
+          "x": 0,
+          "y": 740,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "QOOBi",
+          "x": 1104,
+          "y": 195,
+          "rotation": 90,
+          "fill": "#212124",
+          "width": 1,
+          "height": 816
+        },
+        {
+          "type": "rectangle",
+          "id": "X7hF3",
+          "x": 0,
+          "y": 809,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "oADEv",
+          "x": 1719,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "UJNAx",
+          "x": 1104,
+          "y": 195,
+          "fill": "#0f0f13",
+          "width": 615,
+          "height": 545
+        },
+        {
+          "type": "rectangle",
+          "id": "apXpE",
+          "x": 1104,
+          "y": 741,
+          "fill": "#ff4785",
+          "width": 615,
+          "height": 68
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "mMKyj",
+      "x": 5683,
+      "y": 12423,
+      "name": "Diferencial",
+      "clip": true,
+      "width": 1920,
+      "height": 724,
+      "fill": "#09090a",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "q2sod",
+          "x": 200,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 565
+        },
+        {
+          "type": "rectangle",
+          "id": "i4hMr",
+          "x": 681,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 565
+        },
+        {
+          "type": "rectangle",
+          "id": "ORzqG",
+          "x": 0,
+          "y": 168.8585418933617,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "C5ifh",
+          "x": 0,
+          "y": 563.5527747551678,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "e5gDrx",
+          "x": 1719,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 565
+        },
+        {
+          "type": "rectangle",
+          "id": "v4F0mi",
+          "x": 1238,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 565
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "XLzrm",
+      "x": 5683,
+      "y": 8759,
+      "name": "Diferencial",
+      "clip": true,
+      "width": 1920,
+      "height": 919,
+      "fill": "#09090a",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "D0vC0",
+          "x": 200,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "pQOcM",
+          "x": 0,
+          "y": 307,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "jaod7",
+          "x": 0,
+          "y": 808,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "vm7T8",
+          "x": 1719,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "hR6xs",
+          "x": 201,
+          "y": 308,
+          "fill": "#CCCCCC",
+          "width": 379,
+          "height": 500
+        },
+        {
+          "type": "rectangle",
+          "id": "sz9p8",
+          "x": 581,
+          "y": 308,
+          "fill": "#CCCCCC",
+          "width": 379,
+          "height": 500
+        },
+        {
+          "type": "rectangle",
+          "id": "gGRbj",
+          "x": 961,
+          "y": 308,
+          "fill": "#CCCCCC",
+          "width": 379,
+          "height": 500
+        },
+        {
+          "type": "rectangle",
+          "id": "pR0k3",
+          "x": 1341,
+          "y": 308,
+          "fill": "#CCCCCC",
+          "width": 378,
+          "height": 500
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "MYUAv",
+      "x": 5683,
+      "y": 3942,
+      "name": "para quem é",
+      "clip": true,
+      "width": 1920,
+      "height": 919,
+      "fill": "#09090a",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "fTFu8",
+          "x": 200,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "s737L",
+          "x": 1719,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "Hiyu4",
+          "x": 1218,
+          "y": 339,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 580
+        },
+        {
+          "type": "rectangle",
+          "id": "OqxfI",
+          "x": 717,
+          "y": 339,
+          "fill": "#212124",
+          "width": 1,
+          "height": 368
+        },
+        {
+          "type": "rectangle",
+          "id": "bFhKb",
+          "x": 0,
+          "y": 706,
+          "width": 1920,
+          "height": 70,
+          "stroke": "#212124",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "v6Um7y",
+          "x": 0,
+          "y": 339,
+          "width": 1920,
+          "height": 368,
+          "stroke": "#212124",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "fDk96",
+          "x": 1218,
+          "y": 707,
+          "fill": "#ff4785",
+          "width": 501,
+          "height": 68
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "H8pRL",
+      "x": 5683,
+      "y": 4861,
+      "name": "problemas",
+      "clip": true,
+      "width": 1920,
+      "height": 919,
+      "fill": "#f5f4ea",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "IJ0X4",
+          "x": 0,
+          "y": 459,
+          "fill": "#09090a",
+          "width": 1920,
+          "height": 460
+        },
+        {
+          "type": "rectangle",
+          "id": "pLU7L",
+          "x": 200,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 459
+        },
+        {
+          "type": "rectangle",
+          "id": "rsBft",
+          "x": 1719,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 459
+        },
+        {
+          "type": "rectangle",
+          "id": "vj9iN",
+          "x": 200,
+          "y": 459,
+          "fill": "#212124",
+          "width": 1,
+          "height": 460
+        },
+        {
+          "type": "rectangle",
+          "id": "XrAja",
+          "x": 1719,
+          "y": 459,
+          "fill": "#212124",
+          "width": 1,
+          "height": 460
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "FCDco",
+      "x": 5683,
+      "y": 7618,
+      "name": "calculo",
+      "clip": true,
+      "width": 1920,
+      "height": 1141,
+      "fill": "#f5f4ea",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "N4wXD",
+          "x": 200,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 1141
+        },
+        {
+          "type": "rectangle",
+          "id": "UOAsb",
+          "x": 1719,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 1141
+        },
+        {
+          "type": "rectangle",
+          "id": "z3Z4z",
+          "x": 904,
+          "y": 328,
+          "fill": "#CCCCCC",
+          "width": 815,
+          "height": 728
+        },
+        {
+          "type": "rectangle",
+          "id": "N9hNp4",
+          "x": 201,
+          "y": 328,
+          "fill": "#f5f4ea",
+          "width": 703,
+          "height": 243,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "l1lqk",
+          "x": 201,
+          "y": 570,
+          "fill": "#f5f4ea",
+          "width": 703,
+          "height": 98,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "TaT0T",
+          "x": 201,
+          "y": 667,
+          "fill": "#f5f4ea",
+          "width": 703,
+          "height": 98,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "cDETx",
+          "x": 201,
+          "y": 764,
+          "fill": "#f5f4ea",
+          "width": 703,
+          "height": 98,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "nfcE4",
+          "x": 201,
+          "y": 861,
+          "fill": "#f5f4ea",
+          "width": 703,
+          "height": 98,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "VSMEu",
+          "x": 201,
+          "y": 958,
+          "fill": "#f5f4ea",
+          "width": 703,
+          "height": 98,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "D6JEW",
+      "x": 5683,
+      "y": 11662,
+      "name": "faq",
+      "clip": true,
+      "width": 1920,
+      "height": 761,
+      "fill": "#f5f4ea",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "B2XK2",
+          "x": 200,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 239
+        },
+        {
+          "type": "rectangle",
+          "id": "y7xqTG",
+          "x": 199,
+          "y": 670,
+          "fill": "#737373",
+          "width": 1,
+          "height": 91
+        },
+        {
+          "type": "rectangle",
+          "id": "BdycL",
+          "x": 1719,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 239
+        },
+        {
+          "type": "rectangle",
+          "id": "r4yfYu",
+          "x": 1718,
+          "y": 670,
+          "fill": "#737373",
+          "width": 1,
+          "height": 91
+        },
+        {
+          "type": "rectangle",
+          "id": "zozgH",
+          "x": 0,
+          "y": 239,
+          "width": 1920,
+          "height": 87,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "W9EM2B",
+          "x": 0,
+          "y": 325,
+          "width": 1920,
+          "height": 87,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "l6a5z",
+          "x": 0,
+          "y": 411,
+          "width": 1920,
+          "height": 87,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "iFNhe",
+          "x": 0,
+          "y": 497,
+          "width": 1920,
+          "height": 87,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "m8Q7Tz",
+          "x": 0,
+          "y": 583,
+          "width": 1920,
+          "height": 87,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ILek9",
+      "x": 5683,
+      "y": 5780,
+      "name": "solução",
+      "clip": true,
+      "width": 1920,
+      "height": 919,
+      "fill": "#f5f4ea",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "G8urb",
+          "x": 200,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "YlNiU",
+          "x": 1719,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "ibc7k",
+          "x": 1082,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "W0zRrw",
+          "x": 201,
+          "y": 0,
+          "fill": "#CCCCCC",
+          "width": 881,
+          "height": 787
+        },
+        {
+          "type": "rectangle",
+          "id": "v1FtWn",
+          "x": 201,
+          "y": 787,
+          "width": 1519,
+          "height": 70,
+          "stroke": "#737373",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "WujpK",
+          "x": 1083,
+          "y": 788,
+          "fill": "#ff4785",
+          "width": 636,
+          "height": 68
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "JUwHc",
+      "x": 5683,
+      "y": 9678,
+      "name": "depoimentos",
+      "clip": true,
+      "width": 1920,
+      "height": 1065,
+      "fill": "#f5f4ea",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "UQxxG",
+          "x": 200,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 1065
+        },
+        {
+          "type": "rectangle",
+          "id": "GLaKc",
+          "x": 1719,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 1065
+        },
+        {
+          "type": "rectangle",
+          "id": "ekCVS",
+          "x": 200,
+          "y": 331,
+          "width": 500,
+          "height": 396,
+          "stroke": "#737373",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "PrVul",
+          "x": 200,
+          "y": 753,
+          "width": 500,
+          "height": 393,
+          "stroke": "#737373",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "qWYzH",
+          "x": 710,
+          "y": 555,
+          "width": 500,
+          "height": 510,
+          "stroke": "#737373",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "DYK4M",
+          "x": 710,
+          "y": 298,
+          "width": 500,
+          "height": 231,
+          "stroke": "#737373",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "ovTCb",
+          "x": 1220,
+          "y": 331,
+          "width": 500,
+          "height": 367,
+          "stroke": "#737373",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "NbqDW",
+          "x": 1220,
+          "y": 724,
+          "width": 500,
+          "height": 370,
+          "stroke": "#737373",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner"
+        },
+        {
+          "type": "rectangle",
+          "id": "NIar5",
+          "x": 201,
+          "y": 189,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": -180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#f5f4ea",
+                "position": 0.54
+              },
+              {
+                "color": "#f5f4ea00",
+                "position": 1
+              }
+            ],
+            "center": {
+              "x": 0.4999999999999999
+            }
+          },
+          "width": 1518,
+          "height": 218
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "J9wPG",
+      "x": 5683,
+      "y": 3023,
+      "name": "Video",
+      "clip": true,
+      "width": 1920,
+      "height": 919,
+      "fill": "#f5f4ea",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "xNEjy",
+          "x": 200,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 919
+        },
+        {
+          "type": "rectangle",
+          "id": "LRiAc",
+          "x": 1719,
+          "y": 0,
+          "fill": "#737373",
+          "width": 1,
+          "height": 919
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "GGozr",
+      "x": 5683,
+      "y": 1653,
+      "name": "Hero",
+      "clip": true,
+      "width": 1920,
+      "height": 1370,
+      "fill": "#09090a",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "dO8pf",
+          "x": 200,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1237
+        },
+        {
+          "type": "rectangle",
+          "id": "RyhJD",
+          "x": 0,
+          "y": 57,
+          "rotation": 90,
+          "flipX": true,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1920
+        },
+        {
+          "type": "rectangle",
+          "id": "o8dPiS",
+          "x": 1719,
+          "y": 0,
+          "fill": "#212124",
+          "width": 1,
+          "height": 1237
+        },
+        {
+          "type": "rectangle",
+          "id": "fnzea",
+          "x": 288,
+          "y": 559,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "Assets/Hero/Free%20Browser%20Mockup%20Dark2.png",
+            "mode": "fill"
+          },
+          "width": 1343,
+          "height": 678
+        },
+        {
+          "type": "rectangle",
+          "id": "TP0x9",
+          "x": 0,
+          "y": 1237,
+          "fill": "#09090a",
+          "width": 1920,
+          "height": 133,
+          "stroke": "#212124",
+          "strokeWidth": {
+            "top": 1,
+            "bottom": 1
+          },
+          "strokeAlignment": "inner"
+        }
+      ]
+    },
+    {
+      "type": "rectangle",
+      "id": "P5IYm",
+      "x": 9442,
+      "y": 2104,
+      "fill": "#CCCCCC",
+      "width": 200,
+      "height": 627
+    },
+    {
+      "type": "rectangle",
+      "id": "Q4U2fE",
+      "x": 10112,
+      "y": 953,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "Assets/Hero/Free%20Browser%20Mockup%20Dark.png",
+        "mode": "fill"
+      },
+      "width": 875,
+      "height": 649
+    }
+  ],
+  "variables": {
+    "color-bg": {
+      "type": "color",
+      "value": "#0A0A0B"
+    },
+    "color-surface": {
+      "type": "color",
+      "value": "#141414"
+    },
+    "color-surface-2": {
+      "type": "color",
+      "value": "#1C1C1D"
+    },
+    "color-text-primary": {
+      "type": "color",
+      "value": "#F5F4F2"
+    },
+    "color-text-secondary": {
+      "type": "color",
+      "value": "#A3A3A3"
+    },
+    "color-text-tertiary": {
+      "type": "color",
+      "value": "#6B6B6B"
+    },
+    "color-accent": {
+      "type": "color",
+      "value": "#FF4784"
+    },
+    "color-border": {
+      "type": "color",
+      "value": "#242424"
+    },
+    "color-bg-light": {
+      "type": "color",
+      "value": "#FAF9F7"
+    },
+    "color-text-on-light": {
+      "type": "color",
+      "value": "#141312"
+    },
+    "color-text-on-light-secondary": {
+      "type": "color",
+      "value": "#5C5C5C"
+    },
+    "font-display": {
+      "type": "string",
+      "value": "Archivo"
+    },
+    "font-body": {
+      "type": "string",
+      "value": "Libre Baskerville"
+    },
+    "space-xs": {
+      "type": "number",
+      "value": 8
+    },
+    "space-sm": {
+      "type": "number",
+      "value": 16
+    },
+    "space-md": {
+      "type": "number",
+      "value": 24
+    },
+    "space-lg": {
+      "type": "number",
+      "value": 48
+    },
+    "space-xl": {
+      "type": "number",
+      "value": 80
+    },
+    "space-2xl": {
+      "type": "number",
+      "value": 120
+    },
+    "space-3xl": {
+      "type": "number",
+      "value": 160
+    },
+    "radius-sm": {
+      "type": "number",
+      "value": 6
+    },
+    "radius-md": {
+      "type": "number",
+      "value": 12
+    },
+    "color-surface-light": {
+      "type": "color",
+      "value": "#F0EEE9"
+    }
+  },
+  "fileToken": "ca8e92b4-2b61-4aa5-8e37-89d3145ea706"
+}
